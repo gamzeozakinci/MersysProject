@@ -2,9 +2,7 @@ Feature: Profile theme change
 
   Background:
     Given User Opens the website.
-    And Logs in to website
-    # TODO: Login testi yazılınca burası düzeltilecek.
-
+    And Logs into website.
 
   Scenario: User successfully changes the theme to "Purple"
     When User clicks settings on profile dropdown menu.

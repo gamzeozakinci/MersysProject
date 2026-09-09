@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,31 +17,28 @@ public class SettingsPage {
     @FindBy(xpath = "//*[text()=\"Settings\"]")
     public WebElement settings;
 
-    @FindBy(css = "#mat-select-value-7")
+    @FindBy(xpath= "(//*[contains(@class, 'mat-mdc-form-field-flex')])[7]")
     public WebElement themeDropdown;
 
-    @FindBy(css = "#mat-select-value-3")
+    @FindBy(css = "#mat-option-3")
     public WebElement purple;
 
-    @FindBy(css = "#mat-select-value-3")
+    @FindBy(css = "#mat-option-5")
     public WebElement darkpurple;
 
-    @FindBy(css = "#mat-select-value-3")
+    @FindBy(css = "#mat-option-6")
     public WebElement indigo;
 
-    @FindBy(xpath = "//link[contains(@href, 'purple-theme.css')]")
-    public WebElement confirmPurple;
+    public static final By confirmPurple = By.xpath("//link[contains(@href, 'purple-theme.css')]");
 
-    @FindBy(xpath = "//link[contains(@href, 'dark-purple-theme.css')]")
-    public WebElement confirmDarkPurple;
+    public static final By confirmDarkPurple = By.xpath("//link[contains(@href, 'dark-purple-theme.css')]");
 
-    @FindBy(xpath = "//link[contains(@href, 'indigo-theme.css')]")
-    public WebElement confirmIndigo;
+    public static final By confirmIndigo = By.xpath("//link[contains(@href, 'indigo-theme.css')]");
 
     @FindBy(css = "#ms-save-button-0")
     public WebElement saveButton;
 
-    @FindBy(xpath = "//*[contains(text(), 'Profile succesfully updated')]")
+    @FindBy(xpath = "//*[contains(text(), 'Profile successfully updated')]")
     public WebElement saveConfirm;
 
 
