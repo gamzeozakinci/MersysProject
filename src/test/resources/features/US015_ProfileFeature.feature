@@ -1,8 +1,8 @@
 Feature: Profile theme change
 
   Background:
-    Given User Opens the website.
-    And Logs into website.
+    Given User navigates to the "https://test.mersys.io/" page
+    And User logs in with valid credentials
 
   Scenario: User successfully changes the theme to "Purple"
     When User clicks settings on profile dropdown menu.

@@ -1,7 +1,6 @@
 package stepDefinitions;
 
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
@@ -12,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.FinancePage;
 import pages.HeaderMenu;
-import pages.LoginPage;
 import utilities.GWD;
 
 import java.time.Duration;
@@ -20,29 +18,15 @@ import java.time.Duration;
 import static pages.ParentPage.click;
 
 public class US009_US010_HamMenuFinance extends GWD {
-    LoginPage login = new LoginPage(getDriver());
-
-    @And("Logs into website.")
-    public void userLogsIntoWebsite() {
-        login.usernameBox.sendKeys("student10");
-        login.passwordBox.sendKeys("pass.s10");
-        login.loginButton.click();
-
-    }
 
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
     HeaderMenu header = new HeaderMenu(getDriver());
     FinancePage finance = new FinancePage(getDriver());
 
-    @Given("User Opens the website.")
-    public void openWebsite() {
-        GWD.getDriver().get("https://test.mersys.io/");
-    }
-
-
     @When("User clicks hamburger menu.")
     public void ClicksHamburgerMenu() {
-        click(header.hamburgerButton, 3);
+        wait.until(ExpectedConditions.elementToBeClickable(header.hamburgerButton));
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].closest('button').click();", header.hamburgerButton);
 
     }
 
@@ -106,6 +90,13 @@ public class US009_US010_HamMenuFinance extends GWD {
     @And("User clicks 'Stripe' to pay.")
     public void StripePay() {
         click(finance.pay, 3);
+
+    }
+
+    @Then("User should be able to access Finance page.")
+    public void verifyFinancePage() {
+        wait.until(ExpectedConditions.visibilityOf(finance.chooseName));
+        Assert.assertTrue(finance.chooseName.isDisplayed());
     }
 
 }

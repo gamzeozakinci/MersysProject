@@ -22,4 +22,16 @@ public class HeaderMenu {
     @FindBy(xpath = "//*[@caption=\"NAV.ATTENDANCE.TITLE\"]")
     public WebElement headerAttendanceButton;
 
+    @FindBy(xpath = "//*[@caption=\"MY_PAGE.TAB_TITLE.ASSIGNMENTS\"]")
+    public WebElement headerAssignmentButton;
+
+    @FindBy(xpath = "//*[text()=\"Messaging\"]")
+    public WebElement headerMessagingButton;
+
+    @FindBy(xpath = "//*[text()=\"Trash\"]")
+    public WebElement headerTrashButton;
+
+    @FindBy(xpath = "//*[@caption=\"NAV.GRADING.TITLE\"]")
+    public WebElement headerGradingButton;
+
 }

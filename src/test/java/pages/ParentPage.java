@@ -11,7 +11,7 @@ import java.time.Duration;
 
 public class ParentPage {
 
-    public WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(20));
+    public static WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(20));
 
     public static void click(WebElement element, int timeout) {
         WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(timeout));
@@ -27,7 +27,7 @@ public class ParentPage {
         ((JavascriptExecutor) GWD.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    public void mySendKeys(WebElement element, String text) {
+    public static void mySendKeys(WebElement element, String text) {
         wait.until(ExpectedConditions.visibilityOf(element));
         scrollToElement(element);
         element.sendKeys(text);

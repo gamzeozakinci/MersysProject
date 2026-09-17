@@ -17,6 +17,13 @@ public class LoginPage extends ParentPage {
     @FindBy(css = "input[formcontrolname='password']")
     public WebElement passwordBox;
 
-    @FindBy(xpath = "//span[text()=' GİRİŞ YAP ']")
+    @FindBy(css = "button[aria-label='LOGIN']")
     public WebElement loginButton;
+
+    @FindBy(css = "div[class='main-container']")
+    public WebElement dashboardHeader;
+
+    @FindBy(xpath = "//div[text()='Invalid username or password']")
+    public WebElement errorMessage;
+
 }
