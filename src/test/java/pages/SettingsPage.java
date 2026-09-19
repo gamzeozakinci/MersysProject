@@ -38,8 +38,26 @@ public class SettingsPage {
     @FindBy(css = "#ms-save-button-0")
     public WebElement saveButton;
 
-    @FindBy(xpath = "//*[contains(text(), 'Profile successfully updated')]")
+    @FindBy(xpath = "//div[contains(@class,'ms-toast__headline') and normalize-space()='Profile successfully updated']")
     public WebElement saveConfirm;
+
+    @FindBy(css = "img.profile-image")
+    public WebElement profilePicture;
+
+    @FindBy(xpath = "//h3[contains(@id,'mat-mdc-dialog-title')]")
+    public WebElement profilePhotoWindowTitle;
+
+    @FindBy(xpath = "//span[contains(text(),'KB')]")
+    public WebElement uploadedImageSize;
+
+    @FindBy(xpath = "//button[.//span[normalize-space()='Upload']]")
+    public WebElement uploadButton;
+
+    @FindBy(xpath = "//mat-form-field[contains(@class,'mat-mdc-form-field-type-file-input')]//button")
+    public WebElement fileSelectButton;
+
+    @FindBy(xpath = "//user-upload-dialog//button[.//span[normalize-space()='Close']]")
+    public WebElement closeButton;
 
 
 }
