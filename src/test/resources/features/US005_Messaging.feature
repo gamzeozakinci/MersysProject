@@ -4,7 +4,7 @@ Feature: User Messages Teacher
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
 
-    Scenario:
+    Scenario: Student sends a message to a teacher
     Given User clicks on the New Message button
     And User closes the error message
     When User clicks on the icon, searches for 'Teac' and selects a receiver

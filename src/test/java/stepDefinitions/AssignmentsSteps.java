@@ -90,7 +90,7 @@ public class AssignmentsSteps {
     @When("User attaches a sample file for the assignment from the {string} section")
     public void userAttachesSampleFile(String attachText) throws AWTException {
 
-        String dosyaYolu = "C:\\Users\\isTheVAC\\Downloads\\blank.png";
+        String dosyaYolu = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\blank.png";
         StringSelection stringSelection = new StringSelection(dosyaYolu);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
 

@@ -7,8 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class CalenderPage extends ParentPage{
-    public CalenderPage(WebDriver driver) {
+public class CalendarPage extends ParentPage{
+    public CalendarPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 

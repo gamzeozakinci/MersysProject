@@ -17,7 +17,7 @@ public class NavigationSteps {
                 ParentPage.click(np.gradingLink, 10);
                 break;
             case "Calendar":
-                ParentPage.click(np.calenderLink,10);
+                ParentPage.click(np.calendarLink,10);
                 break;
 
             case "Courses":

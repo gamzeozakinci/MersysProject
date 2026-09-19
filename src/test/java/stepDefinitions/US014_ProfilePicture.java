@@ -16,7 +16,7 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 
 
-public class US014_ProfilePictureSteps extends GWD {
+public class US014_ProfilePicture extends GWD {
 
     SettingsPage settpage = new SettingsPage(getDriver());
 

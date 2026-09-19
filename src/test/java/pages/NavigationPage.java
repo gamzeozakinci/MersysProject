@@ -15,7 +15,7 @@ public class NavigationPage extends ParentPage {
     public WebElement gradingLink;
 
     @FindBy(css = "ms-layout-menu-button[page='CALENDAR']")
-    public WebElement calenderLink;
+    public WebElement calendarLink;
 
     @FindBy(xpath = "(//student-toolbar-horizontal//img)[1]")
     public WebElement companyLogo;

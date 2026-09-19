@@ -5,15 +5,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import pages.CalenderPage;
+import pages.CalendarPage;
 import utilities.GWD;
 
 import java.time.Duration;
 import static utilities.GWD.getDriver;
 
-public class CalenderSteps {
+public class CalendarSteps {
 
-     CalenderPage cp = new CalenderPage(getDriver());
+     CalendarPage cp = new CalendarPage(getDriver());
      WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));;
 
     @Then("User is able to see class names")
