@@ -11,6 +11,3 @@ Feature: Grading Module
     And User verifies that the "Course Grade" button on the page is visible and clickable
     Then User verifies that the course grades are successfully displayed in the list
     And User verifies that the "Student Transcript" button on the page is visible and clickable
-    # And User verifies that the "Transcript By Subject" button on the page is visible and clickable
-    # BUG: Commented out because the "Transcript By Subject" button is not present in the UI.
-    # And User verifies that the "Transcript By Subject" button on the page is visible and clickable

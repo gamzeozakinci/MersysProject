@@ -15,7 +15,7 @@ import utilities.GWD;
 import java.time.Duration;
 import static utilities.GWD.getDriver;
 
-public class DeleteMessageSteps {
+public class US006_DeleteMessage {
 
     HeaderMenu hm = new HeaderMenu(GWD.getDriver());
     MessagingPage mp = new MessagingPage(GWD.getDriver());

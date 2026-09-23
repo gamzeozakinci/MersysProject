@@ -4,9 +4,8 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        features = "src/test/resources/features/US015_ProfileFeature.feature",
+        features = "src/test/resources/features/US021_Assignments.feature",
         glue = "stepDefinitions")
 
-public class US015_ProfileFeatureRunner extends AbstractTestNGCucumberTests {
-
+public class US021_AssignmentsRunner extends AbstractTestNGCucumberTests {
 }

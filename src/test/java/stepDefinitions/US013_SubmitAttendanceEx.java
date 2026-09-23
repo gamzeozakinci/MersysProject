@@ -69,8 +69,6 @@ public class US013_SubmitAttendanceEx extends GWD {
         wait.until(ExpectedConditions.elementToBeClickable(attPage.send));
         attPage.send.click();
 
-        //Hocaya sorulacak.
-
     }
 
     @And("User must be able to see the confirm message.")

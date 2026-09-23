@@ -37,7 +37,6 @@ public class CalendarSteps {
         System.out.println("Success: Navigated to the previous week on the calendar.");
     }
 
-
     @And("User clicks on a completed class")
     public void userClicksOnACompletedClass() {
         wait.until(ExpectedConditions.elementToBeClickable(cp.completedClassEvent));
@@ -81,7 +80,6 @@ public class CalendarSteps {
         }
     }
 
-    // US-23 - Weekly Schedule'ın varsayılan seçili olduğunu ve haftalık tarih aralığının görüntülendiğini doğrular
     @Then("User should see the current date and Weekly Course Plan by default")
     public void userShouldSeeTheCurrentDateAndWeeklyCoursePlanByDefault() {
 
@@ -104,7 +102,6 @@ public class CalendarSteps {
         System.out.println("Displayed date range: " + cp.weeklyDateRange.getText());
     }
 
-    // US-23 - Weekly Course Plan üzerindeki P, S, E ve C durum ikonlarının görünürlüğünü doğrular
     @And("User should see course status icons {string}, {string}, {string}, {string}")
     public void userShouldSeeCourseStatusIcons(String p, String s, String e, String c) {
 
@@ -126,7 +123,6 @@ public class CalendarSteps {
         System.out.println("P, S, E and C status icons are visible.");
     }
 
-    // US-23 - Course status meanings (Published, Started, Ended, Cancelled) görünürlüğünü doğrular
     @And("User should see status meanings {string}, {string}, {string}, {string}")
     public void userShouldSeeStatusMeanings(String published, String started,
                                             String ended, String cancelled) {
@@ -149,7 +145,6 @@ public class CalendarSteps {
         System.out.println("Published, Started, Ended and Cancelled status meanings are visible.");
     }
 
-    // US-23 - Weekly Schedule ve Calendar sekmelerinin görünür ve tıklanabilir olduğunu doğrular
     @And("User should see and click {string} and {string} links")
     public void userShouldSeeAndClickWeeklyScheduleAndCalendarLinks(String weeklySchedule, String calendar) {
 
@@ -174,7 +169,6 @@ public class CalendarSteps {
         System.out.println("Weekly Schedule and Calendar tabs are visible and clickable.");
     }
 
-    // US-23 - Previous, Today ve Next navigasyon butonlarının görünür,tıklanabilir ve çalışır olduğunu doğrular
     @And("User should see and click Previous, Today and Next navigation buttons")
     public void userShouldSeeAndClickPreviousTodayAndNextNavigationButtons() {
 
@@ -210,7 +204,6 @@ public class CalendarSteps {
 
     }
 
-    // US-23 - Weekly Schedule üzerinde sorumlu olunan derslerin görünür ve tıklanabilir olduğunu doğrular
     @And("User should see and click responsible courses")
     public void userShouldSeeAndClickResponsibleCourses() {
 
@@ -237,7 +230,6 @@ public class CalendarSteps {
         System.out.println("A responsible course is visible and clickable.");
     }
 
-    // US-25 - Completed (E) durumundaki dersi bulana kadar önceki haftalara gider ve bulunan derslerden rastgele birine tıklar
     @And("User clicks on a random completed class")
     public void userClicksOnARandomCompletedClass() {
 
@@ -245,7 +237,6 @@ public class CalendarSteps {
 
         for (int i = 0; i < maxWeeks; i++) {
 
-            // Bu haftada Completed (E) ders var mı?
             if (!cp.completedClasses.isEmpty()) {
 
                 int randomIndex =
@@ -262,11 +253,9 @@ public class CalendarSteps {
                 return;
             }
 
-            // E ders yoksa bir önceki haftaya geç
             wait.until(ExpectedConditions.elementToBeClickable(cp.previusPageButton));
             cp.previusPageButton.click();
 
-            // Yeni haftanın yüklenmesini kısa süre bekle
             try {
                 Thread.sleep(1500);
             } catch (InterruptedException e) {
@@ -280,7 +269,6 @@ public class CalendarSteps {
         );
     }
 
-    // US-25 - Completed class detay penceresinde Recording butonunun görünür ve tıklanabilir olduğunu doğrular ve butona tıklar
     @Then("User should see and click the Recording button")
     public void userShouldSeeAndClickTheRecordingButton() {
 
@@ -296,7 +284,6 @@ public class CalendarSteps {
         System.out.println("Recording button is visible and clickable.");
     }
 
-    // US-25 - Recording sayfasına erişildiğini ve player iframe'inin açıldığını doğrular
     @And("User should access the class recording")
     public void userShouldAccessTheClassRecording() {
 
@@ -310,10 +297,8 @@ public class CalendarSteps {
 
         System.out.println("Class recording page opened and video player is visible.");
 
-
     }
 
-    // US-25 - Recording ekranındaki Play butonunun görünür ve tıklanabilir olduğunu doğrular ve tıklar
     @Then("User should see and click the Play button")
     public void userShouldSeeAndClickThePlayButton() {
 
@@ -326,7 +311,6 @@ public class CalendarSteps {
 
     }
 
-    // US-25 - Play butonuna tıklandıktan sonra videonun gerçekten başladığını doğrular
     @And("User should be able to start watching the class video")
     public void userShouldBeAbleToStartWatchingTheClassVideo() {
 
@@ -340,7 +324,6 @@ public class CalendarSteps {
 
         System.out.println("Class video started successfully.");
     }
-
 
 }
 

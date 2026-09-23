@@ -20,7 +20,7 @@ import java.time.Duration;
 
 import static pages.ParentPage.click;
 
-public class US021_AssignmentsFeature extends GWD {
+public class US021_Assignments extends GWD {
 
     HeaderMenu header = new HeaderMenu(getDriver());
     AssignmentsPage assign = new AssignmentsPage(getDriver());

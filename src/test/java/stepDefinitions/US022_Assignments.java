@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 
 import static pages.ParentPage.click;
 
-public class US022_AssignmentsFeature extends GWD {
+public class US022_Assignments extends GWD {
 
     AssignmentsPage assign = new AssignmentsPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
@@ -154,7 +154,6 @@ public class US022_AssignmentsFeature extends GWD {
                     return backdrops.stream().allMatch(b -> "0".equals(b.getCssValue("opacity")));
                 });
             } catch (org.openqa.selenium.TimeoutException ignored) {
-                // backdrop hasn't cleared in time - attempt the click anyway
             }
 
             try {

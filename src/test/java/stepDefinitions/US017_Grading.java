@@ -21,12 +21,10 @@ import java.time.Duration;
 
 import static pages.ParentPage.click;
 
-
-public class US017_GradingFeature extends GWD {
+public class US017_Grading extends GWD {
 
     HeaderMenu header = new HeaderMenu(getDriver());
     GradingPage grading = new GradingPage(getDriver());
-
 
     @When("User navigates to the 'Grading' page.")
     public void navigateToGradingPage() {
@@ -78,33 +76,28 @@ public class US017_GradingFeature extends GWD {
 
         Robot robot = new Robot();
 
-        //Ctrl+L
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_L);
         robot.keyRelease(KeyEvent.VK_L);
         robot.keyRelease(KeyEvent.VK_CONTROL);
         Thread.sleep(300);
 
-        //Ctrl+V
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_CONTROL);
         Thread.sleep(300);
 
-        //enter
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
         Thread.sleep(500);
 
-        //Alt+N
         robot.keyPress(KeyEvent.VK_ALT);
         robot.keyPress(KeyEvent.VK_N);
         robot.keyRelease(KeyEvent.VK_N);
         robot.keyRelease(KeyEvent.VK_ALT);
         Thread.sleep(300);
 
-        //enter
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
         Thread.sleep(500);

@@ -12,7 +12,7 @@ import utilities.GWD;
 
 import java.time.Duration;
 
-public class US015_ProfileFeature extends GWD {
+public class US015_Profile extends GWD {
 
     SettingsPage settpage = new SettingsPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));

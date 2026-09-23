@@ -62,7 +62,6 @@ public class AssignmentsSteps {
         Assert.assertTrue(ap.assignments.isDisplayed(), "Gorevler tablosu acilamadi!");
     }
 
-    // US-19
     @When("User clicks on the {string} icon of a random assignment in the list")
     public void userClickOnRandomAssignmentOnTheList(String iconName) {
 
@@ -207,7 +206,4 @@ public class AssignmentsSteps {
         }
     }
 }
-
-
-
 

@@ -15,16 +15,10 @@ import io.cucumber.testng.CucumberOptions;
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
 
-        // Sadece belirli senaryoları koşmak istersen buraya etiket yazabilirsin (Örn: "@Smoke")
         tags = "",
 
-        // true yaparsan tarayıcıyı açmadan sadece eksik adımları (step definitions) kontrol eder
-        // Testleri gerçekten koşmak için false kalmalıdır.
         dryRun = false
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
-    // Paralel test koşumu yapılacaksa TestNG'nin bu metodu Override edilir (Şimdilik boş kalabilir)
 }
-
-//test push
 

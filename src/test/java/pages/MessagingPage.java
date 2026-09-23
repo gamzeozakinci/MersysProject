@@ -12,7 +12,6 @@ public class MessagingPage extends ParentPage {
         PageFactory.initElements(driver, this);
     }
 
-    //US_007
     @FindBy(css = "tbody.mdc-data-table__content")
     public WebElement trash;
 

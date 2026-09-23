@@ -28,7 +28,6 @@ public class GradingPage {
     @FindBy(xpath = "//span[text()='Student Transcripts']")
     public WebElement studentTranscriptButton;
 
-    //fake locater
     @FindBy(css = "div[class='limit-word secondary-text black']")
     public WebElement transcriptBySubjectButton;
 

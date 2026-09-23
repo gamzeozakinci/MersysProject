@@ -22,8 +22,6 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(css = "div[class='assignment']")
     public WebElement assignments;
 
-    //US-19
-    // Sayfadaki tüm Discussion (Mesaj) butonları
     @FindBy(css = "ms-icon-button[icon='comments-alt']")
     public List<WebElement> discussionButtonsList;
 
@@ -39,14 +37,12 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(xpath = "(//span[@class='mat-focus-indicator'])[47]")
     public WebElement apSendButton;
 
-    // Ekranda herhangi bir yerinde "Success", "successfully" veya "başarı" kelimesi geçen bir element
     @FindBy(xpath = "//*[contains(translate(text(), 'SUCCESS', 'success'), 'success')]")
     public WebElement successMessage;
 
     @FindBy(css = "div[class='comment-time secondary-text']")
     public List<WebElement> commentTimeList;
 
-    //US-21
     @FindBy(css = "ms-icon-button[icon='file-import']")
     public List<WebElement> submissionButtons;
 
@@ -95,25 +91,18 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(xpath = "//div[@role='button'][@aria-label='2 columns, 2 rows']")
     public WebElement addTable;
 
-
-    // US-20
-    // Ödev listesindeki Information (Bilgi) ikonlarını temsil eden elementler
     @FindBy(css = "ms-icon-button[icon='info']")
     public List<WebElement> informationButtonsList;
 
-    // US-20 Ödev listesindeki Submit (Gönderme) ikonlarını temsil eden elementler
     @FindBy(css = "ms-icon-button[icon='file-import']")
     public List<WebElement> submitButtonsList;
 
-    // US-20 - Mark it (Favorite) butonları
     @FindBy(css = "ms-icon-button[icon='star']")
     public List<WebElement> markButtonsList;
 
-    // US-20 - Ödev listesindeki ödev satırları
     @FindBy(css = "div.assignment")
     public List<WebElement> assignmentRowsList;
 
-    //US_22
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Search']]")
     public WebElement searchButton;
 
