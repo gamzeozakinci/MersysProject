@@ -12,6 +12,10 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <surefire.version>3.3.1</surefire.version>
+
+        <!-- Overridable: mvn test -DsuiteXmlFile=path/to/other-suite.xml -->
+        <suiteXmlFile>src/XML_files/testng.xml</suiteXmlFile>
     </properties>
 
     <dependencies>
@@ -44,7 +48,6 @@
         <scope>test</scope>
     </dependency>
 
-    <!-- TestRunner'daki ExtentCucumberAdapter plugin'i bu kütüphaneden gelir -->
     <dependency>
         <groupId>tech.grasshopper</groupId>
         <artifactId>extentreports-cucumber7-adapter</artifactId>
@@ -62,7 +65,7 @@
         <groupId>tech.grasshopper</groupId>
         <artifactId>extent-pdf-report</artifactId>
         <version>2.12.0</version>
-        <!-- lombok 1.18.18 JDK 17 ile derlemeyi (mvn test) bozuyor; çalışma zamanında gerekmiyor -->
+        <!-- Lombok 1.18.18 breaks compilation on JDK 17 and is not needed at runtime -->
         <exclusions>
             <exclusion>
                 <groupId>org.projectlombok</groupId>
@@ -72,5 +75,20 @@
     </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

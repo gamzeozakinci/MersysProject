@@ -1,11 +1,11 @@
-Feature: Weekly Course Plan functionality
+@Regression
+Feature: Calendar - Weekly Course Plan
 
   Background:
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
 
-  @Regression
-  Scenario: Validate weekly course plan and course status information
+  Scenario: User verifies the Weekly Course Plan and course status information
     When User navigates to "Calendar" page
     Then User should see the current date and Weekly Course Plan by default
     And User should see course status icons "P", "S", "E", "C"

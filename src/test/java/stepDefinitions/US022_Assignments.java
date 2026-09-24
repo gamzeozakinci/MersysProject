@@ -25,27 +25,27 @@ public class US022_Assignments extends GWD {
     AssignmentsPage assign = new AssignmentsPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
-    @Then("User should see the 'Search' button.")
+    @Then("User should see the \"Search\" button")
     public void checkSearchButtonVisible() {
         wait.until(ExpectedConditions.visibilityOf(assign.searchButton));
         Assert.assertTrue(assign.searchButton.isDisplayed());
 
     }
 
-    @When("User clicks the 'Search' button without applying any filter.")
+    @When("User clicks the \"Search\" button without applying any filter")
     public void clickSearchButtonWithoutFilter() {
         click(assign.searchButton, 5);
 
     }
 
-    @Then("User should see all assigned tasks listed.")
+    @Then("User should see all assigned tasks listed")
     public void checkAllAssignedTasksListed() {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.assignment")));
         Assert.assertFalse(assign.assignmentRowsList.isEmpty());
 
     }
 
-    @And("User filters the search by 'Course'.")
+    @And("User filters the search by \"Course\"")
     public void filterSearchByCourse() {
         clickWithRetry(() -> assign.classFilterDropdown);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("mat-option"), 1));
@@ -54,7 +54,7 @@ public class US022_Assignments extends GWD {
 
     }
 
-    @And("User filters the search by 'Status'.")
+    @And("User filters the search by \"Status\"")
     public void filterSearchByStatus() {
         clickWithRetry(() -> assign.statusFilterDropdown);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("mat-option"), 1));
@@ -63,7 +63,7 @@ public class US022_Assignments extends GWD {
 
     }
 
-    @And("User filters the search by 'Semester'.")
+    @And("User filters the search by \"Semester\"")
     public void filterSearchBySemester() {
         clickWithRetry(() -> assign.semesterFilterDropdown);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("mat-option"), 1));
@@ -72,69 +72,69 @@ public class US022_Assignments extends GWD {
 
     }
 
-    @And("User clicks the 'Search' button.")
+    @And("User clicks the \"Search\" button")
     public void clickSearchButton() {
         clickWithRetry(() -> assign.searchButton);
 
     }
 
-    @Then("User should see the filtered assignment results.")
+    @Then("User should see the filtered assignment results")
     public void checkFilteredResultsVisible() {
         wait.until(ExpectedConditions.visibilityOf(assign.assignments));
         Assert.assertTrue(assign.assignments.isDisplayed());
 
     }
 
-    @Then("User should see the 'Show By' dropdown menu.")
+    @Then("User should see the \"Show By\" dropdown menu")
     public void checkShowByDropdownVisible() {
         wait.until(ExpectedConditions.visibilityOf(assign.showByDropdownButton));
         Assert.assertTrue(assign.showByDropdownButton.isDisplayed());
 
     }
 
-    @When("User sorts the results by 'Course' from the 'Show By' dropdown.")
+    @When("User sorts the results by \"Course\" from the \"Show By\" dropdown")
     public void sortResultsByCourse() {
         selectShowByOption("Show by Class");
 
     }
 
-    @Then("User should see the results sorted by 'Course'.")
+    @Then("User should see the results sorted by \"Course\"")
     public void checkResultsSortedByCourse() {
         wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Class"));
 
     }
 
-    @When("User sorts the results by 'Type' from the 'Show By' dropdown.")
+    @When("User sorts the results by \"Type\" from the \"Show By\" dropdown")
     public void sortResultsByType() {
         selectShowByOption("Show by Type");
 
     }
 
-    @Then("User should see the results sorted by 'Type'.")
+    @Then("User should see the results sorted by \"Type\"")
     public void checkResultsSortedByType() {
         wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Type"));
 
     }
 
-    @When("User sorts the results by 'Date' from the 'Show By' dropdown.")
+    @When("User sorts the results by \"Date\" from the \"Show By\" dropdown")
     public void sortResultsByDate() {
         selectShowByOption("Show by Date");
 
     }
 
-    @Then("User should see the results sorted by 'Date'.")
+    @Then("User should see the results sorted by \"Date\"")
     public void checkResultsSortedByDate() {
         wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Date"));
 
     }
 
-    @When("User sorts the results by 'Chart' from the 'Show By' dropdown.")
+    @When("User sorts the results by \"Chart\" from the \"Show By\" dropdown")
     public void sortResultsByChart() {
         selectShowByOption("Show by Chart");
 
     }
 
-    @Then("User should see the results sorted by 'Chart'.")
+    @Then("User should see the results sorted by \"Chart\"")
     public void checkResultsSortedByChart() {
         wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Chart"));
 

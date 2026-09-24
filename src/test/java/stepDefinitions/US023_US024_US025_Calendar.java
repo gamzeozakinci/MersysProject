@@ -11,10 +11,10 @@ import utilities.GWD;
 import java.time.Duration;
 import static utilities.GWD.getDriver;
 
-public class CalendarSteps {
+public class US023_US024_US025_Calendar {
 
      CalendarPage cp = new CalendarPage(getDriver());
-     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));;
+     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @Then("User is able to see class names")
     public void userIsAbleToSeeClassNames() {
@@ -25,8 +25,8 @@ public class CalendarSteps {
 
     @And("User clicks on the previous week button")
     public void userClicksOnThePreviousWeekButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(cp.previusPageButton));
-        cp.previusPageButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(cp.previousPageButton));
+        cp.previousPageButton.click();
 
         try {
             Thread.sleep(2000);
@@ -253,8 +253,8 @@ public class CalendarSteps {
                 return;
             }
 
-            wait.until(ExpectedConditions.elementToBeClickable(cp.previusPageButton));
-            cp.previusPageButton.click();
+            wait.until(ExpectedConditions.elementToBeClickable(cp.previousPageButton));
+            cp.previousPageButton.click();
 
             try {
                 Thread.sleep(1500);

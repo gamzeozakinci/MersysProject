@@ -18,7 +18,7 @@ public class US015_Profile extends GWD {
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
 
-    @When("User clicks settings on profile dropdown menu.")
+    @When("User clicks settings on profile dropdown menu")
     public void clickSettingsOnProfileDropdownMenu() {
 
         settpage.profile.click();
@@ -27,39 +27,39 @@ public class US015_Profile extends GWD {
 
     }
 
-    @Then("User confirms that 'purple' theme is applied.")
+    @Then("User confirms that \"purple\" theme is applied")
     public void confirmPurple() {
         wait.until(ExpectedConditions.presenceOfElementLocated(SettingsPage.confirmPurple));
 
     }
 
-    @And("User changes default theme to purple.")
+    @And("User changes default theme to purple")
     public void changeDefaultThemeToPurple() {
         settpage.themeDropdown.click();
         settpage.purple.click();
 
     }
 
-    @Then("User confirms that 'dark purple' theme is applied.")
+    @Then("User confirms that \"dark purple\" theme is applied")
     public void confirmDarkPurple() {
         wait.until(ExpectedConditions.presenceOfElementLocated(SettingsPage.confirmDarkPurple));
 
     }
 
-    @And("User changes default theme to dark purple.")
+    @And("User changes default theme to dark purple")
     public void changeDefaultThemeToDarkPurple() {
         settpage.themeDropdown.click();
         settpage.darkpurple.click();
 
     }
 
-    @Then("User confirms that 'indigo' theme is applied.")
+    @Then("User confirms that \"indigo\" theme is applied")
     public void confirmIndigo() {
         wait.until(ExpectedConditions.presenceOfElementLocated(SettingsPage.confirmIndigo));
 
     }
 
-    @And("User changes default theme to indigo.")
+    @And("User changes default theme to indigo")
     public void changeDefaultThemeToIndigo() {
 
         settpage.themeDropdown.click();
@@ -67,7 +67,7 @@ public class US015_Profile extends GWD {
 
     }
 
-    @And("User must see the success message when clicked 'save' button.")
+    @And("User must see the success message when clicked \"save\" button")
     public void clickSaveButton() {
         settpage.saveButton.click();
         wait.until(ExpectedConditions.visibilityOf(settpage.saveConfirm));

@@ -74,7 +74,7 @@ public class AssignmentsPage extends ParentPage {
     public WebElement firstHomeworkButton;
 
     @FindBy(xpath = "//*[text()='New Submission']")
-    public WebElement submissonButton;
+    public WebElement newSubmissionButton;
 
     @FindBy(css = "iframe.tox-edit-area__iframe")
     public WebElement textEditorFrame;

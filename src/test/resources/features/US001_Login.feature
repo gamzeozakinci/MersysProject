@@ -1,14 +1,15 @@
-Feature: User Authentication Functionality
+@Regression
+Feature: Authentication - Login
 
   Background:
     Given User navigates to the "https://test.mersys.io/" page
 
-  @Smoke @Regression
-  Scenario: Successful login with valid credentials
+  @Smoke
+  Scenario: User logs in with valid credentials
     When User logs in with valid credentials
     Then User should be successfully logged in and redirected to the homepage
 
-  @Negative @Regression
-  Scenario: Unsuccessful login with invalid credentials
+  @Negative
+  Scenario: User cannot log in with invalid credentials
     When User enters invalid username or invalid password
     Then User should see an error message regarding invalid credentials

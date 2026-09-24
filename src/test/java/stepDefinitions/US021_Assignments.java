@@ -27,13 +27,13 @@ public class US021_Assignments extends GWD {
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
     WebDriverWait fastWait = new WebDriverWait(getDriver(), Duration.ofSeconds(10), Duration.ofMillis(100));
 
-    @When("User navigates to the 'Assignments' page.")
+    @When("User opens the \"Assignments\" page")
     public void navigateToAssignmentsPage() {
         click(header.headerAssignmentButton, 5);
 
     }
 
-    @Then("User should see a 'Submit' icon on every homework in the Homework list.")
+    @Then("User should see a \"Submit\" icon on every homework in the Homework list")
     public void checkSubmitIconVisible() {
 
         Assert.assertEquals(assign.numberOfHomeworks.size(), assign.submissionButtons.size(),
@@ -41,20 +41,20 @@ public class US021_Assignments extends GWD {
 
     }
 
-    @And("User clicks the 'Submit' icon on a homework.")
+    @And("User clicks the \"Submit\" icon on a homework")
     public void clickSubmitIcon() {
         click(assign.submissionButtons.get(0), 3);
 
     }
 
-    @Then("A pop-up text editor should open.")
+    @Then("A pop-up text editor should open")
     public void checkTextEditorOpen() {
         wait.until(ExpectedConditions.visibilityOf(assign.submissionDialog));
         Assert.assertTrue(assign.submissionDialog.isDisplayed());
 
     }
 
-    @And("User types text into the text editor.")
+    @And("User types text into the text editor")
     public void typeTextInEditor() {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
@@ -65,7 +65,7 @@ public class US021_Assignments extends GWD {
 
     }
 
-    @And("User pastes text into the text editor.")
+    @And("User pastes text into the text editor")
     public void pasteTextInEditor() {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         String current = (String) js.executeScript("return tinymce.activeEditor.getContent({format:'text'});");
@@ -76,7 +76,7 @@ public class US021_Assignments extends GWD {
 
     }
 
-    @And("User inserts an image into the text editor.")
+    @And("User inserts an image into the text editor")
     public void insertImageInEditor() {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\Test_foto.jpg";
 
@@ -92,7 +92,7 @@ public class US021_Assignments extends GWD {
 
     }
 
-    @And("User inserts a table into the text editor.")
+    @And("User inserts a table into the text editor")
     public void insertTableInEditor() {
         click(assign.insertTable, 3);
         click(assign.tableMenuItem, 3);
@@ -100,7 +100,7 @@ public class US021_Assignments extends GWD {
 
     }
 
-    @And("User clicks 'Attach Files' and adds a file to the homework.")
+    @And("User clicks \"Attach Files\" and adds a file to the homework")
     public void attachFileToHomework() throws InterruptedException, AWTException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\EXCUSE_FILE.pdf";
 
@@ -120,61 +120,60 @@ public class US021_Assignments extends GWD {
 
     }
 
-    @And("User clicks 'Save As Draft'.")
+    @And("User clicks \"Save As Draft\"")
     public void clickSaveAsDraft() {
         click(assign.saveAsDraft, 3);
 
     }
 
-    @Then("User should see a 'Success' message.")
+    @Then("User should see a \"Success\" message")
     public void checkSuccessMessage() {
         fastWait.until(ExpectedConditions.visibilityOf(assign.successMessageOnSubmission));
         Assert.assertTrue(assign.successMessageOnSubmission.isDisplayed());
 
     }
 
-    @And("User clicks the 'Submit' button.")
+    @And("User clicks the \"Submit\" button")
     public void clickSendButton() {
         wait.until(ExpectedConditions.elementToBeClickable(assign.submitButton));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", assign.submitButton);
 
     }
 
-    @Then("A confirmation pop-up should open.")
+    @Then("A confirmation pop-up should open")
     public void checkConfirmationPopupOpen() {
-        wait.until(ExpectedConditions.visibilityOf(assign.yesButton)).click();
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOf(assign.yesButton)).isDisplayed());
 
     }
 
-    @When("User confirms the submission.")
+    @When("User confirms the submission")
     public void confirmSubmission() {
-        fastWait.until(ExpectedConditions.visibilityOf(assign.successMessageOnSubmission));
-        Assert.assertTrue(assign.successMessageOnSubmission.isDisplayed());
+        click(assign.yesButton, 3);
 
     }
 
-    @Then("The 'Send' button should not be active.")
+    @Then("The \"Send\" button should not be active")
     public void checkSendButtonNotActive() {
         Assert.assertFalse(assign.submitButton.isEnabled());
 
     }
 
-    @When("User opens the detail page of a homework.")
+    @When("User opens the detail page of a homework")
     public void openHomeworkDetailPage() {
         click(assign.firstHomeworkButton, 3);
 
     }
 
-    @Then("User should see a 'New Submission' button.")
+    @Then("User should see a \"New Submission\" button")
     public void checkNewSubmissionButtonVisible() {
-        wait.until(ExpectedConditions.visibilityOf(assign.submissonButton));
-        Assert.assertTrue(assign.submissonButton.isDisplayed());
+        wait.until(ExpectedConditions.visibilityOf(assign.newSubmissionButton));
+        Assert.assertTrue(assign.newSubmissionButton.isDisplayed());
 
     }
 
-    @And("User clicks the 'New Submission' button.")
+    @And("User clicks the \"New Submission\" button")
     public void clickNewSubmissionButton() {
-        click(assign.submissonButton, 3);
+        click(assign.newSubmissionButton, 3);
 
     }
 

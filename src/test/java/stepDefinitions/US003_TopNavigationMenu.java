@@ -5,7 +5,7 @@ import pages.NavigationPage;
 import pages.ParentPage;
 import utilities.GWD;
 
-public class NavigationSteps {
+public class US003_TopNavigationMenu {
 
     NavigationPage np = new NavigationPage(GWD.getDriver());
     HeaderMenu hm = new HeaderMenu(GWD.getDriver());

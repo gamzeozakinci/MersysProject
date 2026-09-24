@@ -17,7 +17,7 @@ public class HeaderMenu {
     public WebElement hamburgerButtonFinance;
 
     @FindBy(xpath = "//*[text()=\"My Finance\"]")
-    public WebElement hamburgerButtonMYFinance;
+    public WebElement hamburgerButtonMyFinance;
 
     @FindBy(xpath = "//*[@caption=\"NAV.ATTENDANCE.TITLE\"]")
     public WebElement headerAttendanceButton;

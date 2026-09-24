@@ -16,7 +16,7 @@ public class CalendarPage extends ParentPage{
     public List<WebElement> courseNamesTab;
 
     @FindBy(xpath = "(//span[@class='mat-focus-indicator'])[17]")
-    public WebElement previusPageButton;
+    public WebElement previousPageButton;
 
     @FindBy(xpath = "(//div[@class='mat-elevation-z4'])[3]")
     public WebElement completedClassEvent;

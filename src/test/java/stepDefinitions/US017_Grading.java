@@ -26,25 +26,25 @@ public class US017_Grading extends GWD {
     HeaderMenu header = new HeaderMenu(getDriver());
     GradingPage grading = new GradingPage(getDriver());
 
-    @When("User navigates to the 'Grading' page.")
+    @When("User opens the \"Grading\" page")
     public void navigateToGradingPage() {
         click(header.headerGradingButton, 4);
 
     }
 
-    @Then("User should see a 'Print' icon on the page.")
+    @Then("User should see a \"Print\" icon on the page")
     public void checkPrintIconVisible() {
         Assert.assertTrue(grading.printButton.isDisplayed());
 
     }
 
-    @When("User clicks the 'Print' icon.")
+    @When("User clicks the \"Print\" icon")
     public void clickPrintIcon() {
         click(grading.printButton, 4);
 
     }
 
-    @Then("User should see the transcript document in PDF format.")
+    @Then("User should see the transcript document in PDF format")
     public void checkTranscriptPdfVisible() {
         String originalWindow = getDriver().getWindowHandle();
         new WebDriverWait(getDriver(), Duration.ofSeconds(10))
@@ -59,9 +59,10 @@ public class US017_Grading extends GWD {
 
     }
 
-    @And("User must be able click and download the document")
+    @And("User must be able to click and download the document")
     public void checkDownloadDocument() throws InterruptedException, AWTException {
-        File downloadDir = new File(System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files");
+        File downloadDir = new File(System.getProperty("user.dir"), "target" + File.separator + "downloads");
+        downloadDir.mkdirs();
         File[] beforeFiles = downloadDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
         int countBefore = beforeFiles == null ? 0 : beforeFiles.length;
 

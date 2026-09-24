@@ -15,18 +15,18 @@ import java.time.Duration;
 
 import static utilities.GWD.getDriver;
 
-public class FinanceSteps {
+public class US011_US012_Finance {
 
     FinancePage fp = new FinancePage(GWD.getDriver());
     HeaderMenu hp = new HeaderMenu(GWD.getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
 
-    @Given("Users goes to finance page through hamburger menu")
+    @Given("User goes to finance page through hamburger menu")
     public void usersGoesToFinancePageThroughHamburgerMenu() {
         ParentPage.click(hp.hamburgerButton,10);
         ParentPage.click(hp.hamburgerButtonFinance,10);
-        ParentPage.click(hp.hamburgerButtonMYFinance,10);
+        ParentPage.click(hp.hamburgerButtonMyFinance,10);
     }
 
     @Then("User clicks on student name")
@@ -35,8 +35,8 @@ public class FinanceSteps {
         ParentPage.click(fp.errorMessage, 10);
     }
 
-    @When("User clicks on Stribe payment button")
-    public void userClicksOnStribePaymentButton() {
+    @When("User clicks on Stripe payment button")
+    public void userClicksOnStripePaymentButton() {
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", fp.stripe);
     }
 
@@ -49,8 +49,8 @@ public class FinanceSteps {
 
     @And("User fills the card details")
     public void userFillsTheCardDetails() {
-        wait.until(ExpectedConditions.elementToBeClickable(fp.cartNo));
-        ParentPage.mySendKeys(fp.cartNo,"4242 4242 4242 4242");
+        wait.until(ExpectedConditions.elementToBeClickable(fp.cardNumber));
+        ParentPage.mySendKeys(fp.cardNumber,"4242 4242 4242 4242");
         ParentPage.mySendKeys(fp.expireDate,"1229");
         ParentPage.mySendKeys(fp.secureNumber,"123");
         ParentPage.click(fp.pay,10);

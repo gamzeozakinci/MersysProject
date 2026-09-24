@@ -23,77 +23,76 @@ public class US009_US010_HamMenuFinance extends GWD {
     HeaderMenu header = new HeaderMenu(getDriver());
     FinancePage finance = new FinancePage(getDriver());
 
-    @When("User clicks hamburger menu.")
+    @When("User clicks hamburger menu")
     public void ClicksHamburgerMenu() {
         wait.until(ExpectedConditions.elementToBeClickable(header.hamburgerButton));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].closest('button').click();", header.hamburgerButton);
 
     }
 
-    @And("User clicks 'My finance' from 'Finance' option")
+    @And("User clicks \"My finance\" from \"Finance\" option")
     public void ClicksFinance() {
         click(header.hamburgerButtonFinance, 3);
-        click(header.hamburgerButtonMYFinance, 3);
+        click(header.hamburgerButtonMyFinance, 3);
 
     }
 
-    @Then("User finds his\\/her name and clicks.")
+    @Then("User finds his\\/her name and clicks")
     public void nameClicks() {
         wait.until(ExpectedConditions.elementToBeClickable(finance.chooseName));
         click(finance.chooseName, 5);
 
     }
 
-    @And("User clicks 'Fee\\/Balance Detail'.")
+    @And("User clicks \"Fee\\/Balance Detail\"")
     public void ClicksFeeDetail() {
         click(finance.feeBalanceDetail, 3);
 
     }
 
-    @And("User should be able to see the details of payments.")
+    @And("User should be able to see the details of payments")
     public void checkPayments() {
         wait.until(ExpectedConditions.visibilityOf(finance.displayPayments));
         Assert.assertTrue(finance.displayPayments.isDisplayed());
 
     }
 
-    @And("User clicks 'Stripe' to make a payment.")
+    @And("User clicks \"Stripe\" to make a payment")
     public void Stripe() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='radio'][value='STRIPE']")));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", finance.stripe);
 
     }
 
-    @And("User chooses 'Pay Amount Due 100.00$' to pay minimum amount.")
+    @And("User chooses \"Pay Amount Due 100.00$\" to pay minimum amount")
     public void payAmountDue() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//*[contains(@class, 'mdc-radio__background')])[4]")));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", finance.amountDue);
 
     }
 
-    @And("User enters cart info.")
-    public void enterCartInfo() {
+    @And("User enters card info")
+    public void enterCardInfo() {
         WebElement stripeFrame = wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector("iframe[title='Güvenli ödeme giriş çerçevesi']")));
         getDriver().switchTo().frame(stripeFrame);
 
-        wait.until(ExpectedConditions.elementToBeClickable(finance.cartNo));
-        finance.cartNo.sendKeys("4242 4242 4242 4242");
+        wait.until(ExpectedConditions.elementToBeClickable(finance.cardNumber));
+        finance.cardNumber.sendKeys("4242 4242 4242 4242");
         finance.expireDate.sendKeys("1230");
         finance.secureNumber.sendKeys("111");
 
         getDriver().switchTo().defaultContent();
-        finance.pay.click();
 
     }
 
-    @And("User clicks 'Stripe' to pay.")
+    @And("User clicks \"Stripe\" to pay")
     public void StripePay() {
         click(finance.pay, 3);
 
     }
 
-    @Then("User should be able to access Finance page.")
+    @Then("User should be able to access Finance page")
     public void verifyFinancePage() {
         wait.until(ExpectedConditions.visibilityOf(finance.chooseName));
         Assert.assertTrue(finance.chooseName.isDisplayed());

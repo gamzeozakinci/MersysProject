@@ -19,7 +19,8 @@ public class GWD {
             System.setProperty("user.language", "EN");
 
             if (threadBrowserName.get() == null) {
-                threadBrowserName.set("chrome");
+                String configured = ConfigReader.getProperty("browser");
+                threadBrowserName.set(configured == null || configured.isBlank() ? "chrome" : configured);
             }
 
             if (threadDriver.get() == null) {

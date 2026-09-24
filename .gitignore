@@ -38,7 +38,8 @@ build/
 ### Mac OS ###
 .DS_Store
 
-Plaintext
 ### Test Automation Outputs ###
 test-output/
 *.class
+src/ScreenShots/
+.idea/

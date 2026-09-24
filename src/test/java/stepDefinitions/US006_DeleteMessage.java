@@ -59,8 +59,8 @@ public class US006_DeleteMessage {
 
     @Then("User should see a deletion confirmation pop-up on the screen")
     public void userShouldSeeADeletionConfirmationPopUpOnTheScreen() {
-        wait.until(ExpectedConditions.visibilityOf(mp.messageDeleteledConfirmation));
+        wait.until(ExpectedConditions.visibilityOf(mp.messageDeletedConfirmation));
 
-        Assert.assertTrue(mp.messageDeleteledConfirmation.isDisplayed(), "No message shown");
+        Assert.assertTrue(mp.messageDeletedConfirmation.isDisplayed(), "No message shown");
     }
 }

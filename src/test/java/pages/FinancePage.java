@@ -27,7 +27,7 @@ public class FinancePage {
     public WebElement amountDue;
 
     @FindBy(css = "input[name='number']")
-    public WebElement cartNo;
+    public WebElement cardNumber;
 
     @FindBy(css = "input[name='expiry']")
     public WebElement expireDate;

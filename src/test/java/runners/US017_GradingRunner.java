@@ -5,7 +5,8 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
         features = "src/test/resources/features/US017_Grading.feature",
-        glue = "stepDefinitions")
+        glue = {"stepDefinitions", "utilities"},
+        plugin = {"pretty", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"})
 
 public class US017_GradingRunner extends AbstractTestNGCucumberTests {
 }

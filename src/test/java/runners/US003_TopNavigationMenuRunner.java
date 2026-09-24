@@ -5,7 +5,8 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
         features = "src/test/resources/features/US003_TopNavigationMenu.feature",
-        glue = "stepDefinitions")
+        glue = {"stepDefinitions", "utilities"},
+        plugin = {"pretty", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"})
 
 public class US003_TopNavigationMenuRunner extends AbstractTestNGCucumberTests {
 }

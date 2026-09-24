@@ -88,19 +88,16 @@ public class MessagingPage extends ParentPage {
     public WebElement confirmMessageDeleteButton;
 
     @FindBy(xpath = "//div[text()='Message successfully moved to trash!']")
-    public WebElement messageDeleteledConfirmation;
+    public WebElement messageDeletedConfirmation;
 
     @FindBy(xpath = "//span[text()='Attach Files...']")
     public WebElement attachFilesButton;
 
     @FindBy(css = "button[aria-label='Close']")
-    public WebElement succesMsgCloseButton;
+    public WebElement successMsgCloseButton;
 
     @FindBy(css = "span[class='mat-mdc-select-min-line']")
     public WebElement allMessagesCount;
-
-    @FindBy(xpath = "//*[text()=\"Trash\"]")
-    public WebElement testdd;
 
     @FindBy(xpath = "//*[text()='Inbox']")
     public WebElement inboxButton;

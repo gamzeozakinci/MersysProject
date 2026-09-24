@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.AssignmentsPage;
 import pages.ParentPage;
-import utilities.GWD;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
@@ -19,7 +18,7 @@ import java.time.Duration;
 import static pages.ParentPage.hover;
 import static utilities.GWD.getDriver;
 
-public class AssignmentsSteps {
+public class US018_US019_US020_Assignments {
 
     AssignmentsPage ap = new AssignmentsPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
@@ -49,6 +48,7 @@ public class AssignmentsSteps {
                 JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
                 js.executeScript("arguments[0].click();", ap.assignmentsLink);
+                break;
 
             case "Another Menu":
                 break;

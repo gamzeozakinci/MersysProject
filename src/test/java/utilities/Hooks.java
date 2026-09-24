@@ -1,6 +1,5 @@
-package stepDefinitions;
+package utilities;
 
-import utilities.GWD;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -16,10 +15,6 @@ import java.time.format.DateTimeFormatter;
 public class Hooks {
 
     private static WebElement lastUsedElement;
-
-    public static void setLastUsedElement(WebElement element) {
-        lastUsedElement = element;
-    }
 
     @Before
     public void setUp(Scenario scenario) {

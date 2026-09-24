@@ -1,12 +1,12 @@
-Feature: Student Assignments Module
+@Regression
+Feature: Assignments - Assignment list and count
 
   Background:
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
 
-  @Regression
-  Scenario: Student should be able to see the number of assignments and access their details
-    Given User hovers over the "Assignments" link on the home page
+  Scenario: User sees the number of assignments and accesses their details
+    When User hovers over the "Assignments" link on the home page
     Then User verifies that the total number of assigned tasks is displayed
     When User clicks on the "Assignments" link on the home page
     Then User verifies that all assigned tasks are listed

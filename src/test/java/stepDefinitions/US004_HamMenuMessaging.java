@@ -24,7 +24,7 @@ public class US004_HamMenuMessaging extends GWD {
     MessagingPage messaging = new MessagingPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
-    @And("User hovers over the 'Messaging' page.")
+    @And("User hovers over the \"Messaging\" page")
     public void hoverOverMessagingLink() {
         try {
             WebDriverWait shortWait = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
@@ -40,79 +40,79 @@ public class US004_HamMenuMessaging extends GWD {
 
     }
 
-    @Then("User should see the 'New Message' page.")
+    @Then("User should see the \"New Message\" page")
     public void checkNewMessageLinkVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(messaging.newMessageButton));
 
     }
 
-    @And("User should see the 'Inbox' page.")
+    @And("User should see the \"Inbox\" page")
     public void checkInboxLinkVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(messaging.inboxButton));
 
     }
 
-    @And("User should see the 'Outbox' page.")
+    @And("User should see the \"Outbox\" page")
     public void checkOutboxLinkVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(messaging.outboxLink));
 
     }
 
-    @And("User should see the 'Trash' page.")
+    @And("User should see the \"Trash\" page")
     public void checkTrashLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(messaging.outboxLink));
+        wait.until(ExpectedConditions.elementToBeClickable(header.headerTrashButton));
 
     }
 
-    @When("User clicks the 'New Message' page.")
+    @When("User clicks the \"New Message\" page")
     public void clickNewMessageLink() {
         click(messaging.newMessageButton, 10);
 
     }
 
-    @Then("User should be navigated to the 'New Message' page.")
+    @Then("User should be navigated to the \"New Message\" page")
     public void checkNavigatedToNewMessagePage() {
         wait.until(ExpectedConditions.urlContains("new"));
         Assert.assertTrue(getDriver().getCurrentUrl().contains("new"));
 
     }
 
-    @When("User clicks the 'Inbox' page.")
+    @When("User clicks the \"Inbox\" page")
     public void clickInboxLink() {
         wait.until(ExpectedConditions.elementToBeClickable(messaging.inboxButton));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", messaging.inboxButton);
 
     }
 
-    @Then("User should be navigated to the 'Inbox' page.")
+    @Then("User should be navigated to the \"Inbox\" page")
     public void checkNavigatedToInboxPage() {
         wait.until(ExpectedConditions.urlContains("inbox"));
         Assert.assertTrue(getDriver().getCurrentUrl().contains("inbox"));
 
     }
 
-    @When("User clicks the 'Outbox' page.")
+    @When("User clicks the \"Outbox\" page")
     public void clickOutboxLink() {
         wait.until(ExpectedConditions.elementToBeClickable(messaging.outboxLink));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", messaging.outboxLink);
 
     }
 
-    @Then("User should be navigated to the 'Outbox' page.")
+    @Then("User should be navigated to the \"Outbox\" page")
     public void checkNavigatedToOutboxPage() {
         wait.until(ExpectedConditions.urlContains("outbox"));
         Assert.assertTrue(getDriver().getCurrentUrl().contains("outbox"));
 
     }
 
-    @When("User clicks the 'Trash' page.")
+    @When("User clicks the \"Trash\" page")
     public void clickTrashLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(messaging.moveToTrashButton));
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", messaging.moveToTrashButton);
+        wait.until(ExpectedConditions.elementToBeClickable(header.headerTrashButton));
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerTrashButton);
 
     }
 
-    @Then("User should be navigated to the 'Trash' page.")
+    @Then("User should be navigated to the \"Trash\" page")
     public void checkNavigatedToTrashPage() {
         wait.until(ExpectedConditions.urlContains("trash"));
         Assert.assertTrue(getDriver().getCurrentUrl().contains("trash"));

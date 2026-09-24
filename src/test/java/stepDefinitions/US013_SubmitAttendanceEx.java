@@ -25,25 +25,25 @@ public class US013_SubmitAttendanceEx extends GWD {
     AttendancePage attPage = new AttendancePage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
-    @When("User clicks 'Attendance' mainpage header.")
+    @When("User clicks \"Attendance\" mainpage header")
     public void user_clicks_attendance() {
         click(header.headerAttendanceButton, 3);
 
     }
 
-    @And("User opens 'Attendance Excuses' screen and clicks 'Add Excuse'.")
+    @And("User opens \"Attendance Excuses\" screen and clicks \"Add Excuse\"")
     public void attendanceExcuses() {
         click(attPage.attendanceExcuses, 3);
         click(attPage.addAttendance, 3);
 
     }
 
-    @Then("User adds a description for the excuse.")
+    @Then("User adds a description for the excuse")
     public void addDescriptionExcuse() {
         attPage.enterDescription.sendKeys("Sick day.");
     }
 
-    @And("User adds a file to support the excuse and clicks 'send'.")
+    @And("User adds a file to support the excuse and clicks \"send\"")
     public void fileToSupportExcuse() throws AWTException, InterruptedException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\EXCUSE_FILE.pdf";
 
@@ -71,7 +71,7 @@ public class US013_SubmitAttendanceEx extends GWD {
 
     }
 
-    @And("User must be able to see the confirm message.")
+    @And("User must be able to see the confirm message")
     public void confirmExcuse() {
         wait.until(ExpectedConditions.elementToBeClickable(attPage.confirmExcuse));
         Assert.assertTrue(attPage.confirmExcuse.isDisplayed());

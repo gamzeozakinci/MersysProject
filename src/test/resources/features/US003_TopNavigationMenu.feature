@@ -1,10 +1,11 @@
-Feature: Top navigation menu functionality
+@Regression
+Feature: Navigation - Top navigation menu
 
   Background:
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
 
-  Scenario Outline: User verifies top navigation menu items
+  Scenario Outline: User navigates through the top navigation menu items
     When User navigates to "<menu>" page
 
     Examples:
