@@ -26,9 +26,9 @@ public class US001_Login {
     @Given("User logs in with valid credentials")
     public void userLogsInWithValidCredentials() {
         ParentPage.click(lp.usernameBox,10);
-        ParentPage.mySendKeys(lp.usernameBox, ConfigReader.getProperty("student_username"));
+        ParentPage.mySendKeys(lp.usernameBox, ConfigReader.getRequiredProperty("student_username"));
         ParentPage.click(lp.passwordBox,10);
-        ParentPage.mySendKeys(lp.passwordBox, ConfigReader.getProperty("student_password"));
+        ParentPage.mySendKeys(lp.passwordBox, ConfigReader.getRequiredProperty("student_password"));
         ParentPage.click(lp.loginButton,10);
     }
 

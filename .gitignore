@@ -43,3 +43,6 @@ test-output/
 *.class
 src/ScreenShots/
 .idea/
+
+# Local test account - copy configuration.properties.example and fill it in
+src/test/resources/configuration.properties

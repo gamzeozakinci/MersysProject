@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
+import java.nio.file.Paths;
 
 
 public class US014_ProfilePicture extends GWD {
@@ -41,8 +42,7 @@ public class US014_ProfilePicture extends GWD {
 
         Thread.sleep(1500);
 
-        String filePath = System.getProperty("user.dir")
-                + "\\src\\test\\resources\\features\\files\\blank.png";
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "blank.png").toString();
 
         Toolkit.getDefaultToolkit().getSystemClipboard()
                 .setContents(new StringSelection(filePath), null);

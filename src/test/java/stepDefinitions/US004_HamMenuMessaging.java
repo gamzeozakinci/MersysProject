@@ -4,7 +4,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,7 +33,8 @@ public class US004_HamMenuMessaging extends GWD {
             WebDriverWait shortWait = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
             WebElement closeButton = shortWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".svg-inline--fa.fa-xmark.fa-fw")));
             closeButton.click();
-        } catch (Exception e) {
+        } catch (TimeoutException | StaleElementReferenceException | ElementNotInteractableException e) {
+            System.out.println("No error toast to close (" + e.getClass().getSimpleName() + ")");
         }
 
         Actions actions = new Actions(getDriver());

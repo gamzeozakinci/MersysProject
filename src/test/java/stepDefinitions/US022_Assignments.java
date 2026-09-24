@@ -153,7 +153,8 @@ public class US022_Assignments extends GWD {
                     List<WebElement> backdrops = d.findElements(By.cssSelector(".cdk-overlay-backdrop"));
                     return backdrops.stream().allMatch(b -> "0".equals(b.getCssValue("opacity")));
                 });
-            } catch (org.openqa.selenium.TimeoutException ignored) {
+            } catch (org.openqa.selenium.TimeoutException e) {
+                System.out.println("Overlay backdrop still present after 3s; attempting the click anyway");
             }
 
             try {

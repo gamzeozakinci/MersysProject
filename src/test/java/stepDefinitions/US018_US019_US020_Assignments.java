@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 import static pages.ParentPage.hover;
 import static utilities.GWD.getDriver;
+import java.nio.file.Paths;
 
 public class US018_US019_US020_Assignments {
 
@@ -34,9 +35,9 @@ public class US018_US019_US020_Assignments {
     public void userVerifiesTotalNumberOfAssignedTasks(){
         wait.until(ExpectedConditions.visibilityOf(ap.assignmentsCountBadge));
 
-        Assert.assertTrue(ap.assignmentsCountBadge.isDisplayed(), "Gorev sayisi (Badge) ekranda gorunmuyor!");
+        Assert.assertTrue(ap.assignmentsCountBadge.isDisplayed(), "The assignment count badge is not displayed!");
         String countText = ap.assignmentsCountBadge.getText();
-        Assert.assertFalse(countText.isEmpty(), "Gorev sayisi bos donuyor!");
+        Assert.assertFalse(countText.isEmpty(), "The assignment count badge is empty!");
     }
 
     @When("User clicks on the {string} link on the home page")
@@ -59,7 +60,7 @@ public class US018_US019_US020_Assignments {
     public void userVerifiesThatAllAssignedTasksAreListed() {
         wait.until(ExpectedConditions.visibilityOf(ap.assignments));
 
-        Assert.assertTrue(ap.assignments.isDisplayed(), "Gorevler tablosu acilamadi!");
+        Assert.assertTrue(ap.assignments.isDisplayed(), "The assignments list did not open!");
     }
 
     @When("User clicks on the {string} icon of a random assignment in the list")
@@ -69,7 +70,7 @@ public class US018_US019_US020_Assignments {
         int buttonCount = ap.discussionButtonsList.size();
         int randomIndex = (int) (Math.random() * buttonCount);
         ParentPage.click(ap.discussionButtonsList.get(randomIndex), 10);
-        System.out.println("Başarılı! Toplam " + buttonCount + " ödev arasından " + (randomIndex + 1) + ". sıradakine tıklandı.");
+        System.out.println("Clicked discussion icon " + (randomIndex + 1) + " of " + buttonCount + ".");
     }
 
     @Then("User verifies the chat area where they can view past discussions")
@@ -77,7 +78,7 @@ public class US018_US019_US020_Assignments {
 
         wait.until(ExpectedConditions.visibilityOf(ap.discussionChatArea));
 
-        Assert.assertTrue(ap.discussionChatArea.isDisplayed(), "Sohbet alanı ekranda görünmüyor!");
+        Assert.assertTrue(ap.discussionChatArea.isDisplayed(), "The discussion chat area is not displayed!");
     }
 
     @And("User types {string} into the text editor on the Assignment page")
@@ -89,12 +90,12 @@ public class US018_US019_US020_Assignments {
     @When("User attaches a sample file for the assignment from the {string} section")
     public void userAttachesSampleFile(String attachText) throws AWTException {
 
-        String dosyaYolu = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\blank.png";
-        StringSelection stringSelection = new StringSelection(dosyaYolu);
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "blank.png").toString();
+        StringSelection stringSelection = new StringSelection(filePath);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
 
         ParentPage.click(ap.attachFilesButton, 10);
-        try { Thread.sleep(2000); } catch (Exception e) {}
+        ParentPage.pause(2000);
 
         Robot robot = new Robot();
 
@@ -103,12 +104,12 @@ public class US018_US019_US020_Assignments {
         robot.keyRelease(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_CONTROL);
 
-        try { Thread.sleep(1000); } catch (Exception e) {}
+        ParentPage.pause(1000);
 
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
 
-        try { Thread.sleep(2000); } catch (Exception e) {}
+        ParentPage.pause(2000);
     }
 
     @And("User clicks the {string} button on the Assignment page")
@@ -123,19 +124,19 @@ public class US018_US019_US020_Assignments {
             WebDriverWait shortWait = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
             shortWait.until(ExpectedConditions.visibilityOf(ap.successMessage));
 
-            Assert.fail("HATA: Ekranda Success mesajı çıktı! (Kabul kriterine aykırı)");
+            Assert.fail("A Success message was displayed, which violates the acceptance criteria!");
 
         } catch (TimeoutException | NoSuchElementException e) {
-            System.out.println("Negatif Test Başarılı: Beklendiği gibi ekranda bildiri (Success) mesajı çıkmadı.");
+            System.out.println("Negative check passed: no Success message was displayed, as expected.");
         }
     }
 
     @Then("User verifies that the sent message, file name, and time information are displayed in the flow")
     public void userVerifiesMessageInformation() {
         wait.until(ExpectedConditions.visibilityOfAllElements(ap.commentTimeList));
-        int sonMesajIndex = ap.commentTimeList.size() - 1;
-        Assert.assertTrue(ap.commentTimeList.get(sonMesajIndex).isDisplayed(), "HATA: Gönderilen mesajın saati akışta görünmüyor!");
-        System.out.println("Mesaj başarıyla gönderildi ve saati akışta teyit edildi: " + ap.commentTimeList.get(sonMesajIndex).getText());
+        int lastMessageIndex = ap.commentTimeList.size() - 1;
+        Assert.assertTrue(ap.commentTimeList.get(lastMessageIndex).isDisplayed(), "The time of the sent message is not displayed in the flow!");
+        System.out.println("Message sent; its time is displayed in the flow: " + ap.commentTimeList.get(lastMessageIndex).getText());
     }
 
     @Then("User should see Information, Submit and Mark it icons on a random assignment")
@@ -150,18 +151,18 @@ public class US018_US019_US020_Assignments {
                 Math.min(ap.submitButtonsList.size(), ap.markButtonsList.size())
         );
 
-        Assert.assertTrue(minCount > 0, "Kontrol edilecek ödev bulunamadı!");
+        Assert.assertTrue(minCount > 0, "No assignment found to check!");
 
         int randomIndex = (int) (Math.random() * minCount);
 
         Assert.assertTrue(ap.informationButtonsList.get(randomIndex).isDisplayed(),
-                "Information ikonu görünmüyor!");
+                "The Information icon is not displayed!");
 
         Assert.assertTrue(ap.submitButtonsList.get(randomIndex).isDisplayed(),
-                "Submit ikonu görünmüyor!");
+                "The Submit icon is not displayed!");
 
         Assert.assertTrue(ap.markButtonsList.get(randomIndex).isDisplayed(),
-                "Mark it ikonu görünmüyor!");
+                "The Mark it icon is not displayed!");
 
         wait.until(ExpectedConditions.elementToBeClickable(
                 ap.informationButtonsList.get(randomIndex)));
@@ -190,7 +191,7 @@ public class US018_US019_US020_Assignments {
 
         Assert.assertTrue(
                 getDriver().getCurrentUrl().contains("/my-assignments/info/"),
-                "Assignment detay sayfasına yönlendirilmedi!");
+                "Not redirected to the assignment details page!");
     }
 
     @Then("User should see Discussion icon if a discussion exists for the assignment")
@@ -199,10 +200,10 @@ public class US018_US019_US020_Assignments {
         if (!ap.discussionButtonsList.isEmpty()) {
             Assert.assertTrue(
                     ap.discussionButtonsList.get(0).isDisplayed(),
-                    "Discussion ikonu görünmüyor!"
+                    "The Discussion icon is not displayed!"
             );
         } else {
-            System.out.println("Bu ödevler için aktif discussion bulunmadı.");
+            System.out.println("No active discussion exists for these assignments.");
         }
     }
 }

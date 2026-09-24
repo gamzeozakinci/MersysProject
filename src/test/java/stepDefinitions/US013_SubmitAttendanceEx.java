@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import java.nio.file.Paths;
 
 public class US013_SubmitAttendanceEx extends GWD {
 
@@ -45,7 +46,7 @@ public class US013_SubmitAttendanceEx extends GWD {
 
     @And("User adds a file to support the excuse and clicks \"send\"")
     public void fileToSupportExcuse() throws AWTException, InterruptedException {
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\EXCUSE_FILE.pdf";
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "EXCUSE_FILE.pdf").toString();
 
         attPage.attachFilesButton.click();
         wait.until(ExpectedConditions.elementToBeClickable(attPage.fromLocalOption));

@@ -32,7 +32,7 @@ public class US006_DeleteMessage {
 
     @And("User selects a sent message")
     public void userSelectsASentMessage() {
-        try { Thread.sleep(2000); } catch (InterruptedException e) {}
+        ParentPage.pause(2000);
         int allMessages = mp.allMessages.size();
 
         if(allMessages  > 0) {

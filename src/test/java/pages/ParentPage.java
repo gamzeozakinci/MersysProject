@@ -25,6 +25,15 @@ public class ParentPage {
         ((JavascriptExecutor) GWD.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
+    /** Fixed pause, only for steps where there is no page state to wait for (native dialogs). */
+    public static void pause(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     public static void mySendKeys(WebElement element, String text) {
         new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOf(element));
         scrollToElement(element);

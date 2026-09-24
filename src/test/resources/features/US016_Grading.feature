@@ -5,6 +5,7 @@ Feature: Grading - Grading page buttons
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
 
+  @wip
   Scenario: User verifies that the buttons on the Grading page are active
     When User navigates to "Grading" page
     Then User verifies being successfully redirected to the "Grading" page

@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import java.nio.file.Paths;
 
 public class US021_Assignments extends GWD {
 
@@ -78,7 +79,7 @@ public class US021_Assignments extends GWD {
 
     @And("User inserts an image into the text editor")
     public void insertImageInEditor() {
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\Test_foto.jpg";
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "Test_foto.jpg").toString();
 
         getDriver().switchTo().frame(assign.textEditorFrame);
         click(getDriver().findElement(By.id("tinymce")), 3);
@@ -102,7 +103,7 @@ public class US021_Assignments extends GWD {
 
     @And("User clicks \"Attach Files\" and adds a file to the homework")
     public void attachFileToHomework() throws InterruptedException, AWTException {
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\features\\files\\EXCUSE_FILE.pdf";
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "EXCUSE_FILE.pdf").toString();
 
         click(assign.attachFiles, 3);
         click(assign.attachFromLocal, 3);

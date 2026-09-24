@@ -4,9 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.trendyolautomation</groupId>
-    <artifactId>Mersys_UI_Intern_Project</artifactId>
+    <groupId>io.github.gamzeozakinci</groupId>
+    <artifactId>mersys-ui-automation</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Mersys UI Automation</name>
+    <description>Selenium + Cucumber + TestNG UI test automation for the Mersys student portal</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -40,7 +42,7 @@
         <scope>test</scope>
     </dependency>
 
-    <!-- Cucumber ile TestNG'yi birbirine bağlayan kütüphane -->
+    <!-- Bridges Cucumber and TestNG -->
     <dependency>
         <groupId>io.cucumber</groupId>
         <artifactId>cucumber-testng</artifactId>

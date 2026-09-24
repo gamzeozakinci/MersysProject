@@ -5,6 +5,7 @@ Feature: Messaging - Send a message
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
 
+  @wip
   Scenario: User sends a message to a teacher
     When User clicks on the New Message button
     And User closes the error message

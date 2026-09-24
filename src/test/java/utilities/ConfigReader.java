@@ -10,17 +10,26 @@ public class ConfigReader {
 
     static {
         try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream("configuration.properties")) {
-            if (input == null) {
-                throw new RuntimeException("configuration.properties was not found on the classpath");
+            if (input != null) {
+                properties.load(input);
             }
-            properties.load(input);
         } catch (IOException e) {
             throw new RuntimeException("configuration.properties could not be read: " + e.getMessage(), e);
         }
     }
 
+    /** A -D system property wins over configuration.properties. Returns null when neither is set. */
     public static String getProperty(String key) {
         String override = System.getProperty(key);
         return override != null ? override : properties.getProperty(key);
+    }
+
+    public static String getRequiredProperty(String key) {
+        String value = getProperty(key);
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException("Missing setting '" + key + "'. Copy configuration.properties.example to "
+                    + "configuration.properties and fill it in, or pass -D" + key + "=<value>.");
+        }
+        return value;
     }
 }
