@@ -4,11 +4,12 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
 import pages.NavigationPage;
-import utilities.GWD;
+
+import static utilities.GWD.getDriver;
 
 public class US002_CompanyLogo {
 
-    NavigationPage np = new NavigationPage(GWD.getDriver());
+    NavigationPage np = new NavigationPage(getDriver());
 
     @Then("User should see the company logo")
     public void userShouldSeeTheCompanyLogo() {
@@ -23,10 +24,10 @@ public class US002_CompanyLogo {
 
     @Then("User should be redirected to Techno Study website")
     public void userShouldBeRedirectedToTechnoStudyWebsite() {
-        for (String window : GWD.getDriver().getWindowHandles()) {
-            GWD.getDriver().switchTo().window(window);
+        for (String window : getDriver().getWindowHandles()) {
+            getDriver().switchTo().window(window);
         }
 
-        Assert.assertTrue(GWD.getDriver().getCurrentUrl().contains("technostudy.com.tr"));
+        Assert.assertTrue(getDriver().getCurrentUrl().contains("technostudy.com.tr"));
     }
 }

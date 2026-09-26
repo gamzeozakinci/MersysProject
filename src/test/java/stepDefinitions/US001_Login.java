@@ -9,18 +9,19 @@ import org.testng.Assert;
 import pages.LoginPage;
 import pages.ParentPage;
 import utilities.ConfigReader;
-import utilities.GWD;
 
 import java.time.Duration;
 
+import static utilities.GWD.getDriver;
+
 public class US001_Login {
 
-    LoginPage lp = new LoginPage(GWD.getDriver());
-    WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(20));
+    LoginPage lp = new LoginPage(getDriver());
+    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
 
     @Given("User navigates to the {string} page")
     public void userNavigatesWebsite(String url) {
-        GWD.getDriver().get(url);
+        getDriver().get(url);
     }
 
     @Given("User logs in with valid credentials")

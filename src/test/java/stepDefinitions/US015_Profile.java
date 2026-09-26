@@ -8,11 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.SettingsPage;
-import utilities.GWD;
 
 import java.time.Duration;
 
-public class US015_Profile extends GWD {
+import static utilities.GWD.getDriver;
+
+public class US015_Profile {
 
     SettingsPage settpage = new SettingsPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));

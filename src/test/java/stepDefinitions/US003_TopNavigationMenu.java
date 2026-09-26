@@ -3,12 +3,13 @@ import io.cucumber.java.en.When;
 import pages.HeaderMenu;
 import pages.NavigationPage;
 import pages.ParentPage;
-import utilities.GWD;
+
+import static utilities.GWD.getDriver;
 
 public class US003_TopNavigationMenu {
 
-    NavigationPage np = new NavigationPage(GWD.getDriver());
-    HeaderMenu hm = new HeaderMenu(GWD.getDriver());
+    NavigationPage np = new NavigationPage(getDriver());
+    HeaderMenu hm = new HeaderMenu(getDriver());
 
     @When("User navigates to {string} page")
     public void userNavigatesToPage(String linkName) {

@@ -11,13 +11,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.FinancePage;
 import pages.HeaderMenu;
-import utilities.GWD;
 
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static utilities.GWD.getDriver;
 
-public class US009_US010_HamMenuFinance extends GWD {
+public class US009_US010_HamMenuFinance {
 
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
     HeaderMenu header = new HeaderMenu(getDriver());

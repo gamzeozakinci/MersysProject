@@ -14,13 +14,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.HeaderMenu;
-import utilities.GWD;
 
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static utilities.GWD.getDriver;
 
-public class US004_HamMenuMessaging extends GWD {
+public class US004_HamMenuMessaging {
 
     HeaderMenu header = new HeaderMenu(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));

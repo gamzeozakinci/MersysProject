@@ -3,13 +3,12 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class MessagingPage extends ParentPage {
     public MessagingPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     @FindBy(css = "tbody.mdc-data-table__content")

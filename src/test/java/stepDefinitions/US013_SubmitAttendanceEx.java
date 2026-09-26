@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.AttendancePage;
 import pages.HeaderMenu;
-import utilities.GWD;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -20,7 +19,9 @@ import java.time.Duration;
 import static pages.ParentPage.click;
 import java.nio.file.Paths;
 
-public class US013_SubmitAttendanceEx extends GWD {
+import static utilities.GWD.getDriver;
+
+public class US013_SubmitAttendanceEx {
 
     HeaderMenu header = new HeaderMenu(getDriver());
     AttendancePage attPage = new AttendancePage(getDriver());

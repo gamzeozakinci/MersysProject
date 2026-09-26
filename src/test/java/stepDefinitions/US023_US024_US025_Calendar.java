@@ -6,9 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.CalendarPage;
-import utilities.GWD;
 
 import java.time.Duration;
+
 import static utilities.GWD.getDriver;
 
 public class US023_US024_US025_Calendar {
@@ -287,7 +287,7 @@ public class US023_US024_US025_Calendar {
     @And("User should access the class recording")
     public void userShouldAccessTheClassRecording() {
 
-        WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
 
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(
                 cp.recordingIframe

@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class AssignmentsPage extends ParentPage {
     public static final String FILTER_OPTION_CSS = "mat-option";
 
     public AssignmentsPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     @FindBy(xpath = "(//span[@class='mat-focus-indicator'])[4]")

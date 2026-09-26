@@ -11,14 +11,14 @@ import org.testng.Assert;
 import pages.HeaderMenu;
 import pages.MessagingPage;
 import pages.ParentPage;
-import utilities.GWD;
 import java.time.Duration;
+
 import static utilities.GWD.getDriver;
 
 public class US006_DeleteMessage {
 
-    HeaderMenu hm = new HeaderMenu(GWD.getDriver());
-    MessagingPage mp = new MessagingPage(GWD.getDriver());
+    HeaderMenu hm = new HeaderMenu(getDriver());
+    MessagingPage mp = new MessagingPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @Given("User clicks on the \"Outbox\" button")
@@ -39,7 +39,7 @@ public class US006_DeleteMessage {
             int Index = (int) (Math.random() * allMessages );
             WebElement targetMessage = mp.allMessages.get(Index);
 
-            JavascriptExecutor js = (JavascriptExecutor) GWD.getDriver();
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
             js.executeScript("arguments[0].scrollIntoView({behavior: 'instant', block: 'center', inline: 'nearest'});", targetMessage);
 

@@ -12,15 +12,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.AssignmentsPage;
-import utilities.GWD;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.function.Supplier;
 
 import static pages.ParentPage.click;
+import static utilities.GWD.getDriver;
 
-public class US022_Assignments extends GWD {
+public class US022_Assignments {
 
     AssignmentsPage assign = new AssignmentsPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));

@@ -2,18 +2,16 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.FindBy;
 
-public class FinancePage {
+public class FinancePage extends ParentPage {
 
     // Also used by By-based waits in US009_US010, so each selector lives in one place.
     public static final String STRIPE_RADIO_CSS = "input[type='radio'][value='STRIPE']";
     public static final String AMOUNT_DUE_RADIO_XPATH = "(//*[contains(@class, 'mdc-radio__background')])[4]";
 
     public FinancePage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-
+        super(driver);
     }
 
     @FindBy(css = "tbody.mdc-data-table__content")

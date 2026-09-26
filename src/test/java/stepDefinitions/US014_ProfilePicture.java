@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.SettingsPage;
-import utilities.GWD;
 import io.cucumber.java.en.When;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -16,8 +15,10 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.nio.file.Paths;
 
+import static utilities.GWD.getDriver;
 
-public class US014_ProfilePicture extends GWD {
+
+public class US014_ProfilePicture {
 
     SettingsPage settpage = new SettingsPage(getDriver());
 

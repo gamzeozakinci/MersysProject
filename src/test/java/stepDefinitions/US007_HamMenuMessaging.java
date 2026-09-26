@@ -9,13 +9,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HeaderMenu;
 import pages.MessagingPage;
-import utilities.GWD;
 
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static utilities.GWD.getDriver;
 
-public class US007_HamMenuMessaging extends GWD {
+public class US007_HamMenuMessaging {
 
     HeaderMenu header = new HeaderMenu(getDriver());
     MessagingPage messaging = new MessagingPage(getDriver());

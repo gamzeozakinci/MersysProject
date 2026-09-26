@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.AssignmentsPage;
 import pages.HeaderMenu;
-import utilities.GWD;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -21,7 +20,9 @@ import java.time.Duration;
 import static pages.ParentPage.click;
 import java.nio.file.Paths;
 
-public class US021_Assignments extends GWD {
+import static utilities.GWD.getDriver;
+
+public class US021_Assignments {
 
     HeaderMenu header = new HeaderMenu(getDriver());
     AssignmentsPage assign = new AssignmentsPage(getDriver());

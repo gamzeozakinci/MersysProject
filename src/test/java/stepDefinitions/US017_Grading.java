@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.GradingPage;
 import pages.HeaderMenu;
-import utilities.GWD;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -20,8 +19,9 @@ import java.io.File;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static utilities.GWD.getDriver;
 
-public class US017_Grading extends GWD {
+public class US017_Grading {
 
     HeaderMenu header = new HeaderMenu(getDriver());
     GradingPage grading = new GradingPage(getDriver());

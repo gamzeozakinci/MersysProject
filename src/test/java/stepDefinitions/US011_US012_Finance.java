@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.FinancePage;
 import pages.HeaderMenu;
 import pages.ParentPage;
-import utilities.GWD;
 
 import java.time.Duration;
 
@@ -17,8 +16,8 @@ import static utilities.GWD.getDriver;
 
 public class US011_US012_Finance {
 
-    FinancePage fp = new FinancePage(GWD.getDriver());
-    HeaderMenu hp = new HeaderMenu(GWD.getDriver());
+    FinancePage fp = new FinancePage(getDriver());
+    HeaderMenu hp = new HeaderMenu(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
 
