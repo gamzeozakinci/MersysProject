@@ -25,8 +25,8 @@ public class US006_DeleteMessage {
     public void userClicksOnTheOutboxButton(){
 
         ParentPage.click(hm.hamburgerButton, 10);
-        ParentPage.hover(mp.messagingLink);
-        ParentPage.click(mp.outboxLink,10);
+        ParentPage.hover(hm.headerMessagingButton);
+        ParentPage.click(hm.headerOutboxButton,10);
 
     }
 

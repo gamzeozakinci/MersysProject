@@ -25,8 +25,8 @@ public class US023_US024_US025_Calendar {
 
     @And("User clicks on the previous week button")
     public void userClicksOnThePreviousWeekButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(cp.previousPageButton));
-        cp.previousPageButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(cp.previousWeekButton));
+        cp.previousWeekButton.click();
 
         try {
             Thread.sleep(2000);
@@ -253,8 +253,8 @@ public class US023_US024_US025_Calendar {
                 return;
             }
 
-            wait.until(ExpectedConditions.elementToBeClickable(cp.previousPageButton));
-            cp.previousPageButton.click();
+            wait.until(ExpectedConditions.elementToBeClickable(cp.previousWeekButton));
+            cp.previousWeekButton.click();
 
             try {
                 Thread.sleep(1500);

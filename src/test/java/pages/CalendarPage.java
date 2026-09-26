@@ -15,9 +15,6 @@ public class CalendarPage extends ParentPage{
     @FindBy(css = "table[style='table-layout: fixed;']")
     public List<WebElement> courseNamesTab;
 
-    @FindBy(xpath = "(//span[@class='mat-focus-indicator'])[17]")
-    public WebElement previousPageButton;
-
     @FindBy(xpath = "(//div[@class='mat-elevation-z4'])[3]")
     public WebElement completedClassEvent;
 
@@ -48,14 +45,8 @@ public class CalendarPage extends ParentPage{
     @FindBy(xpath = "//div[@role='tab'][.//span[normalize-space()='Calendar']]")
     public WebElement calendarTab;
 
-    @FindBy(xpath = "//button[.//*[name()='svg' and @data-icon='chevron-left']]")
+    @FindBy(xpath = "//ms-course-schedule-board//button[.//*[name()='svg' and @data-icon='chevron-left']]")
     public WebElement previousWeekButton;
-
-    @FindBy(xpath = "//button[.//*[name()='svg' and @data-icon='calendar-day']]")
-    public WebElement todayButton;
-
-    @FindBy(xpath = "//button[.//*[name()='svg' and @data-icon='chevron-right']]")
-    public WebElement nextWeekButton;
 
     @FindBy(xpath = "//ms-course-schedule-board//div[contains(@class,'mat-elevation-z4') and contains(@style,'cursor: pointer')]")
     public List<WebElement> responsibleCourses;

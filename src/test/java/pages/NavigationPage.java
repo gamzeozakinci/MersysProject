@@ -11,9 +11,6 @@ public class NavigationPage extends ParentPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = "ms-layout-menu-button[page='GRADING']")
-    public WebElement gradingLink;
-
     @FindBy(css = "ms-layout-menu-button[page='CALENDAR']")
     public WebElement calendarLink;
 
@@ -22,12 +19,6 @@ public class NavigationPage extends ParentPage {
 
     @FindBy(css = "ms-layout-menu-button[page='COURSES']")
     public WebElement coursesLink;
-
-    @FindBy(xpath = "//ms-layout-menu-button[@page='ATTENDANCE']")
-    public WebElement attendanceLink;
-
-    @FindBy(xpath = "//ms-layout-menu-button[@page='ASSIGNMENT']")
-    public WebElement assignmentsLink;
 
     @FindBy(css = "user-chat-bell button")
     public WebElement chatMsgLink;
@@ -40,6 +31,5 @@ public class NavigationPage extends ParentPage {
 
     @FindBy(css = "button.user-button")
     public WebElement profileButton;
-
 
 }

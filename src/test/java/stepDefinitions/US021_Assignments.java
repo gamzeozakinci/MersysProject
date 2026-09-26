@@ -37,14 +37,14 @@ public class US021_Assignments extends GWD {
     @Then("User should see a \"Submit\" icon on every homework in the Homework list")
     public void checkSubmitIconVisible() {
 
-        Assert.assertEquals(assign.numberOfHomeworks.size(), assign.submissionButtons.size(),
+        Assert.assertEquals(assign.numberOfHomeworks.size(), assign.submitButtonsList.size(),
                 "Submission buttons on homeworks are missing.");
 
     }
 
     @And("User clicks the \"Submit\" icon on a homework")
     public void clickSubmitIcon() {
-        click(assign.submissionButtons.get(0), 3);
+        click(assign.submitButtonsList.get(0), 3);
 
     }
 
@@ -161,7 +161,7 @@ public class US021_Assignments extends GWD {
 
     @When("User opens the detail page of a homework")
     public void openHomeworkDetailPage() {
-        click(assign.firstHomeworkButton, 3);
+        click(assign.assignments, 3);
 
     }
 

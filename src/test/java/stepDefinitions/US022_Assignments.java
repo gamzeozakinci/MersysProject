@@ -40,7 +40,7 @@ public class US022_Assignments extends GWD {
 
     @Then("User should see all assigned tasks listed")
     public void checkAllAssignedTasksListed() {
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.assignment")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)));
         Assert.assertFalse(assign.assignmentRowsList.isEmpty());
 
     }
@@ -48,7 +48,7 @@ public class US022_Assignments extends GWD {
     @And("User filters the search by \"Course\"")
     public void filterSearchByCourse() {
         clickWithRetry(() -> assign.classFilterDropdown);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("mat-option"), 1));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.FILTER_OPTION_CSS), 1));
         clickWithRetry(() -> assign.filterOptionsList.get(1));
         closeOpenDropdown();
 
@@ -57,7 +57,7 @@ public class US022_Assignments extends GWD {
     @And("User filters the search by \"Status\"")
     public void filterSearchByStatus() {
         clickWithRetry(() -> assign.statusFilterDropdown);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("mat-option"), 1));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.FILTER_OPTION_CSS), 1));
         clickWithRetry(() -> assign.filterOptionsList.get(1));
         closeOpenDropdown();
 
@@ -66,7 +66,7 @@ public class US022_Assignments extends GWD {
     @And("User filters the search by \"Semester\"")
     public void filterSearchBySemester() {
         clickWithRetry(() -> assign.semesterFilterDropdown);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("mat-option"), 1));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.FILTER_OPTION_CSS), 1));
         clickWithRetry(() -> assign.filterOptionsList.get(1));
         closeOpenDropdown();
 

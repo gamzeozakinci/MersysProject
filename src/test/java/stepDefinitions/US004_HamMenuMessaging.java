@@ -14,7 +14,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.HeaderMenu;
-import pages.MessagingPage;
 import utilities.GWD;
 
 import java.time.Duration;
@@ -24,7 +23,6 @@ import static pages.ParentPage.click;
 public class US004_HamMenuMessaging extends GWD {
 
     HeaderMenu header = new HeaderMenu(getDriver());
-    MessagingPage messaging = new MessagingPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @And("User hovers over the \"Messaging\" page")
@@ -46,19 +44,19 @@ public class US004_HamMenuMessaging extends GWD {
 
     @Then("User should see the \"New Message\" page")
     public void checkNewMessageLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(messaging.newMessageButton));
+        wait.until(ExpectedConditions.elementToBeClickable(header.headerNewMessageButton));
 
     }
 
     @And("User should see the \"Inbox\" page")
     public void checkInboxLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(messaging.inboxButton));
+        wait.until(ExpectedConditions.elementToBeClickable(header.headerInboxButton));
 
     }
 
     @And("User should see the \"Outbox\" page")
     public void checkOutboxLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(messaging.outboxLink));
+        wait.until(ExpectedConditions.elementToBeClickable(header.headerOutboxButton));
 
     }
 
@@ -70,7 +68,7 @@ public class US004_HamMenuMessaging extends GWD {
 
     @When("User clicks the \"New Message\" page")
     public void clickNewMessageLink() {
-        click(messaging.newMessageButton, 10);
+        click(header.headerNewMessageButton, 10);
 
     }
 
@@ -83,8 +81,8 @@ public class US004_HamMenuMessaging extends GWD {
 
     @When("User clicks the \"Inbox\" page")
     public void clickInboxLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(messaging.inboxButton));
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", messaging.inboxButton);
+        wait.until(ExpectedConditions.elementToBeClickable(header.headerInboxButton));
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerInboxButton);
 
     }
 
@@ -97,8 +95,8 @@ public class US004_HamMenuMessaging extends GWD {
 
     @When("User clicks the \"Outbox\" page")
     public void clickOutboxLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(messaging.outboxLink));
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", messaging.outboxLink);
+        wait.until(ExpectedConditions.elementToBeClickable(header.headerOutboxButton));
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerOutboxButton);
 
     }
 

@@ -28,6 +28,15 @@ public class HeaderMenu {
     @FindBy(xpath = "//*[text()=\"Messaging\"]")
     public WebElement headerMessagingButton;
 
+    @FindBy(xpath = "//span[text()='Send Message']")
+    public WebElement headerNewMessageButton;
+
+    @FindBy(xpath = "//*[text()='Inbox']")
+    public WebElement headerInboxButton;
+
+    @FindBy(xpath = "//span[text()='Outbox']")
+    public WebElement headerOutboxButton;
+
     @FindBy(xpath = "//*[text()=\"Trash\"]")
     public WebElement headerTrashButton;
 

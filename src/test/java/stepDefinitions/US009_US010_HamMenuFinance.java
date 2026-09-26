@@ -59,14 +59,14 @@ public class US009_US010_HamMenuFinance extends GWD {
 
     @And("User clicks \"Stripe\" to make a payment")
     public void Stripe() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='radio'][value='STRIPE']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FinancePage.STRIPE_RADIO_CSS)));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", finance.stripe);
 
     }
 
     @And("User chooses \"Pay Amount Due 100.00$\" to pay minimum amount")
     public void payAmountDue() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//*[contains(@class, 'mdc-radio__background')])[4]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(FinancePage.AMOUNT_DUE_RADIO_XPATH)));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", finance.amountDue);
 
     }

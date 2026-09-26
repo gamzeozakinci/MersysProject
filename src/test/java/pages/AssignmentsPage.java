@@ -9,6 +9,10 @@ import java.util.List;
 
 public class AssignmentsPage extends ParentPage {
 
+    // Also used by By-based waits in US022, so each selector lives in one place.
+    public static final String ASSIGNMENT_ROW_CSS = "div.assignment";
+    public static final String FILTER_OPTION_CSS = "mat-option";
+
     public AssignmentsPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -19,7 +23,7 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(css = "div[class='mat-mdc-tooltip-surface mdc-tooltip__surface']")
     public WebElement assignmentsCountBadge;
 
-    @FindBy(css = "div[class='assignment']")
+    @FindBy(css = ASSIGNMENT_ROW_CSS)
     public WebElement assignments;
 
     @FindBy(css = "ms-icon-button[icon='comments-alt']")
@@ -42,9 +46,6 @@ public class AssignmentsPage extends ParentPage {
 
     @FindBy(css = "div[class='comment-time secondary-text']")
     public List<WebElement> commentTimeList;
-
-    @FindBy(css = "ms-icon-button[icon='file-import']")
-    public List<WebElement> submissionButtons;
 
     @FindBy(xpath = "//span[contains(text(), '100')]")
     public List<WebElement> numberOfHomeworks;
@@ -69,9 +70,6 @@ public class AssignmentsPage extends ParentPage {
 
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Yes']]")
     public WebElement yesButton;
-
-    @FindBy(css = ".assignment")
-    public WebElement firstHomeworkButton;
 
     @FindBy(xpath = "//*[text()='New Submission']")
     public WebElement newSubmissionButton;
@@ -100,7 +98,7 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(css = "ms-icon-button[icon='star']")
     public List<WebElement> markButtonsList;
 
-    @FindBy(css = "div.assignment")
+    @FindBy(css = ASSIGNMENT_ROW_CSS)
     public List<WebElement> assignmentRowsList;
 
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Search']]")
@@ -115,7 +113,7 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(xpath = "(//mat-select)[3]")
     public WebElement semesterFilterDropdown;
 
-    @FindBy(css = "mat-option")
+    @FindBy(css = FILTER_OPTION_CSS)
     public List<WebElement> filterOptionsList;
 
     @FindBy(css = "ms-drop-down button")

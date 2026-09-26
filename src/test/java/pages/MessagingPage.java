@@ -42,15 +42,6 @@ public class MessagingPage extends ParentPage {
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Delete']]")
     public WebElement dialogAnswer;
 
-    @FindBy (xpath = "(//span[@class='mdc-button__label'])[6]")
-    public WebElement hamburgerMenu;
-
-    @FindBy(xpath = "//span[text()='Messaging']")
-    public WebElement messagingLink;
-
-    @FindBy(xpath = "//span[text()='Send Message']")
-    public WebElement newMessageButton;
-
     @FindBy(css = "fa-icon[class='ng-fa-icon btn-fa btn-fa--table']")
     public WebElement receiversIcon;
 
@@ -71,9 +62,6 @@ public class MessagingPage extends ParentPage {
 
     @FindBy(xpath = "//span[text()='Send']")
     public WebElement sendButton;
-
-    @FindBy(xpath = "//span[text()='Outbox']")
-    public WebElement outboxLink;
 
     @FindBy(css = "svg[class='svg-inline--fa fa-xmark fa-fw']")
     public WebElement closeErrorButton;
@@ -98,8 +86,5 @@ public class MessagingPage extends ParentPage {
 
     @FindBy(css = "span[class='mat-mdc-select-min-line']")
     public WebElement allMessagesCount;
-
-    @FindBy(xpath = "//*[text()='Inbox']")
-    public WebElement inboxButton;
 
 }

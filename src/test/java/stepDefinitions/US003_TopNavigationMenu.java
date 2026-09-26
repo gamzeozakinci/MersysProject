@@ -14,7 +14,7 @@ public class US003_TopNavigationMenu {
     public void userNavigatesToPage(String linkName) {
         switch (linkName) {
             case "Grading":
-                ParentPage.click(np.gradingLink, 10);
+                ParentPage.click(hm.headerGradingButton, 10);
                 break;
             case "Calendar":
                 ParentPage.click(np.calendarLink,10);
@@ -25,11 +25,11 @@ public class US003_TopNavigationMenu {
                 break;
 
             case "Attendance":
-                ParentPage.click(np.attendanceLink, 10);
+                ParentPage.click(hm.headerAttendanceButton, 10);
                 break;
 
             case "Assignments":
-                ParentPage.click(np.assignmentsLink, 10);
+                ParentPage.click(hm.headerAssignmentButton, 10);
                 break;
 
             case "Hamburger Menu":

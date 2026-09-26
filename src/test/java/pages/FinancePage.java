@@ -6,6 +6,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.FindBy;
 
 public class FinancePage {
+
+    // Also used by By-based waits in US009_US010, so each selector lives in one place.
+    public static final String STRIPE_RADIO_CSS = "input[type='radio'][value='STRIPE']";
+    public static final String AMOUNT_DUE_RADIO_XPATH = "(//*[contains(@class, 'mdc-radio__background')])[4]";
+
     public FinancePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
 
@@ -20,10 +25,10 @@ public class FinancePage {
     @FindBy(xpath = "(//div[contains(@class, 'table-container-wrapper')])[2]")
     public WebElement displayPayments;
 
-    @FindBy(css = "input[type='radio'][value='STRIPE']")
+    @FindBy(css = STRIPE_RADIO_CSS)
     public WebElement stripe;
 
-    @FindBy(xpath = "(//*[contains(@class, 'mdc-radio__background')])[4]")
+    @FindBy(xpath = AMOUNT_DUE_RADIO_XPATH)
     public WebElement amountDue;
 
     @FindBy(css = "input[name='number']")
