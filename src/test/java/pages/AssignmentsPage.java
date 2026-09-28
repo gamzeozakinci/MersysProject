@@ -1,25 +1,56 @@
 package pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
+
+import static utilities.GWD.getDriver;
 
 public class AssignmentsPage extends ParentPage {
 
     // Also used by By-based waits in US022, so each selector lives in one place.
     public static final String ASSIGNMENT_ROW_CSS = "div.assignment";
     public static final String FILTER_OPTION_CSS = "mat-option";
+    public static final String COUNT_TOOLTIP_CSS = "div[class='mat-mdc-tooltip-surface mdc-tooltip__surface']";
+    public static final String SUBMIT_ICON_CSS = "ms-icon-button[icon='file-import']";
 
     public AssignmentsPage(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(xpath = "(//span[@class='mat-focus-indicator'])[4]")
+    /**
+     * The due date filter defaults to a window around today, so homework due earlier drops off the
+     * list and only a quiz is left. Fails if the list still holds no homework afterwards.
+     */
+    public void widenDueDateFilter() {
+        retypeDate(dueDateStart, "01.01.2025");
+        retypeDate(dueDateEnd, "31.12.2027");
+        click(searchButton, 10);
+
+        new WebDriverWait(getDriver(), Duration.ofSeconds(15)).withMessage(
+                        "The due date filter was applied but no homework is listed - only assignments without a Submit icon.")
+                .until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(SUBMIT_ICON_CSS), 0));
+    }
+
+    private void retypeDate(WebElement field, String date) {
+        field.sendKeys(Keys.chord(Keys.CONTROL, "a"), date);
+
+        new WebDriverWait(getDriver(), Duration.ofSeconds(5)).withMessage(
+                        "The date field kept its own value instead of accepting " + date)
+                .until(ExpectedConditions.attributeToBe(field, "value", date));
+    }
+
+    @FindBy(xpath = "//button[.//*[normalize-space(text())='Assignments']]")
     public WebElement assignmentsLink;
 
-    @FindBy(css = "div[class='mat-mdc-tooltip-surface mdc-tooltip__surface']")
+    @FindBy(css = COUNT_TOOLTIP_CSS)
     public WebElement assignmentsCountBadge;
 
     @FindBy(css = ASSIGNMENT_ROW_CSS)
@@ -102,6 +133,12 @@ public class AssignmentsPage extends ParentPage {
 
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Search']]")
     public WebElement searchButton;
+
+    @FindBy(css = "input[formcontrolname='startDate']")
+    public WebElement dueDateStart;
+
+    @FindBy(css = "input[formcontrolname='endDate']")
+    public WebElement dueDateEnd;
 
     @FindBy(xpath = "(//mat-select)[1]")
     public WebElement classFilterDropdown;

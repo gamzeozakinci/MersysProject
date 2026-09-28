@@ -14,19 +14,16 @@ public class CalendarPage extends ParentPage {
     @FindBy(css = "table[style='table-layout: fixed;']")
     public List<WebElement> courseNamesTab;
 
-    @FindBy(xpath = "(//div[@class='mat-elevation-z4'])[3]")
-    public WebElement completedClassEvent;
-
-    @FindBy(xpath = "(//div[@role='tab'])[4]")
+    @FindBy(xpath = "//div[@role='tab'][.//span[normalize-space()='Information']]")
     public WebElement informationTab;
 
-    @FindBy(xpath = "(//div[@role='tab'])[5]")
+    @FindBy(xpath = "//div[@role='tab'][.//span[normalize-space()='Topic']]")
     public WebElement topicTab;
 
-    @FindBy(xpath = "(//div[@role='tab'])[6]")
+    @FindBy(xpath = "//div[@role='tab'][.//span[normalize-space()='Attachments']]")
     public WebElement attachmentsTab;
 
-    @FindBy(xpath = "(//div[@role='tab'])[7]")
+    @FindBy(xpath = "//div[@role='tab'][.//span[normalize-space()='Recent Events']]")
     public WebElement recentEventsTab;
 
     @FindBy(xpath = "//div[@role='tab'][.//span[normalize-space()='Weekly Schedule']]")

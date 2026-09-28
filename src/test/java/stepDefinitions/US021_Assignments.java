@@ -5,6 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -162,8 +163,37 @@ public class US021_Assignments {
 
     @When("User opens the detail page of a homework")
     public void openHomeworkDetailPage() {
-        click(assign.assignments, 3);
+        By newSubmission = By.xpath("//*[normalize-space(text())='New Submission']");
+        int rowCount = getDriver().findElements(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)).size();
 
+        for (int row = 0; row < rowCount; row++) {
+            // a quiz, or homework whose submission window has closed, offers no New Submission,
+            // so keep opening rows until one that still accepts a submission turns up
+            openAssignmentRow(row);
+            wait.until(ExpectedConditions.urlContains("/my-assignments/info/"));
+
+            if (!getDriver().findElements(newSubmission).isEmpty()) {
+                return;
+            }
+
+            getDriver().navigate().back();
+            assign.widenDueDateFilter();
+        }
+
+        Assert.fail("None of the " + rowCount + " listed assignments offers a New Submission button.");
+    }
+
+    private void openAssignmentRow(int index) {
+        for (int attempt = 0; attempt < 3; attempt++) {
+            try {
+                click(getDriver().findElements(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)).get(index), 10);
+                return;
+            } catch (StaleElementReferenceException listReRendered) {
+                // the list rebuilt between locating the row and clicking it
+            }
+        }
+
+        Assert.fail("The assignment list kept re-rendering; row " + (index + 1) + " could not be opened.");
     }
 
     @Then("User should see a \"New Submission\" button")

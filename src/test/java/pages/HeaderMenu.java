@@ -24,7 +24,7 @@ public class HeaderMenu extends ParentPage {
     @FindBy(xpath = "//*[@caption=\"MY_PAGE.TAB_TITLE.ASSIGNMENTS\"]")
     public WebElement headerAssignmentButton;
 
-    @FindBy(xpath = "//*[text()=\"Messaging\"]")
+    @FindBy(xpath = "//button[.//*[normalize-space(text())='Messaging']]")
     public WebElement headerMessagingButton;
 
     @FindBy(xpath = "//span[text()='Send Message']")
@@ -36,7 +36,7 @@ public class HeaderMenu extends ParentPage {
     @FindBy(xpath = "//span[text()='Outbox']")
     public WebElement headerOutboxButton;
 
-    @FindBy(xpath = "//*[text()=\"Trash\"]")
+    @FindBy(xpath = "//button[.//*[normalize-space(text())='Trash']]")
     public WebElement headerTrashButton;
 
     @FindBy(xpath = "//*[@caption=\"NAV.GRADING.TITLE\"]")

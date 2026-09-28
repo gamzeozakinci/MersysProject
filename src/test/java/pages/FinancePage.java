@@ -42,7 +42,7 @@ public class FinancePage extends ParentPage {
     public WebElement pay;
 
     @FindBy(css = "svg[class='svg-inline--fa fa-xmark fa-fw']")
-    public WebElement errorMessage;
+    public WebElement closeErrorButton;
 
     @FindBy(id = "ms-currency-field-0")
     public WebElement customPayButton;
