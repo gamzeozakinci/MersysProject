@@ -73,9 +73,9 @@ public class US009_US010_HamMenuFinance {
 
     @And("User enters card info")
     public void enterCardInfo() {
-        WebElement stripeFrame = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("iframe[title='Güvenli ödeme giriş çerçevesi']")));
-        getDriver().switchTo().frame(stripeFrame);
+        new WebDriverWait(getDriver(), Duration.ofSeconds(20)).withMessage(
+                        "The Stripe card form never appeared")
+                .until(d -> switchToCardFrame());
 
         wait.until(ExpectedConditions.elementToBeClickable(finance.cardNumber));
         finance.cardNumber.sendKeys("4242 4242 4242 4242");
@@ -84,6 +84,20 @@ public class US009_US010_HamMenuFinance {
 
         getDriver().switchTo().defaultContent();
 
+    }
+
+    private boolean switchToCardFrame() {
+        for (WebElement frame : getDriver().findElements(By.cssSelector(FinancePage.STRIPE_FRAME_CSS))) {
+            getDriver().switchTo().defaultContent();
+            getDriver().switchTo().frame(frame);
+
+            if (!getDriver().findElements(By.cssSelector(FinancePage.CARD_NUMBER_CSS)).isEmpty()) {
+                return true;
+            }
+        }
+
+        getDriver().switchTo().defaultContent();
+        return false;
     }
 
     @And("User clicks \"Stripe\" to pay")
