@@ -3,9 +3,13 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -15,6 +19,7 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
+import java.util.List;
 import static pages.ParentPage.hover;
 import static utilities.GWD.getDriver;
 import java.nio.file.Paths;
@@ -28,7 +33,19 @@ public class US018_US019_US020_Assignments {
     public void userHoversOverLinkNameOnHomepage(String linkName) {
         wait.until(ExpectedConditions.visibilityOf(ap.assignmentsLink));
 
-        hover(ap.assignmentsLink);
+        for (int attempt = 0; attempt < 3; attempt++) {
+            new Actions(getDriver()).moveToElement(getDriver().findElement(By.tagName("body")), 5, 5).perform();
+            hover(ap.assignmentsLink);
+
+            try {
+                new WebDriverWait(getDriver(), Duration.ofSeconds(3))
+                        .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(AssignmentsPage.COUNT_TOOLTIP_CSS)));
+                return;
+            } catch (TimeoutException tooltipDidNotOpen) {
+            }
+        }
+
+        Assert.fail("The assignment count tooltip did not open after hovering the Assignments link.");
     }
 
     @Then("User verifies that the total number of assigned tasks is displayed")
@@ -51,8 +68,8 @@ public class US018_US019_US020_Assignments {
                 js.executeScript("arguments[0].click();", ap.assignmentsLink);
                 break;
 
-            case "Another Menu":
-                break;
+            default:
+                throw new IllegalArgumentException("No home page link defined for: " + linkName);
         }
     }
 
@@ -61,6 +78,11 @@ public class US018_US019_US020_Assignments {
         wait.until(ExpectedConditions.visibilityOf(ap.assignments));
 
         Assert.assertTrue(ap.assignments.isDisplayed(), "The assignments list did not open!");
+    }
+
+    @And("User widens the due date filter to list past assignments")
+    public void userWidensDueDateFilter() {
+        ap.widenDueDateFilter();
     }
 
     @When("User clicks on the {string} icon of a random assignment in the list")
@@ -142,9 +164,9 @@ public class US018_US019_US020_Assignments {
     @Then("User should see Information, Submit and Mark it icons on a random assignment")
     public void userShouldSeeQuickActionIconsOnRandomAssignment() {
 
-        wait.until(ExpectedConditions.visibilityOfAllElements(ap.informationButtonsList));
-        wait.until(ExpectedConditions.visibilityOfAllElements(ap.submitButtonsList));
-        wait.until(ExpectedConditions.visibilityOfAllElements(ap.markButtonsList));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.INFO_ICON_CSS), 0));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.SUBMIT_ICON_CSS), 0));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.MARK_ICON_CSS), 0));
 
         int minCount = Math.min(
                 ap.informationButtonsList.size(),
@@ -155,23 +177,24 @@ public class US018_US019_US020_Assignments {
 
         int randomIndex = (int) (Math.random() * minCount);
 
-        Assert.assertTrue(ap.informationButtonsList.get(randomIndex).isDisplayed(),
-                "The Information icon is not displayed!");
+        checkIconIsReady(AssignmentsPage.INFO_ICON_CSS, randomIndex, "Information");
+        checkIconIsReady(AssignmentsPage.SUBMIT_ICON_CSS, randomIndex, "Submit");
+        checkIconIsReady(AssignmentsPage.MARK_ICON_CSS, randomIndex, "Mark it");
+    }
 
-        Assert.assertTrue(ap.submitButtonsList.get(randomIndex).isDisplayed(),
-                "The Submit icon is not displayed!");
-
-        Assert.assertTrue(ap.markButtonsList.get(randomIndex).isDisplayed(),
-                "The Mark it icon is not displayed!");
-
-        wait.until(ExpectedConditions.elementToBeClickable(
-                ap.informationButtonsList.get(randomIndex)));
-
-        wait.until(ExpectedConditions.elementToBeClickable(
-                ap.submitButtonsList.get(randomIndex)));
-
-        wait.until(ExpectedConditions.elementToBeClickable(
-                ap.markButtonsList.get(randomIndex)));
+    private void checkIconIsReady(String iconCss, int index, String iconName) {
+        try {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(10)).until(driver -> {
+                try {
+                    List<WebElement> icons = driver.findElements(By.cssSelector(iconCss));
+                    return icons.size() > index && icons.get(index).isDisplayed() && icons.get(index).isEnabled();
+                } catch (StaleElementReferenceException listRebuilt) {
+                    return false;
+                }
+            });
+        } catch (TimeoutException iconNotReady) {
+            Assert.fail("The " + iconName + " icon is not displayed and clickable on the chosen assignment.");
+        }
     }
 
     @When("User clicks anywhere except the icons on a random assignment")
