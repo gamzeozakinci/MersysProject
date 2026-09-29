@@ -8,6 +8,7 @@ import org.testng.Assert;
 import pages.CalendarPage;
 
 import java.time.Duration;
+import java.util.Random;
 
 import static utilities.GWD.getDriver;
 
@@ -39,11 +40,7 @@ public class US023_US024_US025_Calendar {
 
     @And("User clicks on a completed class")
     public void userClicksOnACompletedClass() {
-        wait.until(ExpectedConditions.elementToBeClickable(cp.completedClassEvent));
-
-        cp.completedClassEvent.click();
-
-        System.out.println("Success: Clicked on a completed class.");
+        clickCompletedClass();
     }
 
     @Then("User should see {string}, {string}, {string}, {string} tabs and confirm they are working")
@@ -232,24 +229,22 @@ public class US023_US024_US025_Calendar {
 
     @And("User clicks on a random completed class")
     public void userClicksOnARandomCompletedClass() {
+        clickCompletedClass();
+    }
 
+    private void clickCompletedClass() {
         int maxWeeks = 10;
 
-        for (int i = 0; i < maxWeeks; i++) {
+        for (int week = 0; week < maxWeeks; week++) {
 
             if (!cp.completedClasses.isEmpty()) {
+                WebElement completedClass =
+                        cp.completedClasses.get(new Random().nextInt(cp.completedClasses.size()));
 
-                int randomIndex =
-                        new java.util.Random().nextInt(cp.completedClasses.size());
+                wait.until(ExpectedConditions.elementToBeClickable(completedClass));
+                completedClass.click();
 
-                WebElement randomCompletedClass =
-                        cp.completedClasses.get(randomIndex);
-
-                wait.until(ExpectedConditions.elementToBeClickable(randomCompletedClass));
-                randomCompletedClass.click();
-
-                System.out.println(
-                        "Clicked on a random completed (E) class.");
+                System.out.println("Clicked a completed (E) class " + week + " week(s) back.");
                 return;
             }
 
@@ -263,10 +258,7 @@ public class US023_US024_US025_Calendar {
             }
         }
 
-        Assert.fail(
-                "No completed (E) class was found within the previous "
-                        + maxWeeks + " weeks!"
-        );
+        Assert.fail("No completed (E) class was found within the previous " + maxWeeks + " weeks!");
     }
 
     @Then("User should see and click the Recording button")

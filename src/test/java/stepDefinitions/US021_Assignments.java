@@ -167,8 +167,6 @@ public class US021_Assignments {
         int rowCount = getDriver().findElements(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)).size();
 
         for (int row = 0; row < rowCount; row++) {
-            // a quiz, or homework whose submission window has closed, offers no New Submission,
-            // so keep opening rows until one that still accepts a submission turns up
             openAssignmentRow(row);
             wait.until(ExpectedConditions.urlContains("/my-assignments/info/"));
 
@@ -189,7 +187,6 @@ public class US021_Assignments {
                 click(getDriver().findElements(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)).get(index), 10);
                 return;
             } catch (StaleElementReferenceException listReRendered) {
-                // the list rebuilt between locating the row and clicking it
             }
         }
 

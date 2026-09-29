@@ -20,6 +20,8 @@ public class AssignmentsPage extends ParentPage {
     public static final String FILTER_OPTION_CSS = "mat-option";
     public static final String COUNT_TOOLTIP_CSS = "div[class='mat-mdc-tooltip-surface mdc-tooltip__surface']";
     public static final String SUBMIT_ICON_CSS = "ms-icon-button[icon='file-import']";
+    public static final String INFO_ICON_CSS = "ms-icon-button[icon='info']";
+    public static final String MARK_ICON_CSS = "ms-icon-button[icon='star']";
 
     public AssignmentsPage(WebDriver driver) {
         super(driver);
@@ -115,13 +117,13 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(xpath = "//div[@role='button'][@aria-label='2 columns, 2 rows']")
     public WebElement addTable;
 
-    @FindBy(css = "ms-icon-button[icon='info']")
+    @FindBy(css = INFO_ICON_CSS)
     public List<WebElement> informationButtonsList;
 
-    @FindBy(css = "ms-icon-button[icon='file-import']")
+    @FindBy(css = SUBMIT_ICON_CSS)
     public List<WebElement> submitButtonsList;
 
-    @FindBy(css = "ms-icon-button[icon='star']")
+    @FindBy(css = MARK_ICON_CSS)
     public List<WebElement> markButtonsList;
 
     @FindBy(css = ASSIGNMENT_ROW_CSS)
