@@ -3,8 +3,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -32,29 +32,63 @@ public class US006_DeleteMessage {
 
     @And("User selects a sent message")
     public void userSelectsASentMessage() {
-        ParentPage.pause(2000);
-        int allMessages = mp.allMessages.size();
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
+                By.cssSelector(MessagingPage.MESSAGE_ROW_CSS), 0));
 
-        if(allMessages  > 0) {
-            int Index = (int) (Math.random() * allMessages );
-            WebElement targetMessage = mp.allMessages.get(Index);
+        Assert.assertFalse(mp.allMessages.isEmpty(), "The Outbox holds no message to select.");
 
-            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        int messageCount = mp.allMessages.size();
+        int index = (int) (Math.random() * messageCount);
 
-            js.executeScript("arguments[0].scrollIntoView({behavior: 'instant', block: 'center', inline: 'nearest'});", targetMessage);
+        waitForListToSettle();
 
-                js.executeScript("arguments[0].click();", targetMessage);
+        for (int attempt = 0; attempt < 5; attempt++) {
+            ParentPage.click(mp.allMessages.get(index), 10);
 
-            System.out.println("Selected message: " + Index);
-        } else {
-            System.out.println("Error: No messages on the list!");
+            try {
+                new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+                        .until(ExpectedConditions.elementToBeClickable(mp.moveToTrashButton));
+
+                System.out.println("Selected message " + (index + 1) + " of " + messageCount + ".");
+                return;
+            } catch (TimeoutException selectionDidNotRegister) {
+            }
         }
+
+        Assert.fail("Selecting a message never enabled the Move To Trash button.");
+    }
+
+    private void waitForListToSettle() {
+        By rows = By.cssSelector(MessagingPage.MESSAGE_ROW_CSS);
+
+        new WebDriverWait(getDriver(), Duration.ofSeconds(15)).until(driver -> {
+            int before = driver.findElements(rows).size();
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException interrupted) {
+                Thread.currentThread().interrupt();
+            }
+
+            return before > 0 && before == driver.findElements(rows).size();
+        });
     }
 
     @When("User clicks on the Move to Trash icon for a sent message")
     public void userClicksOnTheMoveToTrashIconForASentMessage() {
-        ParentPage.click(mp.moveToTrashButton,10);
-        ParentPage.click(mp.confirmMessageDeleteButton,10);
+        for (int attempt = 0; attempt < 3; attempt++) {
+            ParentPage.click(mp.moveToTrashButton, 10);
+
+            try {
+                new WebDriverWait(getDriver(), Duration.ofSeconds(3))
+                        .until(ExpectedConditions.visibilityOf(mp.confirmationDialog));
+                ParentPage.click(mp.confirmMessageDeleteButton, 10);
+                return;
+            } catch (TimeoutException dialogDidNotOpen) {
+            }
+        }
+
+        Assert.fail("The move-to-trash confirmation dialog did not open.");
     }
 
     @Then("User should see a deletion confirmation pop-up on the screen")
@@ -62,5 +96,13 @@ public class US006_DeleteMessage {
         wait.until(ExpectedConditions.visibilityOf(mp.messageDeletedConfirmation));
 
         Assert.assertTrue(mp.messageDeletedConfirmation.isDisplayed(), "No message shown");
+    }
+
+    @Then("User should see a {string} message on the screen")
+    public void userShouldSeeAMessageOnTheScreen(String messageType) {
+        wait.until(ExpectedConditions.visibilityOf(mp.successMessage));
+
+        Assert.assertTrue(mp.successMessage.isDisplayed(),
+                "No " + messageType + " toast appeared on the screen.");
     }
 }
