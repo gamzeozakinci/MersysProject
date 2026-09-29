@@ -25,10 +25,6 @@ public class AssignmentsPage extends ParentPage {
         super(driver);
     }
 
-    /**
-     * The due date filter defaults to a window around today, so homework due earlier drops off the
-     * list and only a quiz is left. Fails if the list still holds no homework afterwards.
-     */
     public void widenDueDateFilter() {
         retypeDate(dueDateStart, "01.01.2025");
         retypeDate(dueDateEnd, "31.12.2027");

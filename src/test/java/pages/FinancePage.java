@@ -8,6 +8,8 @@ public class FinancePage extends ParentPage {
 
     // Also used by By-based waits in US009_US010, so each selector lives in one place.
     public static final String STRIPE_RADIO_CSS = "input[type='radio'][value='STRIPE']";
+    public static final String STRIPE_FRAME_CSS = "iframe[name^='__privateStripeFrame']";
+    public static final String CARD_NUMBER_CSS = "input[name='number']";
     public static final String AMOUNT_DUE_RADIO_XPATH = "(//*[contains(@class, 'mdc-radio__background')])[4]";
 
     public FinancePage(WebDriver driver) {
@@ -16,6 +18,9 @@ public class FinancePage extends ParentPage {
 
     @FindBy(css = "tbody.mdc-data-table__content")
     public WebElement chooseName;
+
+    @FindBy(css = "tbody.mdc-data-table__content td.cdk-column-totalRevenue")
+    public WebElement totalRevenue;
 
     @FindBy(xpath = "//*[text()=\"Fee/Balance Detail\"]")
     public WebElement feeBalanceDetail;

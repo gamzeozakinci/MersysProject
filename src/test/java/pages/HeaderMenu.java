@@ -27,7 +27,7 @@ public class HeaderMenu extends ParentPage {
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Messaging']]")
     public WebElement headerMessagingButton;
 
-    @FindBy(xpath = "//span[text()='Send Message']")
+    @FindBy(xpath = "//button[.//*[normalize-space(text())='Send Message']]")
     public WebElement headerNewMessageButton;
 
     @FindBy(xpath = "//*[text()='Inbox']")
