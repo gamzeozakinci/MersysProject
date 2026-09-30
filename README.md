@@ -37,7 +37,6 @@ End-to-end UI test automation for the student portal of **Mersys**, a school man
 | Assignments | US018–US022 | The assignment count badge; a discussion thread with an attachment; the quick-action icons; homework submission in the rich-text editor (text, image, table, file, draft, submit); the Send button staying disabled until a draft is saved; search, filters and sorting |
 | Calendar | US023–US025 | The Weekly Course Plan with its status legend and week navigation; the tabs of a completed class; a class recording that actually plays |
 
-US011 is automated too, but stays tagged `@wip` because the app itself blocks it (see [Known defects](#known-defects)). `cucumber.properties` leaves `@wip` scenarios out of normal runs.
 
 ## Known defects
 
@@ -46,6 +45,8 @@ Defects found while automating the portal are written up in [`docs/bug-reports/`
 | ID | Summary | Severity | Blocks |
 |---|---|---|---|
 | BUG-001 | A student cannot pay a fee. The Pay button stays disabled because the portal requests an admin-only endpoint as the student and is rejected with `403 Forbidden` | Critical | US010, US011 |
+| BUG-002 | The Grading page has no "Course Grade" or "Student Transcript" button, so two of the US016 acceptance steps cannot be verified | Medium | US016 |
+| BUG-003 | The Fee/Balance Detail tab offers no Excel or PDF export, so the report cannot be downloaded | Medium | US012 |
 
 ## Framework design
 
@@ -130,10 +131,6 @@ In IntelliJ IDEA, you can also right-click `src/XML_files/testng.xml` or any run
 | PDF report | `target/PdfReport/ExtentPdf.pdf` |
 | Screenshots of failed scenarios | `target/screenshots/` (also attached to the HTML report) |
 
-## Continuous integration
-
-GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs on every push to `master` and on every pull request. It compiles the project and runs every scenario except the `@wip` ones in Cucumber's dry-run mode, which fails the build if a Gherkin step has no matching step definition or matches more than one. The full UI run needs a Mersys account and a desktop browser, so it runs locally.
-
 ## Project structure
 
 ```
@@ -155,7 +152,3 @@ MersysProject
             ├── cucumber.properties   # Leaves @wip scenarios out of normal runs
             └── extent.properties     # Report output settings
 ```
-
-## Contact
-
-GitHub: [@gamzeozakinci](https://github.com/gamzeozakinci)

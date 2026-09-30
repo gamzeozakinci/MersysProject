@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Mersys UI Regression">
+    <test name="US001 - Login">
+        <classes>
+            <class name="runners.US001_LoginRunner"/>
+        </classes>
+    </test>
+    <test name="US002 - Company logo">
+        <classes>
+            <class name="runners.US002_CompanyLogoRunner"/>
+        </classes>
+    </test>
+    <test name="US003 - Top navigation menu">
+        <classes>
+            <class name="runners.US003_TopNavigationMenuRunner"/>
+        </classes>
+    </test>
+    <test name="US004 - Hamburger menu submenu">
+        <classes>
+            <class name="runners.US004_HamMenuMessagingRunner"/>
+        </classes>
+    </test>
+    <test name="US005 - Send a message">
+        <classes>
+            <class name="runners.US005_MessagingRunner"/>
+        </classes>
+    </test>
+    <test name="US006 - Delete a sent message">
+        <classes>
+            <class name="runners.US006_DeleteMessageRunner"/>
+        </classes>
+    </test>
+    <test name="US007 - Restore and delete from Trash">
+        <classes>
+            <class name="runners.US007_HamMenuMessagingRunner"/>
+        </classes>
+    </test>
+    <test name="US008 - Access the Finance page">
+        <classes>
+            <class name="runners.US008_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US009 - View payments">
+        <classes>
+            <class name="runners.US009_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US010 - Make a payment">
+        <classes>
+            <class name="runners.US010_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US011 - Monthly payment">
+        <classes>
+            <class name="runners.US011_FinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US012 - Download Fee/Balance report">
+        <classes>
+            <class name="runners.US012_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US013 - Submit an attendance excuse">
+        <classes>
+            <class name="runners.US013_SubmitAttendanceExRunner"/>
+        </classes>
+    </test>
+    <test name="US014 - Change the profile picture">
+        <classes>
+            <class name="runners.US014_ProfilePictureRunner"/>
+        </classes>
+    </test>
+    <test name="US015 - Change the theme">
+        <classes>
+            <class name="runners.US015_ProfileRunner"/>
+        </classes>
+    </test>
+    <test name="US016 - Grading page buttons">
+        <classes>
+            <class name="runners.US016_GradingRunner"/>
+        </classes>
+    </test>
+    <test name="US017 - Print and download the transcript">
+        <classes>
+            <class name="runners.US017_GradingRunner"/>
+        </classes>
+    </test>
+    <test name="US018 - Assignment list and count">
+        <classes>
+            <class name="runners.US018_AssignmentsRunner"/>
+        </classes>
+    </test>
+    <test name="US019 - Discussion">
+        <classes>
+            <class name="runners.US019_AssignmentDiscussionRunner"/>
+        </classes>
+    </test>
+    <test name="US020 - Quick actions">
+        <classes>
+            <class name="runners.US020_AssignmentQuickActionsRunner"/>
+        </classes>
+    </test>
+    <test name="US021 - Homework submission">
+        <classes>
+            <class name="runners.US021_AssignmentsRunner"/>
+        </classes>
+    </test>
+    <test name="US022 - Search, filter and sort">
+        <classes>
+            <class name="runners.US022_AssignmentsRunner"/>
+        </classes>
+    </test>
+    <test name="US023 - Weekly Course Plan">
+        <classes>
+            <class name="runners.US023_WeeklyCoursePlanRunner"/>
+        </classes>
+    </test>
+    <test name="US024 - Completed class details">
+        <classes>
+            <class name="runners.US024_CalendarRunner"/>
+        </classes>
+    </test>
+    <test name="US025 - Class recording">
+        <classes>
+            <class name="runners.US025_ClassRecordingRunner"/>
+        </classes>
+    </test>
+</suite>

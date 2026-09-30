@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Mersys UI Grading">
+    <test name="US016 - Grading page buttons">
+        <classes>
+            <class name="runners.US016_GradingRunner"/>
+        </classes>
+    </test>
+    <test name="US017 - Print and download the transcript">
+        <classes>
+            <class name="runners.US017_GradingRunner"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Mersys UI Finance">
+    <test name="US008 - Access the Finance page">
+        <classes>
+            <class name="runners.US008_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US009 - View payments">
+        <classes>
+            <class name="runners.US009_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US010 - Make a payment">
+        <classes>
+            <class name="runners.US010_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US011 - Monthly payment">
+        <classes>
+            <class name="runners.US011_FinanceRunner"/>
+        </classes>
+    </test>
+    <test name="US012 - Download Fee/Balance report">
+        <classes>
+            <class name="runners.US012_HamMenuFinanceRunner"/>
+        </classes>
+    </test>
+</suite>

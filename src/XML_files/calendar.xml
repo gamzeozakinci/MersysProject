@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Mersys UI Calendar">
+    <test name="US023 - Weekly Course Plan">
+        <classes>
+            <class name="runners.US023_WeeklyCoursePlanRunner"/>
+        </classes>
+    </test>
+    <test name="US024 - Completed class details">
+        <classes>
+            <class name="runners.US024_CalendarRunner"/>
+        </classes>
+    </test>
+    <test name="US025 - Class recording">
+        <classes>
+            <class name="runners.US025_ClassRecordingRunner"/>
+        </classes>
+    </test>
+</suite>
