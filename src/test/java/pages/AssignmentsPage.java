@@ -1,57 +1,27 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
-import static utilities.GWD.getDriver;
-
 public class AssignmentsPage extends ParentPage {
-
-    // Also used by By-based waits in US022, so each selector lives in one place.
-    public static final String ASSIGNMENT_ROW_CSS = "div.assignment";
-    public static final String FILTER_OPTION_CSS = "mat-option";
-    public static final String COUNT_TOOLTIP_CSS = "div[class='mat-mdc-tooltip-surface mdc-tooltip__surface']";
-    public static final String SUBMIT_ICON_CSS = "ms-icon-button[icon='file-import']";
-    public static final String INFO_ICON_CSS = "ms-icon-button[icon='info']";
-    public static final String MARK_ICON_CSS = "ms-icon-button[icon='star']";
 
     public AssignmentsPage(WebDriver driver) {
         super(driver);
     }
 
-    public void widenDueDateFilter() {
-        retypeDate(dueDateStart, "01.01.2025");
-        retypeDate(dueDateEnd, "31.12.2027");
-        click(searchButton, 10);
-
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15)).withMessage(
-                        "The due date filter was applied but no homework is listed - only assignments without a Submit icon.")
-                .until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(SUBMIT_ICON_CSS), 0));
-    }
-
-    private void retypeDate(WebElement field, String date) {
-        field.sendKeys(Keys.chord(Keys.CONTROL, "a"), date);
-
-        new WebDriverWait(getDriver(), Duration.ofSeconds(5)).withMessage(
-                        "The date field kept its own value instead of accepting " + date)
-                .until(ExpectedConditions.attributeToBe(field, "value", date));
-    }
+    @FindBy(tagName = "body")
+    public WebElement pageBody;
 
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Assignments']]")
     public WebElement assignmentsLink;
 
-    @FindBy(css = COUNT_TOOLTIP_CSS)
+    @FindBy(css = "div[class='mat-mdc-tooltip-surface mdc-tooltip__surface']")
     public WebElement assignmentsCountBadge;
 
-    @FindBy(css = ASSIGNMENT_ROW_CSS)
+    @FindBy(css = "div.assignment")
     public WebElement assignments;
 
     @FindBy(css = "ms-icon-button[icon='comments-alt']")
@@ -99,14 +69,20 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Yes']]")
     public WebElement yesButton;
 
-    @FindBy(xpath = "//*[text()='New Submission']")
+    @FindBy(xpath = "//*[normalize-space(text())='New Submission']")
     public WebElement newSubmissionButton;
 
     @FindBy(css = "iframe.tox-edit-area__iframe")
     public WebElement textEditorFrame;
 
+    @FindBy(id = "tinymce")
+    public WebElement editorBody;
+
     @FindBy(css = "button[aria-label='Insert image']")
     public WebElement insertImageButton;
+
+    @FindBy(css = "input[type='file'][accept='image/*']")
+    public WebElement imageFileInput;
 
     @FindBy(xpath = "//button[contains(@class,'tox-mbtn')][normalize-space()='Table']")
     public WebElement insertTable;
@@ -117,26 +93,20 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(xpath = "//div[@role='button'][@aria-label='2 columns, 2 rows']")
     public WebElement addTable;
 
-    @FindBy(css = INFO_ICON_CSS)
+    @FindBy(css = "ms-icon-button[icon='info']")
     public List<WebElement> informationButtonsList;
 
-    @FindBy(css = SUBMIT_ICON_CSS)
+    @FindBy(css = "ms-icon-button[icon='file-import']")
     public List<WebElement> submitButtonsList;
 
-    @FindBy(css = MARK_ICON_CSS)
+    @FindBy(css = "ms-icon-button[icon='star']")
     public List<WebElement> markButtonsList;
 
-    @FindBy(css = ASSIGNMENT_ROW_CSS)
+    @FindBy(css = "div.assignment")
     public List<WebElement> assignmentRowsList;
 
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Search']]")
     public WebElement searchButton;
-
-    @FindBy(css = "input[formcontrolname='startDate']")
-    public WebElement dueDateStart;
-
-    @FindBy(css = "input[formcontrolname='endDate']")
-    public WebElement dueDateEnd;
 
     @FindBy(xpath = "(//mat-select)[1]")
     public WebElement classFilterDropdown;
@@ -147,8 +117,14 @@ public class AssignmentsPage extends ParentPage {
     @FindBy(xpath = "(//mat-select)[3]")
     public WebElement semesterFilterDropdown;
 
-    @FindBy(css = FILTER_OPTION_CSS)
+    @FindBy(css = "mat-option")
     public List<WebElement> filterOptionsList;
+
+    @FindBy(css = "mat-select.mat-select-open")
+    public List<WebElement> openDropdowns;
+
+    @FindBy(css = ".cdk-overlay-backdrop")
+    public List<WebElement> overlayBackdrops;
 
     @FindBy(css = "ms-drop-down button")
     public WebElement showByDropdownButton;

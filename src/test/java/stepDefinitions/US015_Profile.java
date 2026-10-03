@@ -11,6 +11,7 @@ import pages.SettingsPage;
 
 import java.time.Duration;
 
+import static pages.ParentPage.isPresent;
 import static utilities.GWD.getDriver;
 
 public class US015_Profile {
@@ -30,7 +31,7 @@ public class US015_Profile {
 
     @Then("User confirms that \"purple\" theme is applied")
     public void confirmPurple() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(SettingsPage.confirmPurple));
+        wait.until(driver -> isPresent(settpage.purpleThemeLink));
 
     }
 
@@ -43,7 +44,7 @@ public class US015_Profile {
 
     @Then("User confirms that \"dark purple\" theme is applied")
     public void confirmDarkPurple() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(SettingsPage.confirmDarkPurple));
+        wait.until(driver -> isPresent(settpage.darkPurpleThemeLink));
 
     }
 
@@ -56,7 +57,7 @@ public class US015_Profile {
 
     @Then("User confirms that \"indigo\" theme is applied")
     public void confirmIndigo() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(SettingsPage.confirmIndigo));
+        wait.until(driver -> isPresent(settpage.indigoThemeLink));
 
     }
 

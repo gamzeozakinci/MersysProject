@@ -3,7 +3,6 @@ package stepDefinitions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -14,7 +13,6 @@ import org.testng.Assert;
 import pages.AssignmentsPage;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.function.Supplier;
 
 import static pages.ParentPage.click;
@@ -40,7 +38,7 @@ public class US022_Assignments {
 
     @Then("User should see all assigned tasks listed")
     public void checkAllAssignedTasksListed() {
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)));
+        wait.until(driver -> !assign.assignmentRowsList.isEmpty());
         Assert.assertFalse(assign.assignmentRowsList.isEmpty());
 
     }
@@ -48,7 +46,7 @@ public class US022_Assignments {
     @And("User filters the search by \"Course\"")
     public void filterSearchByCourse() {
         clickWithRetry(() -> assign.classFilterDropdown);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.FILTER_OPTION_CSS), 1));
+        wait.until(driver -> assign.filterOptionsList.size() > 1);
         clickWithRetry(() -> assign.filterOptionsList.get(1));
         closeOpenDropdown();
 
@@ -57,7 +55,7 @@ public class US022_Assignments {
     @And("User filters the search by \"Status\"")
     public void filterSearchByStatus() {
         clickWithRetry(() -> assign.statusFilterDropdown);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.FILTER_OPTION_CSS), 1));
+        wait.until(driver -> assign.filterOptionsList.size() > 1);
         clickWithRetry(() -> assign.filterOptionsList.get(1));
         closeOpenDropdown();
 
@@ -66,7 +64,7 @@ public class US022_Assignments {
     @And("User filters the search by \"Semester\"")
     public void filterSearchBySemester() {
         clickWithRetry(() -> assign.semesterFilterDropdown);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.FILTER_OPTION_CSS), 1));
+        wait.until(driver -> assign.filterOptionsList.size() > 1);
         clickWithRetry(() -> assign.filterOptionsList.get(1));
         closeOpenDropdown();
 
@@ -142,17 +140,15 @@ public class US022_Assignments {
 
     private void closeOpenDropdown() {
         new Actions(getDriver()).sendKeys(Keys.ESCAPE).perform();
-        wait.until(d -> d.findElements(By.cssSelector("mat-select.mat-select-open")).isEmpty());
+        wait.until(driver -> assign.openDropdowns.isEmpty());
 
     }
 
     private void clickWithRetry(Supplier<WebElement> elementSupplier) {
         for (int i = 0; i < 3; i++) {
             try {
-                new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(d -> {
-                    List<WebElement> backdrops = d.findElements(By.cssSelector(".cdk-overlay-backdrop"));
-                    return backdrops.stream().allMatch(b -> "0".equals(b.getCssValue("opacity")));
-                });
+                new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(driver ->
+                        assign.overlayBackdrops.stream().allMatch(b -> "0".equals(b.getCssValue("opacity"))));
             } catch (org.openqa.selenium.TimeoutException e) {
                 System.out.println("Overlay backdrop still present after 3s; attempting the click anyway");
             }

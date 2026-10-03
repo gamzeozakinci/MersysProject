@@ -3,7 +3,6 @@ package stepDefinitions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +14,7 @@ import pages.HeaderMenu;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static pages.ParentPage.isPresent;
 import static utilities.GWD.getDriver;
 
 public class US009_US010_HamMenuFinance {
@@ -59,14 +59,14 @@ public class US009_US010_HamMenuFinance {
 
     @And("User clicks \"Stripe\" to make a payment")
     public void Stripe() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(FinancePage.STRIPE_RADIO_CSS)));
+        wait.until(driver -> isPresent(finance.stripe));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", finance.stripe);
 
     }
 
     @And("User chooses \"Pay Amount Due 100.00$\" to pay minimum amount")
     public void payAmountDue() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(FinancePage.AMOUNT_DUE_RADIO_XPATH)));
+        wait.until(driver -> isPresent(finance.amountDue));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", finance.amountDue);
 
     }
@@ -87,11 +87,11 @@ public class US009_US010_HamMenuFinance {
     }
 
     private boolean switchToCardFrame() {
-        for (WebElement frame : getDriver().findElements(By.cssSelector(FinancePage.STRIPE_FRAME_CSS))) {
+        for (WebElement frame : finance.stripeFrames) {
             getDriver().switchTo().defaultContent();
             getDriver().switchTo().frame(frame);
 
-            if (!getDriver().findElements(By.cssSelector(FinancePage.CARD_NUMBER_CSS)).isEmpty()) {
+            if (isPresent(finance.cardNumber)) {
                 return true;
             }
         }

@@ -3,7 +3,6 @@ package stepDefinitions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -22,6 +21,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static pages.ParentPage.isPresent;
 import static utilities.GWD.getDriver;
 
 public class US005_Messaging {
@@ -55,8 +55,7 @@ public class US005_Messaging {
         }
 
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(
-                    ExpectedConditions.numberOfElementsToBe(By.cssSelector(".hot-toast-bar-base-wrapper"), 0));
+            new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(driver -> mp.toastBars.isEmpty());
         } catch (TimeoutException stillOnScreen) {
         }
     }
@@ -80,17 +79,24 @@ public class US005_Messaging {
         wait.until(ExpectedConditions.visibilityOf(mp.receiverSearchBox));
         mp.receiverSearchBox.sendKeys(searchTerm, Keys.ENTER);
 
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
-                By.cssSelector(MessagingPage.RECEIVER_CHECKBOX_CSS), 0));
+        wait.until(driver -> receiverListIsFilteredBy(searchTerm));
 
-        WebElement firstResult = mp.receiverResults.get(0);
-        click(firstResult, 10);
-        wait.until(driver -> firstResult.findElement(By.tagName("input")).isSelected());
+        click(mp.receiverResults.get(0), 10);
+        wait.until(driver -> !mp.receiverResultInputs.isEmpty() && mp.receiverResultInputs.get(0).isSelected());
 
         click(mp.addAndCloseButton, 10);
 
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("mat-chip-row"), 0));
+        wait.until(driver -> !mp.receiverChips.isEmpty());
         Assert.assertFalse(mp.receiverChips.isEmpty(), "No receiver was added to the message.");
+    }
+
+    private boolean receiverListIsFilteredBy(String searchTerm) {
+        try {
+            return !mp.receiverRows.isEmpty() && mp.receiverRows.stream()
+                    .allMatch(row -> row.getText().toLowerCase().contains(searchTerm.toLowerCase()));
+        } catch (StaleElementReferenceException listRebuilt) {
+            return false;
+        }
     }
 
     @And("User enters {string} as the message subject")
@@ -118,14 +124,12 @@ public class US005_Messaging {
 
         clickPastToasts(mp.attachFilesButton);
 
-        WebElement fileInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("input[type='file']")));
-        fileInput.sendKeys(filePath);
+        wait.until(driver -> isPresent(mp.fileInput));
+        mp.fileInput.sendKeys(filePath);
 
         new Actions(getDriver()).sendKeys(Keys.ESCAPE).perform();
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//*[contains(text(),'blank.png')]")));
+        wait.until(driver -> isPresent(mp.attachedFileName));
     }
 
     @And("User clicks the \"Send\" button")

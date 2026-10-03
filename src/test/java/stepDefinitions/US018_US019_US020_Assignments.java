@@ -3,7 +3,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -19,8 +18,11 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import static pages.ParentPage.hover;
+import static pages.ParentPage.isPresent;
 import static utilities.GWD.getDriver;
 import java.nio.file.Paths;
 
@@ -34,12 +36,12 @@ public class US018_US019_US020_Assignments {
         wait.until(ExpectedConditions.visibilityOf(ap.assignmentsLink));
 
         for (int attempt = 0; attempt < 3; attempt++) {
-            new Actions(getDriver()).moveToElement(getDriver().findElement(By.tagName("body")), 5, 5).perform();
+            new Actions(getDriver()).moveToElement(ap.pageBody, 5, 5).perform();
             hover(ap.assignmentsLink);
 
             try {
                 new WebDriverWait(getDriver(), Duration.ofSeconds(3))
-                        .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(AssignmentsPage.COUNT_TOOLTIP_CSS)));
+                        .until(driver -> isPresent(ap.assignmentsCountBadge));
                 return;
             } catch (TimeoutException tooltipDidNotOpen) {
             }
@@ -164,9 +166,9 @@ public class US018_US019_US020_Assignments {
     @Then("User should see Information, Submit and Mark it icons on a random assignment")
     public void userShouldSeeQuickActionIconsOnRandomAssignment() {
 
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.INFO_ICON_CSS), 0));
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.SUBMIT_ICON_CSS), 0));
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(AssignmentsPage.MARK_ICON_CSS), 0));
+        wait.until(driver -> !ap.informationButtonsList.isEmpty());
+        wait.until(driver -> !ap.submitButtonsList.isEmpty());
+        wait.until(driver -> !ap.markButtonsList.isEmpty());
 
         int minCount = Math.min(
                 ap.informationButtonsList.size(),
@@ -177,16 +179,16 @@ public class US018_US019_US020_Assignments {
 
         int randomIndex = (int) (Math.random() * minCount);
 
-        checkIconIsReady(AssignmentsPage.INFO_ICON_CSS, randomIndex, "Information");
-        checkIconIsReady(AssignmentsPage.SUBMIT_ICON_CSS, randomIndex, "Submit");
-        checkIconIsReady(AssignmentsPage.MARK_ICON_CSS, randomIndex, "Mark it");
+        checkIconIsReady(() -> ap.informationButtonsList, randomIndex, "Information");
+        checkIconIsReady(() -> ap.submitButtonsList, randomIndex, "Submit");
+        checkIconIsReady(() -> ap.markButtonsList, randomIndex, "Mark it");
     }
 
-    private void checkIconIsReady(String iconCss, int index, String iconName) {
+    private void checkIconIsReady(Supplier<List<WebElement>> iconList, int index, String iconName) {
         try {
             new WebDriverWait(getDriver(), Duration.ofSeconds(10)).until(driver -> {
                 try {
-                    List<WebElement> icons = driver.findElements(By.cssSelector(iconCss));
+                    List<WebElement> icons = new ArrayList<>(iconList.get());
                     return icons.size() > index && icons.get(index).isDisplayed() && icons.get(index).isEnabled();
                 } catch (StaleElementReferenceException listRebuilt) {
                     return false;

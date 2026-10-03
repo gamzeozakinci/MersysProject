@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,11 +27,14 @@ public class SettingsPage extends ParentPage {
     @FindBy(css = "#mat-option-6")
     public WebElement indigo;
 
-    public static final By confirmPurple = By.xpath("//link[contains(@href, 'purple-theme.css')]");
+    @FindBy(xpath = "//link[starts-with(@href, 'purple-theme.css') or contains(@href, '/purple-theme.css')]")
+    public WebElement purpleThemeLink;
 
-    public static final By confirmDarkPurple = By.xpath("//link[contains(@href, 'dark-purple-theme.css')]");
+    @FindBy(xpath = "//link[contains(@href, 'dark-purple-theme.css')]")
+    public WebElement darkPurpleThemeLink;
 
-    public static final By confirmIndigo = By.xpath("//link[contains(@href, 'indigo-theme.css')]");
+    @FindBy(xpath = "//link[contains(@href, 'indigo-theme.css')]")
+    public WebElement indigoThemeLink;
 
     @FindBy(css = "#ms-save-button-0")
     public WebElement saveButton;
@@ -57,6 +59,5 @@ public class SettingsPage extends ParentPage {
 
     @FindBy(xpath = "//user-upload-dialog//button[.//span[normalize-space()='Close']]")
     public WebElement closeButton;
-
 
 }

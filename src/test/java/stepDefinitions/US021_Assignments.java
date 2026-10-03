@@ -3,10 +3,8 @@ package stepDefinitions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -19,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static pages.ParentPage.isPresent;
 import java.nio.file.Paths;
 
 import static utilities.GWD.getDriver;
@@ -84,14 +83,13 @@ public class US021_Assignments {
         String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "Test_foto.jpg").toString();
 
         getDriver().switchTo().frame(assign.textEditorFrame);
-        click(getDriver().findElement(By.id("tinymce")), 3);
+        click(assign.editorBody, 3);
         getDriver().switchTo().defaultContent();
 
         click(assign.insertImageButton, 3);
 
-        WebElement fileInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("input[type='file'][accept='image/*']")));
-        fileInput.sendKeys(filePath);
+        wait.until(driver -> isPresent(assign.imageFileInput));
+        assign.imageFileInput.sendKeys(filePath);
 
     }
 
@@ -163,14 +161,13 @@ public class US021_Assignments {
 
     @When("User opens the detail page of a homework")
     public void openHomeworkDetailPage() {
-        By newSubmission = By.xpath("//*[normalize-space(text())='New Submission']");
-        int rowCount = getDriver().findElements(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)).size();
+        int rowCount = assign.assignmentRowsList.size();
 
         for (int row = 0; row < rowCount; row++) {
             openAssignmentRow(row);
             wait.until(ExpectedConditions.urlContains("/my-assignments/info/"));
 
-            if (!getDriver().findElements(newSubmission).isEmpty()) {
+            if (isPresent(assign.newSubmissionButton)) {
                 return;
             }
 
@@ -184,7 +181,7 @@ public class US021_Assignments {
     private void openAssignmentRow(int index) {
         for (int attempt = 0; attempt < 3; attempt++) {
             try {
-                click(getDriver().findElements(By.cssSelector(AssignmentsPage.ASSIGNMENT_ROW_CSS)).get(index), 10);
+                click(assign.assignmentRowsList.get(index), 10);
                 return;
             } catch (StaleElementReferenceException listReRendered) {
             }

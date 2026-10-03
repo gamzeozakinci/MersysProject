@@ -4,13 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class FinancePage extends ParentPage {
+import java.util.List;
 
-    // Also used by By-based waits in US009_US010, so each selector lives in one place.
-    public static final String STRIPE_RADIO_CSS = "input[type='radio'][value='STRIPE']";
-    public static final String STRIPE_FRAME_CSS = "iframe[name^='__privateStripeFrame']";
-    public static final String CARD_NUMBER_CSS = "input[name='number']";
-    public static final String AMOUNT_DUE_RADIO_XPATH = "(//*[contains(@class, 'mdc-radio__background')])[4]";
+public class FinancePage extends ParentPage {
 
     public FinancePage(WebDriver driver) {
         super(driver);
@@ -28,11 +24,14 @@ public class FinancePage extends ParentPage {
     @FindBy(xpath = "(//div[contains(@class, 'table-container-wrapper')])[2]")
     public WebElement displayPayments;
 
-    @FindBy(css = STRIPE_RADIO_CSS)
+    @FindBy(css = "input[type='radio'][value='STRIPE']")
     public WebElement stripe;
 
-    @FindBy(xpath = AMOUNT_DUE_RADIO_XPATH)
+    @FindBy(xpath = "(//*[contains(@class, 'mdc-radio__background')])[4]")
     public WebElement amountDue;
+
+    @FindBy(css = "iframe[name^='__privateStripeFrame']")
+    public List<WebElement> stripeFrames;
 
     @FindBy(css = "input[name='number']")
     public WebElement cardNumber;

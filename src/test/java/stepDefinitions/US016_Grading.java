@@ -2,7 +2,6 @@ package stepDefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -49,7 +48,7 @@ public class US016_Grading {
 
     @And("User verifies that the course grades are successfully displayed in the list")
     public void userVerifiesCourseGradesDisplayed() {
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(GradingPage.GRADE_ROW_CSS), 0));
+        wait.until(driver -> !grading.gradeRows.isEmpty());
 
         Assert.assertFalse(grading.gradeRows.isEmpty(), "No class grades are listed on the Grading page.");
     }

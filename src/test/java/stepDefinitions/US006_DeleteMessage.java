@@ -3,7 +3,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,8 +31,7 @@ public class US006_DeleteMessage {
 
     @And("User selects a sent message")
     public void userSelectsASentMessage() {
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
-                By.cssSelector(MessagingPage.MESSAGE_ROW_CSS), 0));
+        wait.until(driver -> !mp.messageRows.isEmpty());
 
         Assert.assertFalse(mp.allMessages.isEmpty(), "The Outbox holds no message to select.");
 
@@ -59,10 +57,8 @@ public class US006_DeleteMessage {
     }
 
     private void waitForListToSettle() {
-        By rows = By.cssSelector(MessagingPage.MESSAGE_ROW_CSS);
-
         new WebDriverWait(getDriver(), Duration.ofSeconds(15)).until(driver -> {
-            int before = driver.findElements(rows).size();
+            int before = mp.messageRows.size();
 
             try {
                 Thread.sleep(500);
@@ -70,7 +66,7 @@ public class US006_DeleteMessage {
                 Thread.currentThread().interrupt();
             }
 
-            return before > 0 && before == driver.findElements(rows).size();
+            return before > 0 && before == mp.messageRows.size();
         });
     }
 

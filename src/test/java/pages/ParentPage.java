@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,7 +13,6 @@ import java.time.Duration;
 
 import static utilities.GWD.getDriver;
 
-/** Base class for every page object: initialises its @FindBy fields and holds shared wait helpers. */
 public abstract class ParentPage {
 
     protected ParentPage(WebDriver driver) {
@@ -33,7 +33,15 @@ public abstract class ParentPage {
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    /** Fixed pause, only for steps where there is no page state to wait for (native dialogs). */
+    public static boolean isPresent(WebElement element) {
+        try {
+            element.isEnabled();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public static void pause(long millis) {
         try {
             Thread.sleep(millis);

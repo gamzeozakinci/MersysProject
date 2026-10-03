@@ -8,8 +8,6 @@ import java.util.List;
 
 public class GradingPage extends ParentPage {
 
-    public static final String GRADE_ROW_CSS = "tr.mat-mdc-row";
-
     public GradingPage(WebDriver driver) {
         super(driver);
     }
@@ -23,7 +21,7 @@ public class GradingPage extends ParentPage {
     @FindBy(xpath = "//div[@role='tab'][.//span[normalize-space()='Reports']]")
     public WebElement reportsTab;
 
-    @FindBy(css = GRADE_ROW_CSS)
+    @FindBy(css = "tr.mat-mdc-row")
     public List<WebElement> gradeRows;
 
     @FindBy(xpath = "//span[normalize-space()='Student Transcripts']")
