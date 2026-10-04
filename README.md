@@ -52,24 +52,24 @@ Defects found while automating the portal are written up in [`docs/bug-reports/`
 
 ```mermaid
 flowchart LR
-    suite["testng.xml<br/>regression suite"] --> runner["25 Cucumber runners<br/>one per user story"]
-    runner --> feature["Feature files<br/>Gherkin"]
-    feature --> steps["Step definitions"]
-    steps --> pages["Page objects<br/>PageFactory + explicit waits"]
-    pages --> driver["GWD<br/>ThreadLocal WebDriver"]
+    suite["testng.xml<br/>list of tests to run"] --> runner["Runners<br/>one for each user story"]
+    runner --> feature["Feature files<br/>scenarios written in Gherkin"]
+    feature --> steps["Step definitions<br/>Java code for each step"]
+    steps --> pages["Page objects<br/>where the page elements are defined"]
+    pages --> driver["GWD<br/>opens and keeps the browser"]
     driver --> app(("Mersys<br/>test site"))
-    config["ConfigReader<br/>properties + -D overrides"] --> driver
+    config["ConfigReader<br/>reads the settings"] --> driver
     config --> steps
-    runner --> report["ExtentReports<br/>HTML + PDF"]
-    hooks["Hooks<br/>screenshot on failure"] --> report
+    runner --> report["ExtentReports<br/>HTML and PDF report"]
+    hooks["Hooks<br/>take a screenshot when a test fails"] --> report
 ```
 
-- **Page Object Model.** Ten page classes locate elements with Selenium's `PageFactory` (`@FindBy`). Shared helpers in `ParentPage` (`click`, `mySendKeys`, `hover`, `scrollToElement`) wait for an element before acting on it.
-- **One driver per thread.** `GWD` keeps the WebDriver in a `ThreadLocal`. It opens Chrome, Edge or Firefox depending on the config, and Chrome switches to headless mode when it detects a Jenkins agent.
-- **Credentials stay out of Git.** The test account lives in a gitignored `configuration.properties`. `ConfigReader` lets a `-D` flag override any setting, and a missing required setting fails with a message that explains how to fix it.
-- **Reusable steps.** `Background` sections handle the shared setup (opening the site and logging in), and parameterised steps such as `User navigates to {string} page` are shared across stories.
-- **Reporting.** Every runner feeds ExtentReports. When a scenario fails, `Hooks` takes a screenshot, attaches it to the report and saves a copy under `target/screenshots/`.
-- **Tags.** Scenarios are tagged `@Regression`, `@Smoke` and `@Negative`, so you can run a subset by tag.
+- **Page Object Model.** Every page of the site has its own Java class (there are ten). The class only lists the elements of that page, written with `@FindBy`. If the site changes, we fix the element in one file. All page classes extend `ParentPage`, which has the shared helpers: `click`, `hover`, `mySendKeys`, `isPresent` and `pause`. For example, `click` waits until the element can be clicked, then clicks it.
+- **One browser for each test thread.** `GWD` opens the browser and keeps it for the running test. It uses Chrome, Edge or Firefox, depending on the `browser` setting. On a Jenkins server, Chrome runs without a window (headless mode).
+- **Passwords stay out of Git.** The test account is saved in `configuration.properties`, and Git ignores that file. `ConfigReader` reads it. You can also give a setting on the command line with `-D` (for example `-Dbrowser=firefox`), and it wins over the file. If a required setting is missing, the error message tells you what to do.
+- **Shared steps.** Every feature file starts with a `Background` that opens the site and logs in, and those steps are written only once. Some steps take a value, like `User navigates to {string} page`, so many stories can reuse them.
+- **Reports.** Every runner sends its results to ExtentReports. When a scenario fails, `Hooks` takes a screenshot, adds it to the report and saves a copy in `target/screenshots/`.
+- **Tags.** Scenarios have tags like `@Regression`, `@Smoke` and `@Negative`, so you can run only a part of the suite.
 
 ## Technical highlights
 

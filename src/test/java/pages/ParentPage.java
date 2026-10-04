@@ -13,24 +13,27 @@ import java.time.Duration;
 
 import static utilities.GWD.getDriver;
 
-public abstract class ParentPage {
+public class ParentPage {
 
-    protected ParentPage(WebDriver driver) {
+    public ParentPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
-    public static void click(WebElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
-        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+    public static void click(WebElement element, int seconds) {
+        new WebDriverWait(getDriver(), Duration.ofSeconds(seconds))
+                .until(ExpectedConditions.elementToBeClickable(element))
+                .click();
     }
 
     public static void hover(WebElement element) {
-        Actions actions = new Actions(getDriver());
-        actions.moveToElement(element).perform();
+        new Actions(getDriver()).moveToElement(element).perform();
     }
 
-    public static void scrollToElement(WebElement element) {
+    public static void mySendKeys(WebElement element, String text) {
+        new WebDriverWait(getDriver(), Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(element));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        element.sendKeys(text);
     }
 
     public static boolean isPresent(WebElement element) {
@@ -48,11 +51,5 @@ public abstract class ParentPage {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    public static void mySendKeys(WebElement element, String text) {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOf(element));
-        scrollToElement(element);
-        element.sendKeys(text);
     }
 }
