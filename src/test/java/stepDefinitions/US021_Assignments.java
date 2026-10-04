@@ -172,7 +172,6 @@ public class US021_Assignments {
             }
 
             getDriver().navigate().back();
-            assign.widenDueDateFilter();
         }
 
         Assert.fail("None of the " + rowCount + " listed assignments offers a New Submission button.");

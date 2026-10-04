@@ -7,16 +7,15 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import pages.HeaderMenu;
 import pages.MessagingPage;
 
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static pages.ParentPage.hover;
 import static pages.ParentPage.isPresent;
 import static utilities.GWD.getDriver;
 
@@ -28,98 +27,79 @@ public class US004_HamMenuMessaging {
 
     @And("User hovers over the \"Messaging\" page")
     public void hoverOverMessagingLink() {
-        try {
-            WebDriverWait shortWait = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
-            shortWait.until(driver -> isPresent(messaging.errorToastCloseIcon));
-            messaging.errorToastCloseIcon.click();
-        } catch (TimeoutException | StaleElementReferenceException | ElementNotInteractableException e) {
-            System.out.println("No error toast to close (" + e.getClass().getSimpleName() + ")");
-        }
-
-        Actions actions = new Actions(getDriver());
+        closeErrorToast();
         wait.until(ExpectedConditions.elementToBeClickable(header.headerMessagingButton));
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerMessagingButton);
-        actions.moveToElement(header.headerMessagingButton).perform();
+        hover(header.headerMessagingButton);
+    }
 
+    private void closeErrorToast() {
+        try {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(3))
+                    .until(driver -> isPresent(messaging.errorToastCloseIcon));
+            messaging.errorToastCloseIcon.click();
+        } catch (TimeoutException | StaleElementReferenceException | ElementNotInteractableException e) {
+            System.out.println("No error toast to close");
+        }
     }
 
     @Then("User should see the \"New Message\" page")
     public void checkNewMessageLinkVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(header.headerNewMessageButton));
-
     }
 
     @And("User should see the \"Inbox\" page")
     public void checkInboxLinkVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(header.headerInboxButton));
-
     }
 
     @And("User should see the \"Outbox\" page")
     public void checkOutboxLinkVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(header.headerOutboxButton));
-
     }
 
     @And("User should see the \"Trash\" page")
     public void checkTrashLinkVisible() {
         wait.until(ExpectedConditions.elementToBeClickable(header.headerTrashButton));
-
     }
 
     @When("User clicks the \"New Message\" page")
     public void clickNewMessageLink() {
         click(header.headerNewMessageButton, 10);
+    }
 
+    @When("User clicks the \"Inbox\" page")
+    public void clickInboxLink() {
+        click(header.headerInboxButton, 10);
+    }
+
+    @When("User clicks the \"Outbox\" page")
+    public void clickOutboxLink() {
+        click(header.headerOutboxButton, 10);
+    }
+
+    @When("User clicks the \"Trash\" page")
+    public void clickTrashLink() {
+        click(header.headerTrashButton, 10);
     }
 
     @Then("User should be navigated to the \"New Message\" page")
     public void checkNavigatedToNewMessagePage() {
         wait.until(ExpectedConditions.urlContains("new"));
-        Assert.assertTrue(getDriver().getCurrentUrl().contains("new"));
-
-    }
-
-    @When("User clicks the \"Inbox\" page")
-    public void clickInboxLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerInboxButton));
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerInboxButton);
-
     }
 
     @Then("User should be navigated to the \"Inbox\" page")
     public void checkNavigatedToInboxPage() {
         wait.until(ExpectedConditions.urlContains("inbox"));
-        Assert.assertTrue(getDriver().getCurrentUrl().contains("inbox"));
-
-    }
-
-    @When("User clicks the \"Outbox\" page")
-    public void clickOutboxLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerOutboxButton));
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerOutboxButton);
-
     }
 
     @Then("User should be navigated to the \"Outbox\" page")
     public void checkNavigatedToOutboxPage() {
         wait.until(ExpectedConditions.urlContains("outbox"));
-        Assert.assertTrue(getDriver().getCurrentUrl().contains("outbox"));
-
-    }
-
-    @When("User clicks the \"Trash\" page")
-    public void clickTrashLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerTrashButton));
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerTrashButton);
-
     }
 
     @Then("User should be navigated to the \"Trash\" page")
     public void checkNavigatedToTrashPage() {
         wait.until(ExpectedConditions.urlContains("trash"));
-        Assert.assertTrue(getDriver().getCurrentUrl().contains("trash"));
-
     }
-
 }

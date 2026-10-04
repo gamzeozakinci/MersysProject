@@ -82,7 +82,7 @@ flowchart LR
 | Proving a download worked | Polls `target/downloads` for up to 30 seconds until a new `.pdf` file appears |
 | Proving a video plays | Reads the `paused` property of the HTML5 `<video>` element with JavaScript |
 | Test data that changes every week | Picks a random assignment or class. For the calendar it steps back a week at a time, up to 10 weeks, until it finds a completed class |
-| List filters that hide older data | The assignment and message lists default to a date window around today, so fixtures fall out of range as time passes. The suite widens the filter first, then checks the list really repopulated instead of assuming it did |
+| List filters that hide older data | The message lists default to a date window around today, so old messages fall out of range as time passes. The suite widens the dates first, then checks the list really filled instead of assuming it did |
 | Hover menus and hard-to-click elements | Uses Selenium `Actions` for hover submenus, and a JavaScript click for elements a regular click can't reach |
 
 ## Running the tests
@@ -106,7 +106,7 @@ Open `configuration.properties` and fill in `student_username` and `student_pass
 mvn test
 
 # Only the scenarios with a given tag
-mvn test -Dcucumber.filter.tags="@Smoke and not @wip"
+mvn test -Dcucumber.filter.tags="@Smoke"
 
 # A single user story
 mvn test -Dtest=US021_AssignmentsRunner
@@ -149,6 +149,5 @@ MersysProject
         └── resources
             ├── features/             # 25 feature files; files/ holds upload fixtures
             ├── configuration.properties.example
-            ├── cucumber.properties   # Leaves @wip scenarios out of normal runs
             └── extent.properties     # Report output settings
 ```
