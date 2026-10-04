@@ -1,4 +1,5 @@
 package stepDefinitions;
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,9 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.HeaderMenu;
 import pages.MessagingPage;
-import pages.ParentPage;
+
 import java.time.Duration;
 
+import static pages.ParentPage.click;
+import static pages.ParentPage.hover;
+import static pages.ParentPage.pause;
 import static utilities.GWD.getDriver;
 
 public class US006_DeleteMessage {
@@ -21,33 +25,24 @@ public class US006_DeleteMessage {
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @Given("User clicks on the \"Outbox\" button")
-    public void userClicksOnTheOutboxButton(){
-
-        ParentPage.click(hm.hamburgerButton, 10);
-        ParentPage.hover(hm.headerMessagingButton);
-        ParentPage.click(hm.headerOutboxButton,10);
-
+    public void userClicksOnTheOutboxButton() {
+        click(hm.hamburgerButton, 10);
+        hover(hm.headerMessagingButton);
+        click(hm.headerOutboxButton, 10);
     }
 
     @And("User selects a sent message")
     public void userSelectsASentMessage() {
-        wait.until(driver -> !mp.messageRows.isEmpty());
-
-        Assert.assertFalse(mp.allMessages.isEmpty(), "The Outbox holds no message to select.");
-
-        int messageCount = mp.allMessages.size();
-        int index = (int) (Math.random() * messageCount);
-
         waitForListToSettle();
 
+        int index = (int) (Math.random() * mp.allMessages.size());
+
         for (int attempt = 0; attempt < 5; attempt++) {
-            ParentPage.click(mp.allMessages.get(index), 10);
+            click(mp.allMessages.get(index), 10);
 
             try {
                 new WebDriverWait(getDriver(), Duration.ofSeconds(5))
                         .until(ExpectedConditions.elementToBeClickable(mp.moveToTrashButton));
-
-                System.out.println("Selected message " + (index + 1) + " of " + messageCount + ".");
                 return;
             } catch (TimeoutException selectionDidNotRegister) {
             }
@@ -59,13 +54,7 @@ public class US006_DeleteMessage {
     private void waitForListToSettle() {
         new WebDriverWait(getDriver(), Duration.ofSeconds(15)).until(driver -> {
             int before = mp.messageRows.size();
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException interrupted) {
-                Thread.currentThread().interrupt();
-            }
-
+            pause(500);
             return before > 0 && before == mp.messageRows.size();
         });
     }
@@ -73,12 +62,12 @@ public class US006_DeleteMessage {
     @When("User clicks on the Move to Trash icon for a sent message")
     public void userClicksOnTheMoveToTrashIconForASentMessage() {
         for (int attempt = 0; attempt < 3; attempt++) {
-            ParentPage.click(mp.moveToTrashButton, 10);
+            click(mp.moveToTrashButton, 10);
 
             try {
                 new WebDriverWait(getDriver(), Duration.ofSeconds(3))
                         .until(ExpectedConditions.visibilityOf(mp.confirmationDialog));
-                ParentPage.click(mp.confirmMessageDeleteButton, 10);
+                click(mp.confirmMessageDeleteButton, 10);
                 return;
             } catch (TimeoutException dialogDidNotOpen) {
             }

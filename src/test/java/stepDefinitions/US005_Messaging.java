@@ -3,7 +3,6 @@ package stepDefinitions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -15,7 +14,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.HeaderMenu;
 import pages.MessagingPage;
-import pages.ParentPage;
 
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -29,6 +27,7 @@ public class US005_Messaging {
     HeaderMenu hm = new HeaderMenu(getDriver());
     MessagingPage mp = new MessagingPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+    JavascriptExecutor js = (JavascriptExecutor) getDriver();
 
     private String sentSubject;
 
@@ -43,10 +42,6 @@ public class US005_Messaging {
 
     @And("User closes the error message")
     public void userClosesTheErrorMessage() {
-        dismissErrorToasts();
-    }
-
-    private void dismissErrorToasts() {
         for (WebElement closeButton : mp.toastCloseButtons) {
             try {
                 closeButton.click();
@@ -60,18 +55,6 @@ public class US005_Messaging {
         }
     }
 
-    private void clickPastToasts(WebElement element) {
-        for (int attempt = 0; attempt < 3; attempt++) {
-            dismissErrorToasts();
-            try {
-                click(element, 10);
-                return;
-            } catch (ElementClickInterceptedException toastInTheWay) {
-                if (attempt == 2) throw toastInTheWay;
-            }
-        }
-    }
-
     @And("User clicks on the icon, searches for {string} and selects a receiver")
     public void userSearchesAndSelectsAReceiver(String searchTerm) {
         click(mp.receiverPickerButton, 10);
@@ -79,7 +62,7 @@ public class US005_Messaging {
         wait.until(ExpectedConditions.visibilityOf(mp.receiverSearchBox));
         mp.receiverSearchBox.sendKeys(searchTerm, Keys.ENTER);
 
-        wait.until(driver -> receiverListIsFilteredBy(searchTerm));
+        wait.until(driver -> onlyShowsResultsFor(searchTerm));
 
         click(mp.receiverResults.get(0), 10);
         wait.until(driver -> !mp.receiverResultInputs.isEmpty() && mp.receiverResultInputs.get(0).isSelected());
@@ -87,10 +70,9 @@ public class US005_Messaging {
         click(mp.addAndCloseButton, 10);
 
         wait.until(driver -> !mp.receiverChips.isEmpty());
-        Assert.assertFalse(mp.receiverChips.isEmpty(), "No receiver was added to the message.");
     }
 
-    private boolean receiverListIsFilteredBy(String searchTerm) {
+    private boolean onlyShowsResultsFor(String searchTerm) {
         try {
             return !mp.receiverRows.isEmpty() && mp.receiverRows.stream()
                     .allMatch(row -> row.getText().toLowerCase().contains(searchTerm.toLowerCase()));
@@ -109,8 +91,6 @@ public class US005_Messaging {
 
     @And("User types {string} into the text editor")
     public void userTypesIntoTheTextEditor(String text) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-
         wait.until(driver -> Boolean.TRUE.equals(js.executeScript(
                 "return typeof tinymce !== 'undefined' && tinymce.activeEditor != null;")));
 
@@ -122,7 +102,8 @@ public class US005_Messaging {
         String filePath = Paths.get(System.getProperty("user.dir"),
                 "src", "test", "resources", "features", "files", "blank.png").toString();
 
-        clickPastToasts(mp.attachFilesButton);
+        wait.until(ExpectedConditions.elementToBeClickable(mp.attachFilesButton));
+        js.executeScript("arguments[0].click();", mp.attachFilesButton);
 
         wait.until(driver -> isPresent(mp.fileInput));
         mp.fileInput.sendKeys(filePath);
