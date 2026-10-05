@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Messaging - Restore and delete from Trash
 
   Background:

@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Profile - Change the profile picture
 
   Background:

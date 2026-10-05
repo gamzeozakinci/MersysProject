@@ -42,7 +42,7 @@ public class GWD {
 
                         chromeOptions.addArguments("--disable-notifications");
 
-                        if (isRunningOnJenkins()) {
+                        if (isRunningOnCi()) {
                             chromeOptions.addArguments(
                                     "--headless=new",
                                     "--no-sandbox",
@@ -65,9 +65,11 @@ public class GWD {
             return threadDriver.get();
         }
 
-        public static boolean isRunningOnJenkins() {
+        public static boolean isRunningOnCi() {
             String jenkinsHome = System.getenv("JENKINS_HOME");
-            return jenkinsHome != null && !jenkinsHome.isEmpty();
+            boolean onJenkins = jenkinsHome != null && !jenkinsHome.isEmpty();
+            boolean onGitHub = "true".equals(System.getenv("GITHUB_ACTIONS"));
+            return onJenkins || onGitHub;
         }
 
         public static void quitDriver() {

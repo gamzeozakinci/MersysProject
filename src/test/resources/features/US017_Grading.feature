@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Grading - Print and download the transcript
 
   Background:

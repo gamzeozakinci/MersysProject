@@ -12,7 +12,7 @@ public class FinancePage extends ParentPage {
         super(driver);
     }
 
-    @FindBy(css = "tbody.mdc-data-table__content")
+    @FindBy(css = "tbody.mdc-data-table__content tr")
     public WebElement chooseName;
 
     @FindBy(css = "tbody.mdc-data-table__content td.cdk-column-totalRevenue")

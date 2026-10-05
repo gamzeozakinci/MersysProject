@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Messaging - Send a message
 
   Background:

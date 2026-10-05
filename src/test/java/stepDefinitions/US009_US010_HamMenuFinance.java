@@ -4,6 +4,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,7 +40,17 @@ public class US009_US010_HamMenuFinance {
 
     @Then("User finds his\\/her name and clicks")
     public void nameClicks() {
-        click(fp.chooseName, 10);
+        for (int attempt = 0; attempt < 3; attempt++) {
+            try {
+                click(fp.chooseName, 10);
+                new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+                        .until(ExpectedConditions.elementToBeClickable(fp.feeBalanceDetail));
+                return;
+            } catch (StaleElementReferenceException | TimeoutException rowClickLost) {
+            }
+        }
+
+        Assert.fail("Clicking the student row never opened the fee details.");
     }
 
     @And("User clicks \"Fee\\/Balance Detail\"")

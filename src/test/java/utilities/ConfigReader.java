@@ -26,8 +26,8 @@ public class ConfigReader {
     public static String getRequiredProperty(String key) {
         String value = getProperty(key);
         if (value == null || value.isBlank()) {
-            throw new IllegalStateException("Missing setting '" + key + "'. Copy configuration.properties.example to "
-                    + "configuration.properties and fill it in, or pass -D" + key + "=<value>.");
+            throw new IllegalStateException("Missing setting '" + key + "'. Add it to configuration.properties "
+                    + "or pass -D" + key + "=<value>.");
         }
         return value;
     }

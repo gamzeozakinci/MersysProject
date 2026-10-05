@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Attendance - Submit an attendance excuse
 
   Background:

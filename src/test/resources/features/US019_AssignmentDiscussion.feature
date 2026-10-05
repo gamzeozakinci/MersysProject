@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Assignments - Discussion
 
   Background:

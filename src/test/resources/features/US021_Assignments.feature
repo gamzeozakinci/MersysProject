@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Assignments - Homework submission
 
   Background:

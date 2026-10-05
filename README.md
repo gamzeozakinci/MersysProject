@@ -63,39 +63,22 @@ flowchart LR
 ```
 
 - **Page Object Model.** Every page of the site has its own Java class (there are ten). The class lists the elements of that page with `@FindBy`. If the site changes, we fix one file. All page classes extend `ParentPage`, which has the shared helpers: `click`, `hover`, `mySendKeys`, `isPresent` and `pause`. For example, `click` waits until the element can be clicked, then clicks it.
-- **One browser for each test.** `GWD` opens the browser and closes it after the test. The `browser` setting chooses Chrome, Edge or Firefox. On a Jenkins server, Chrome runs without a window.
-- **Passwords stay out of Git.** The test account is in `configuration.properties`, and Git ignores that file. You can also give a setting on the command line, for example `-Dbrowser=firefox`, and it is used instead of the file.
+- **One browser for each test.** `GWD` opens the browser and closes it after the test. The `browser` setting chooses Chrome, Edge or Firefox. On Jenkins and on GitHub Actions, Chrome runs without a window.
+- **Shared test account.** The login of the shared Mersys test account is in `src/test/resources/configuration.properties`, so a fresh clone runs right away. Do not put a personal password in this file. To use another account, give the settings on the command line, for example `-Dstudent_username=...` and `-Dstudent_password=...`. A setting from the command line is used instead of the file.
 - **Shared steps.** Every feature file starts with the same `Background`: open the site and log in. These steps are written once. Some steps take a value, like `User navigates to {string} page`, so many stories can use them.
 - **Screenshots.** When a scenario fails, `Hooks` takes a screenshot, adds it to the report and saves it in `target/screenshots/`.
-- **Tags and suites.** Scenarios have tags (`@Regression`, `@Smoke`, `@Negative`, `@Bug`). The XML files in `src/XML_files/` run a group of stories.
-
-## Problems we had to solve
-
-| Problem | What we did |
-|---|---|
-| The page changes while the test runs: lists reload, pop-ups cover buttons, menus slide in | We wait for the element and never use fixed sleeps. For a few steps we try again. If a normal click misses, we use a JavaScript click. |
-| Elements inside an iframe: the Stripe card form, the text editor, the class video | We switch into the iframe and switch back after. The Stripe frames are found by looking for the card number box, because their titles change with the language. |
-| The text editor (TinyMCE) | We wait until it is ready, then set its text with the TinyMCE JavaScript. |
-| Uploading a file | If the page has a hidden file input, we use `sendKeys` with the file path. If the site opens a Windows file window, `java.awt.Robot` pastes the path from the clipboard. |
-| Checking a download | We look in `target/downloads` for up to 30 seconds for a new PDF. |
-| Checking that a video plays | We read the `paused` property of the video with JavaScript. |
-| New windows and tabs | We switch to the new window. |
-| Lists that only show dates around today | The message lists hide old messages. We set a wide date range first, then check the list really filled. |
-| Data that changes | For the calendar we click a random finished class. If there is none, we go back one week at a time, up to 10 weeks. |
+- **Tags and suites.** Scenarios have tags: `@Regression`, `@Smoke`, `@Negative`, `@Bug` and `@NoCI`. `@Bug` marks a scenario blocked by a known site bug. `@NoCI` marks a story that must not run on GitHub Actions, because it changes data on the site or needs the keyboard. The XML files in `src/XML_files/` run a group of stories.
 
 ## Run the tests
 
-**You need:** JDK 17, Maven (IntelliJ IDEA has it), Chrome, Edge or Firefox, and a Mersys student test account.
+**You need:** JDK 17, Maven (IntelliJ IDEA has it), and Chrome, Edge or Firefox. The shared test account is already in the project.
 
-**1. Clone the project and add the test account**
+**1. Clone the project**
 
 ```bash
 git clone https://github.com/gamzeozakinci/MersysProject.git
 cd MersysProject
-cp src/test/resources/configuration.properties.example src/test/resources/configuration.properties
 ```
-
-Open `configuration.properties` and write your `student_username` and `student_password`. Git ignores this file, so the password is never committed.
 
 **2. Run**
 
@@ -103,8 +86,11 @@ Open `configuration.properties` and write your `student_username` and `student_p
 # All 25 stories (src/XML_files/testng.xml). This includes the @Bug scenarios, which fail.
 mvn test
 
-# Everything except the scenarios blocked by site bugs (this is what CI runs)
+# Everything except the scenarios blocked by site bugs
 mvn test -Dcucumber.filter.tags="not @Bug"
+
+# What GitHub Actions runs: the ci.xml group, without @NoCI and @Bug
+mvn test -DsuiteXmlFile=src/XML_files/ci.xml -Dcucumber.filter.tags="not @NoCI and not @Bug"
 
 # Only the scenarios with one tag
 mvn test -Dcucumber.filter.tags="@Smoke"
@@ -129,6 +115,7 @@ In IntelliJ IDEA you can also right-click an XML file or a runner class and choo
 | File | Runs |
 |---|---|
 | `testng.xml` | All 25 stories |
+| `ci.xml` | What GitHub Actions runs: US001–US004, US008, US009, US016, US018, US022–US024 |
 | `smoke.xml` | US001 (login) and US006 (move a message to Trash) |
 | `messaging.xml` | US004–US007 |
 | `finance.xml` | US008–US012 |
@@ -136,12 +123,15 @@ In IntelliJ IDEA you can also right-click an XML file or a runner class and choo
 | `calendar.xml` | US023–US025 |
 | `grading.xml` | US016–US017 |
 
-## Good to know
+## GitHub Actions
 
-- **Native file windows.** Some steps type into a Windows file window with `java.awt.Robot` (US013, US014, US017, and the file steps in US019 and US021). Run these on a Windows computer, and do not touch the keyboard or mouse while they run.
-- **Dates.** The assignment tests (US019–US021) need assignments inside the default date range of the page. If the list is empty, they fail.
-- **Random data.** Some steps pick a random class or message. For example, a finished class may have no recording, and then US025 fails.
-- **Real data.** US005 sends a real message and US006 moves one to Trash. Run them on a test account only.
+The workflow in `.github/workflows/ci.yml` runs on every push, on every pull request, and when you click **Run workflow** in the Actions tab. It has three steps:
+
+1. **Dry run.** It checks that every step in every feature file has Java code, without opening a browser.
+2. **UI tests.** It runs the stories in `src/XML_files/ci.xml` (23 scenarios) in Chrome without a window. It skips the `@NoCI` and `@Bug` scenarios.
+3. **Save the results.** It keeps the HTML report and the failure screenshots as a download called `test-reports`. You find it at the bottom of the run page.
+
+Two things keep the unsafe tests away from CI. First, `ci.xml` only lists the stories that look at the site. Second, the stories that change data or need the keyboard are tagged `@NoCI`: sending a message, moving to Trash, restoring and deleting, changing the theme or profile picture, sending an excuse or homework, discussions, and the transcript download. US020 and US025 are not in `ci.xml` yet, because they depend on the site's data and can fail by chance.
 
 ## Reports
 
@@ -154,7 +144,7 @@ In IntelliJ IDEA you can also right-click an XML file or a runner class and choo
 
 ```
 MersysProject
-├── .github/workflows/ci.yml        # CI: compile and dry-run, without the @Bug scenarios
+├── .github/workflows/ci.yml        # GitHub Actions: dry run and UI tests from ci.xml
 ├── docs/bug-reports/               # The bugs we found (PDF)
 ├── pom.xml
 └── src
@@ -167,6 +157,6 @@ MersysProject
         │   └── utilities/          # GWD (browser), ConfigReader, Hooks
         └── resources
             ├── features/           # 25 feature files; files/ has the files we upload
-            ├── configuration.properties.example
-            └── extent.properties   # Report settings
+            ├── configuration.properties   # Browser, site address and the shared test login
+            └── extent.properties          # Report settings
 ```

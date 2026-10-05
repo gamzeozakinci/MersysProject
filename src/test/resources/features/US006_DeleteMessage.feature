@@ -1,4 +1,4 @@
-@Regression
+@Regression @NoCI
 Feature: Messaging - Delete a sent message
 
   Background:
