@@ -41,6 +41,11 @@
             <class name="runners.US018_AssignmentsRunner"/>
         </classes>
     </test>
+    <test name="US020 - Quick actions">
+        <classes>
+            <class name="runners.US020_AssignmentQuickActionsRunner"/>
+        </classes>
+    </test>
     <test name="US022 - Search, filter and sort">
         <classes>
             <class name="runners.US022_AssignmentsRunner"/>

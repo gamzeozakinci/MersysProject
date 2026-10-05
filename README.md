@@ -116,7 +116,7 @@ In IntelliJ IDEA you can also right-click an XML file or a runner class and choo
 | File | Runs |
 |---|---|
 | `testng.xml` | All 25 stories |
-| `ci.xml` | What GitHub Actions runs: US001–US004, US008, US009, US016, US018, US022–US024 |
+| `ci.xml` | What GitHub Actions runs: US001–US004, US008, US009, US016, US018, US020, US022–US024 |
 | `smoke.xml` | US001 (login) and US006 (move a message to Trash) |
 | `messaging.xml` | US004–US007 |
 | `finance.xml` | US008–US012 |
@@ -129,7 +129,7 @@ In IntelliJ IDEA you can also right-click an XML file or a runner class and choo
 The workflow in `.github/workflows/ci.yml` runs on every push, on every pull request, and when you click **Run workflow** in the Actions tab. It has three steps:
 
 1. **Dry run.** It checks that every step in every feature file has Java code, without opening a browser.
-2. **UI tests.** It runs the stories in `src/XML_files/ci.xml` (23 scenarios) in Chrome without a window. It skips the `@NoCI` and `@Bug` scenarios.
+2. **UI tests.** It runs the stories in `src/XML_files/ci.xml` (24 scenarios) in Chrome without a window. It skips the `@NoCI` and `@Bug` scenarios.
 3. **Save the results.** It keeps the HTML report and the failure screenshots as a download called `test-reports`. You find it at the bottom of the run page.
 
 Two things keep the unsafe tests away from CI. First, `ci.xml` only lists the stories that look at the site. Second, the stories that change data or need the keyboard are tagged `@NoCI`: sending a message, moving to Trash, restoring and deleting, changing the theme or profile picture, sending an excuse or homework, discussions, and the transcript download. US025 is not in `ci.xml` yet, because it clicks a random finished class and some of them have no recording.
