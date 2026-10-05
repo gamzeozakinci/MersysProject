@@ -66,6 +66,7 @@ flowchart LR
 - **One browser for each test.** `GWD` opens the browser and closes it after the test. The `browser` setting chooses Chrome, Edge or Firefox. On Jenkins and on GitHub Actions, Chrome runs without a window.
 - **Shared test account.** The login of the shared Mersys test account is in `src/test/resources/configuration.properties`, so a fresh clone runs right away. Do not put a personal password in this file. To use another account, give the settings on the command line, for example `-Dstudent_username=...` and `-Dstudent_password=...`. A setting from the command line is used instead of the file.
 - **Shared steps.** Every feature file starts with the same `Background`: open the site and log in. These steps are written once. Some steps take a value, like `User navigates to {string} page`, so many stories can use them.
+- **Date range.** The Outbox, Trash and Assignments pages only show a date window around today, so older items disappear. The tests set a wide date range first (`showMessagesFromAllDates` and `widenDueDateFilter`) and check that the list is not empty. This way they keep working as the days pass.
 - **Screenshots.** When a scenario fails, `Hooks` takes a screenshot, adds it to the report and saves it in `target/screenshots/`.
 - **Tags and suites.** Scenarios have tags: `@Regression`, `@Smoke`, `@Negative`, `@Bug` and `@NoCI`. `@Bug` marks a scenario blocked by a known site bug. `@NoCI` marks a story that must not run on GitHub Actions, because it changes data on the site or needs the keyboard. The XML files in `src/XML_files/` run a group of stories.
 
@@ -131,7 +132,7 @@ The workflow in `.github/workflows/ci.yml` runs on every push, on every pull req
 2. **UI tests.** It runs the stories in `src/XML_files/ci.xml` (23 scenarios) in Chrome without a window. It skips the `@NoCI` and `@Bug` scenarios.
 3. **Save the results.** It keeps the HTML report and the failure screenshots as a download called `test-reports`. You find it at the bottom of the run page.
 
-Two things keep the unsafe tests away from CI. First, `ci.xml` only lists the stories that look at the site. Second, the stories that change data or need the keyboard are tagged `@NoCI`: sending a message, moving to Trash, restoring and deleting, changing the theme or profile picture, sending an excuse or homework, discussions, and the transcript download. US020 and US025 are not in `ci.xml` yet, because they depend on the site's data and can fail by chance.
+Two things keep the unsafe tests away from CI. First, `ci.xml` only lists the stories that look at the site. Second, the stories that change data or need the keyboard are tagged `@NoCI`: sending a message, moving to Trash, restoring and deleting, changing the theme or profile picture, sending an excuse or homework, discussions, and the transcript download. US025 is not in `ci.xml` yet, because it clicks a random finished class and some of them have no recording.
 
 ## Reports
 

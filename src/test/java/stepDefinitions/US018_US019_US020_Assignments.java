@@ -83,6 +83,11 @@ public class US018_US019_US020_Assignments {
         Assert.assertTrue(ap.assignments.isDisplayed(), "The assignments list did not open!");
     }
 
+    @And("User widens the due date filter to list past assignments")
+    public void userWidensDueDateFilter() {
+        ap.widenDueDateFilter();
+    }
+
     @When("User clicks on the {string} icon of a random assignment in the list")
     public void userClickOnRandomAssignmentOnTheList(String iconName) {
         wait.until(ExpectedConditions.visibilityOfAllElements(ap.discussionButtonsList));

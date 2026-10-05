@@ -5,6 +5,7 @@ Feature: Assignments - Discussion
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
     And User clicks on the "Assignments" link on the home page
+    And User widens the due date filter to list past assignments
 
   Scenario: User starts a discussion on an assignment and sees the message flow
     When User clicks on the "Discussion" icon of a random assignment in the list

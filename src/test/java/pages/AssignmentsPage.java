@@ -1,15 +1,39 @@
 package pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
+
+import static utilities.GWD.getDriver;
 
 public class AssignmentsPage extends ParentPage {
 
     public AssignmentsPage(WebDriver driver) {
         super(driver);
+    }
+
+    public void widenDueDateFilter() {
+        retypeDate(dueDateStart, "01.01.2025");
+        retypeDate(dueDateEnd, "31.12.2027");
+        click(searchButton, 10);
+
+        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
+                .withMessage("The due date filter was applied but no homework is listed.")
+                .until(driver -> !submitButtonsList.isEmpty());
+    }
+
+    private void retypeDate(WebElement field, String date) {
+        field.sendKeys(Keys.chord(Keys.CONTROL, "a"), date);
+
+        new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+                .withMessage("The date field kept its own value instead of accepting " + date)
+                .until(ExpectedConditions.attributeToBe(field, "value", date));
     }
 
     @FindBy(tagName = "body")
@@ -107,6 +131,12 @@ public class AssignmentsPage extends ParentPage {
 
     @FindBy(xpath = "//button[.//*[normalize-space(text())='Search']]")
     public WebElement searchButton;
+
+    @FindBy(css = "input[formcontrolname='startDate']")
+    public WebElement dueDateStart;
+
+    @FindBy(css = "input[formcontrolname='endDate']")
+    public WebElement dueDateEnd;
 
     @FindBy(xpath = "(//mat-select)[1]")
     public WebElement classFilterDropdown;
