@@ -43,7 +43,7 @@ public class US009_US010_HamMenuFinance {
 
     @And("User clicks \"Fee\\/Balance Detail\"")
     public void clicksFeeDetail() {
-        click(fp.feeBalanceDetail, 3);
+        click(fp.feeBalanceDetail, 10);
     }
 
     @And("User should be able to see the details of payments")

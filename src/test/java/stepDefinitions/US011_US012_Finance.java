@@ -8,12 +8,14 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import pages.FinancePage;
 import pages.HeaderMenu;
 
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static pages.ParentPage.isPresent;
 import static pages.ParentPage.mySendKeys;
 import static utilities.GWD.getDriver;
 
@@ -73,6 +75,12 @@ public class US011_US012_Finance {
 
     private double parseAmount(String amount) {
         return Double.parseDouble(amount.replaceAll("[^0-9.,]", "").replace(",", ""));
+    }
+
+    @Then("User should see a button to download the report as Excel or PDF")
+    public void userShouldSeeTheDownloadButton() {
+        Assert.assertTrue(isPresent(fp.downloadButton),
+                "The Fee/Balance Detail tab has no Excel or PDF download button.");
     }
 
     @And("User fills the card details")

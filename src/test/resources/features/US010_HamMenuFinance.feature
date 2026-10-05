@@ -4,7 +4,7 @@ Feature: Finance - Make a payment
   Background:
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
-#buglı
+  @Bug
   Scenario: User makes a payment with Stripe
     When User clicks hamburger menu
     And User clicks "My finance" from "Finance" option

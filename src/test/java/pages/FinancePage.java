@@ -53,4 +53,7 @@ public class FinancePage extends ParentPage {
 
     @FindBy(css = "svg[data-icon='wallet']")
     public WebElement walletIcon;
+
+    @FindBy(xpath = "//button[contains(., 'Excel') or contains(., 'PDF')]")
+    public WebElement downloadButton;
 }

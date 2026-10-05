@@ -76,7 +76,7 @@
             <class name="runners.US015_ProfileRunner"/>
         </classes>
     </test>
-    <test name="US016 - Grading page buttons">
+    <test name="US016 - Grading page tabs">
         <classes>
             <class name="runners.US016_GradingRunner"/>
         </classes>

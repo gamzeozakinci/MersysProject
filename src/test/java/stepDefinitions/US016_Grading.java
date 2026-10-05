@@ -25,7 +25,7 @@ public class US016_Grading {
                 "The " + pageName + " page did not open, the browser is on " + getDriver().getCurrentUrl());
     }
 
-    @And("User verifies that the {string} button on the page is visible and clickable")
+    @And("User verifies that the {string} tab is visible and clickable")
     public void userVerifiesTabIsVisibleAndClickable(String tabName) {
         WebElement tab;
 

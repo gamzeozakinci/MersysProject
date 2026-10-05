@@ -18,7 +18,6 @@ public class ConfigReader {
         }
     }
 
-    /** A -D system property wins over configuration.properties. Returns null when neither is set. */
     public static String getProperty(String key) {
         String override = System.getProperty(key);
         return override != null ? override : properties.getProperty(key);

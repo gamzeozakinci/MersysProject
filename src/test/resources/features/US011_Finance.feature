@@ -4,7 +4,7 @@ Feature: Finance - Monthly payment
   Background:
     Given User navigates to the "https://test.mersys.io/" page
     And User logs in with valid credentials
-#buglı
+  @Bug
   Scenario: User pays the monthly fee on the Finance page
     When User goes to finance page through hamburger menu
     And User notes the current total revenue
