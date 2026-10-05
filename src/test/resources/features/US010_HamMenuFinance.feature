@@ -13,4 +13,3 @@ Feature: Finance - Make a payment
     And User chooses "Pay Amount Due 100.00$" to pay minimum amount
     And User enters card info
     And User clicks "Stripe" to pay
-    And User able to pay

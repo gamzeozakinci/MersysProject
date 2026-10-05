@@ -90,10 +90,18 @@ public class US018_US019_US020_Assignments {
 
     @When("User clicks on the {string} icon of a random assignment in the list")
     public void userClickOnRandomAssignmentOnTheList(String iconName) {
-        wait.until(ExpectedConditions.visibilityOfAllElements(ap.discussionButtonsList));
+        wait.until(driver -> !ap.discussionButtonsList.isEmpty());
 
-        int randomIndex = (int) (Math.random() * ap.discussionButtonsList.size());
-        click(ap.discussionButtonsList.get(randomIndex), 10);
+        for (int attempt = 0; attempt < 3; attempt++) {
+            try {
+                int randomIndex = (int) (Math.random() * ap.discussionButtonsList.size());
+                click(ap.discussionButtonsList.get(randomIndex), 10);
+                return;
+            } catch (StaleElementReferenceException | TimeoutException | IndexOutOfBoundsException listRedrawn) {
+            }
+        }
+
+        Assert.fail("The discussion icons kept changing, so none of them could be clicked.");
     }
 
     @Then("User verifies the chat area where they can view past discussions")
