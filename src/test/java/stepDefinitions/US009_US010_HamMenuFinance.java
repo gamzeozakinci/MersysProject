@@ -6,8 +6,10 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.FinancePage;
@@ -21,7 +23,8 @@ import static utilities.GWD.getDriver;
 
 public class US009_US010_HamMenuFinance {
 
-    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+    Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10))
+            .ignoring(StaleElementReferenceException.class);
     HeaderMenu hm = new HeaderMenu(getDriver());
     FinancePage fp = new FinancePage(getDriver());
     JavascriptExecutor js = (JavascriptExecutor) getDriver();
@@ -61,7 +64,6 @@ public class US009_US010_HamMenuFinance {
     @And("User should be able to see the details of payments")
     public void checkPayments() {
         wait.until(ExpectedConditions.visibilityOf(fp.displayPayments));
-        Assert.assertTrue(fp.displayPayments.isDisplayed());
     }
 
     @And("User clicks \"Stripe\" to make a payment")
@@ -112,6 +114,5 @@ public class US009_US010_HamMenuFinance {
     @Then("User should be able to access Finance page")
     public void verifyFinancePage() {
         wait.until(ExpectedConditions.visibilityOf(fp.chooseName));
-        Assert.assertTrue(fp.chooseName.isDisplayed());
     }
 }

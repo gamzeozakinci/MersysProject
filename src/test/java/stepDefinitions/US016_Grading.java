@@ -2,8 +2,11 @@ package stepDefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.GradingPage;
@@ -15,7 +18,8 @@ import static utilities.GWD.getDriver;
 public class US016_Grading {
 
     GradingPage grading = new GradingPage(getDriver());
-    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+    Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10))
+            .ignoring(StaleElementReferenceException.class);
 
     @Then("User verifies being successfully redirected to the {string} page")
     public void userVerifiesRedirectedToPage(String pageName) {

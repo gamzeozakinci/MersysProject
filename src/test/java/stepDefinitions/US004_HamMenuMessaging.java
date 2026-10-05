@@ -7,7 +7,9 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HeaderMenu;
 import pages.MessagingPage;
@@ -23,7 +25,8 @@ public class US004_HamMenuMessaging {
 
     HeaderMenu hm = new HeaderMenu(getDriver());
     MessagingPage mp = new MessagingPage(getDriver());
-    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+    Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10))
+            .ignoring(StaleElementReferenceException.class);
 
     @And("User hovers over the \"Messaging\" page")
     public void hoverOverMessagingLink() {

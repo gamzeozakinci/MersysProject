@@ -8,9 +8,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.AssignmentsPage;
@@ -34,7 +36,8 @@ import static utilities.GWD.getDriver;
 public class US018_US019_US020_Assignments {
 
     AssignmentsPage ap = new AssignmentsPage(getDriver());
-    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+    Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10))
+            .ignoring(StaleElementReferenceException.class);
 
     @Given("User hovers over the {string} link on the home page")
     public void userHoversOverLinkNameOnHomepage(String linkName) {

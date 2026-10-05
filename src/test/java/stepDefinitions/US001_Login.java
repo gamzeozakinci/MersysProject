@@ -3,7 +3,10 @@ package stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.LoginPage;
@@ -18,7 +21,8 @@ import static utilities.GWD.getDriver;
 public class US001_Login {
 
     LoginPage lp = new LoginPage(getDriver());
-    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
+    Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20))
+            .ignoring(StaleElementReferenceException.class);
 
     @Given("User navigates to the {string} page")
     public void userNavigatesWebsite(String url) {

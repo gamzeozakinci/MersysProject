@@ -5,10 +5,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.AssignmentsPage;
@@ -21,7 +24,8 @@ import static utilities.GWD.getDriver;
 public class US022_Assignments {
 
     AssignmentsPage ap = new AssignmentsPage(getDriver());
-    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+    Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10))
+            .ignoring(StaleElementReferenceException.class);
 
     @Then("User should see the \"Search\" button")
     public void checkSearchButtonVisible() {
