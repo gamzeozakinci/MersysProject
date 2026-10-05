@@ -40,9 +40,7 @@ public class US016_Grading {
                 throw new IllegalArgumentException("No Grading tab defined for: " + tabName);
         }
 
-        wait.until(ExpectedConditions.visibilityOf(tab));
         wait.until(ExpectedConditions.elementToBeClickable(tab)).click();
-
         wait.until(ExpectedConditions.attributeToBe(tab, "aria-selected", "true"));
     }
 

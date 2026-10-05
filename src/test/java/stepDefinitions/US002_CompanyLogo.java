@@ -16,7 +16,6 @@ public class US002_CompanyLogo {
         Assert.assertTrue(np.companyLogo.isDisplayed());
     }
 
-
     @When("User clicks the company logo")
     public void userClicksTheCompanyLogo() {
         np.companyLogo.click();

@@ -21,23 +21,23 @@ import static utilities.GWD.getDriver;
 
 public class US004_HamMenuMessaging {
 
-    HeaderMenu header = new HeaderMenu(getDriver());
-    MessagingPage messaging = new MessagingPage(getDriver());
+    HeaderMenu hm = new HeaderMenu(getDriver());
+    MessagingPage mp = new MessagingPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @And("User hovers over the \"Messaging\" page")
     public void hoverOverMessagingLink() {
         closeErrorToast();
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerMessagingButton));
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", header.headerMessagingButton);
-        hover(header.headerMessagingButton);
+        wait.until(ExpectedConditions.elementToBeClickable(hm.headerMessagingButton));
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", hm.headerMessagingButton);
+        hover(hm.headerMessagingButton);
     }
 
     private void closeErrorToast() {
         try {
             new WebDriverWait(getDriver(), Duration.ofSeconds(3))
-                    .until(driver -> isPresent(messaging.errorToastCloseIcon));
-            messaging.errorToastCloseIcon.click();
+                    .until(driver -> isPresent(mp.errorToastCloseIcon));
+            mp.errorToastCloseIcon.click();
         } catch (TimeoutException | StaleElementReferenceException | ElementNotInteractableException e) {
             System.out.println("No error toast to close");
         }
@@ -45,42 +45,42 @@ public class US004_HamMenuMessaging {
 
     @Then("User should see the \"New Message\" page")
     public void checkNewMessageLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerNewMessageButton));
+        wait.until(ExpectedConditions.elementToBeClickable(hm.headerNewMessageButton));
     }
 
     @And("User should see the \"Inbox\" page")
     public void checkInboxLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerInboxButton));
+        wait.until(ExpectedConditions.elementToBeClickable(hm.headerInboxButton));
     }
 
     @And("User should see the \"Outbox\" page")
     public void checkOutboxLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerOutboxButton));
+        wait.until(ExpectedConditions.elementToBeClickable(hm.headerOutboxButton));
     }
 
     @And("User should see the \"Trash\" page")
     public void checkTrashLinkVisible() {
-        wait.until(ExpectedConditions.elementToBeClickable(header.headerTrashButton));
+        wait.until(ExpectedConditions.elementToBeClickable(hm.headerTrashButton));
     }
 
     @When("User clicks the \"New Message\" page")
     public void clickNewMessageLink() {
-        click(header.headerNewMessageButton, 10);
+        click(hm.headerNewMessageButton, 10);
     }
 
     @When("User clicks the \"Inbox\" page")
     public void clickInboxLink() {
-        click(header.headerInboxButton, 10);
+        click(hm.headerInboxButton, 10);
     }
 
     @When("User clicks the \"Outbox\" page")
     public void clickOutboxLink() {
-        click(header.headerOutboxButton, 10);
+        click(hm.headerOutboxButton, 10);
     }
 
     @When("User clicks the \"Trash\" page")
     public void clickTrashLink() {
-        click(header.headerTrashButton, 10);
+        click(hm.headerTrashButton, 10);
     }
 
     @Then("User should be navigated to the \"New Message\" page")

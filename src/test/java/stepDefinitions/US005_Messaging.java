@@ -74,8 +74,17 @@ public class US005_Messaging {
 
     private boolean onlyShowsResultsFor(String searchTerm) {
         try {
-            return !mp.receiverRows.isEmpty() && mp.receiverRows.stream()
-                    .allMatch(row -> row.getText().toLowerCase().contains(searchTerm.toLowerCase()));
+            if (mp.receiverRows.isEmpty()) {
+                return false;
+            }
+
+            for (WebElement row : mp.receiverRows) {
+                if (!row.getText().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    return false;
+                }
+            }
+
+            return true;
         } catch (StaleElementReferenceException listRebuilt) {
             return false;
         }
@@ -126,8 +135,13 @@ public class US005_Messaging {
 
         mp.showMessagesFromAllDates();
 
-        boolean listed = mp.messageRows.stream()
-                .anyMatch(row -> row.getText().contains(sentSubject));
+        boolean listed = false;
+
+        for (WebElement row : mp.messageRows) {
+            if (row.getText().contains(sentSubject)) {
+                listed = true;
+            }
+        }
 
         Assert.assertTrue(listed, "\"" + sentSubject + "\" is not listed in the " + mailbox + ".");
     }

@@ -19,36 +19,34 @@ import java.io.File;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
+import static pages.ParentPage.pause;
 import static utilities.GWD.getDriver;
 
 public class US017_Grading {
 
-    HeaderMenu header = new HeaderMenu(getDriver());
+    HeaderMenu hm = new HeaderMenu(getDriver());
     GradingPage grading = new GradingPage(getDriver());
 
     @When("User opens the \"Grading\" page")
     public void navigateToGradingPage() {
-        click(header.headerGradingButton, 4);
-
+        click(hm.headerGradingButton, 4);
     }
 
     @Then("User should see a \"Print\" icon on the page")
     public void checkPrintIconVisible() {
         Assert.assertTrue(grading.printButton.isDisplayed());
-
     }
 
     @When("User clicks the \"Print\" icon")
     public void clickPrintIcon() {
         click(grading.printButton, 4);
-
     }
 
     @Then("User should see the transcript document in PDF format")
     public void checkTranscriptPdfVisible() {
         String originalWindow = getDriver().getWindowHandle();
         new WebDriverWait(getDriver(), Duration.ofSeconds(10))
-                .until(d -> d.getWindowHandles().size() > 1);
+                .until(driver -> driver.getWindowHandles().size() > 1);
 
         for (String handle : getDriver().getWindowHandles()) {
             if (!handle.equals(originalWindow)) {
@@ -56,23 +54,21 @@ public class US017_Grading {
                 break;
             }
         }
-
     }
 
     @And("User must be able to click and download the document")
-    public void checkDownloadDocument() throws InterruptedException, AWTException {
+    public void checkDownloadDocument() throws AWTException {
         File downloadDir = new File(System.getProperty("user.dir"), "target" + File.separator + "downloads");
         downloadDir.mkdirs();
-        File[] beforeFiles = downloadDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
-        int countBefore = beforeFiles == null ? 0 : beforeFiles.length;
+        int pdfsBefore = countPdfs(downloadDir);
 
         for (int i = 0; i < 22; i++) {
-            Thread.sleep(200);
+            pause(200);
             new Actions(getDriver()).sendKeys(Keys.TAB).perform();
         }
         new Actions(getDriver()).sendKeys(Keys.ENTER).perform();
 
-        Thread.sleep(1500);
+        pause(1500);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(downloadDir.getAbsolutePath()), null);
 
         Robot robot = new Robot();
@@ -81,41 +77,45 @@ public class US017_Grading {
         robot.keyPress(KeyEvent.VK_L);
         robot.keyRelease(KeyEvent.VK_L);
         robot.keyRelease(KeyEvent.VK_CONTROL);
-        Thread.sleep(300);
+        pause(300);
 
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_CONTROL);
-        Thread.sleep(300);
+        pause(300);
 
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
-        Thread.sleep(500);
+        pause(500);
 
         robot.keyPress(KeyEvent.VK_ALT);
         robot.keyPress(KeyEvent.VK_N);
         robot.keyRelease(KeyEvent.VK_N);
         robot.keyRelease(KeyEvent.VK_ALT);
-        Thread.sleep(300);
+        pause(300);
 
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
-        Thread.sleep(500);
+        pause(500);
 
-        boolean fileCreated = false;
-        long endTime = System.currentTimeMillis() + 30000;
-        while (System.currentTimeMillis() < endTime) {
-            File[] currentFiles = downloadDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
-            if (currentFiles != null && currentFiles.length > countBefore) {
-                fileCreated = true;
-                break;
+        new WebDriverWait(getDriver(), Duration.ofSeconds(30))
+                .withMessage("PDF file was not created in " + downloadDir.getAbsolutePath())
+                .until(driver -> countPdfs(downloadDir) > pdfsBefore);
+    }
+
+    private int countPdfs(File folder) {
+        int count = 0;
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.getName().toLowerCase().endsWith(".pdf")) {
+                    count++;
+                }
             }
-            Thread.sleep(500);
         }
 
-        Assert.assertTrue(fileCreated, "PDF file was not created in " + downloadDir.getAbsolutePath());
-
+        return count;
     }
 }
-

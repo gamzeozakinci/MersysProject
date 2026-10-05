@@ -14,30 +14,28 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.nio.file.Paths;
 import java.time.Duration;
 
 import static pages.ParentPage.click;
-import java.nio.file.Paths;
-
+import static pages.ParentPage.pause;
 import static utilities.GWD.getDriver;
 
 public class US013_SubmitAttendanceEx {
 
-    HeaderMenu header = new HeaderMenu(getDriver());
+    HeaderMenu hm = new HeaderMenu(getDriver());
     AttendancePage attPage = new AttendancePage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @When("User clicks \"Attendance\" mainpage header")
-    public void user_clicks_attendance() {
-        click(header.headerAttendanceButton, 3);
-
+    public void userClicksAttendance() {
+        click(hm.headerAttendanceButton, 3);
     }
 
     @And("User opens \"Attendance Excuses\" screen and clicks \"Add Excuse\"")
     public void attendanceExcuses() {
         click(attPage.attendanceExcuses, 3);
         click(attPage.addAttendance, 3);
-
     }
 
     @Then("User adds a description for the excuse")
@@ -46,16 +44,15 @@ public class US013_SubmitAttendanceEx {
     }
 
     @And("User adds a file to support the excuse and clicks \"send\"")
-    public void fileToSupportExcuse() throws AWTException, InterruptedException {
+    public void fileToSupportExcuse() throws AWTException {
         String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "EXCUSE_FILE.pdf").toString();
 
         attPage.attachFilesButton.click();
         wait.until(ExpectedConditions.elementToBeClickable(attPage.fromLocalOption));
         attPage.fromLocalOption.click();
 
-        Thread.sleep(1500);
-        Toolkit.getDefaultToolkit().getSystemClipboard()
-                .setContents(new StringSelection(filePath), null);
+        pause(1500);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(filePath), null);
 
         Robot robot = new Robot();
         robot.keyPress(KeyEvent.VK_CONTROL);
@@ -70,13 +67,11 @@ public class US013_SubmitAttendanceEx {
 
         wait.until(ExpectedConditions.elementToBeClickable(attPage.send));
         attPage.send.click();
-
     }
 
     @And("User must be able to see the confirm message")
     public void confirmExcuse() {
         wait.until(ExpectedConditions.elementToBeClickable(attPage.confirmExcuse));
         Assert.assertTrue(attPage.confirmExcuse.isDisplayed());
-
     }
 }

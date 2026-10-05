@@ -5,6 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,167 +14,134 @@ import org.testng.Assert;
 import pages.AssignmentsPage;
 
 import java.time.Duration;
-import java.util.function.Supplier;
 
 import static pages.ParentPage.click;
 import static utilities.GWD.getDriver;
 
 public class US022_Assignments {
 
-    AssignmentsPage assign = new AssignmentsPage(getDriver());
+    AssignmentsPage ap = new AssignmentsPage(getDriver());
     WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @Then("User should see the \"Search\" button")
     public void checkSearchButtonVisible() {
-        wait.until(ExpectedConditions.visibilityOf(assign.searchButton));
-        Assert.assertTrue(assign.searchButton.isDisplayed());
-
+        wait.until(ExpectedConditions.visibilityOf(ap.searchButton));
+        Assert.assertTrue(ap.searchButton.isDisplayed());
     }
 
     @When("User clicks the \"Search\" button without applying any filter")
     public void clickSearchButtonWithoutFilter() {
-        click(assign.searchButton, 5);
-
+        click(ap.searchButton, 5);
     }
 
     @Then("User should see all assigned tasks listed")
     public void checkAllAssignedTasksListed() {
-        wait.until(driver -> !assign.assignmentRowsList.isEmpty());
-        Assert.assertFalse(assign.assignmentRowsList.isEmpty());
-
+        wait.until(driver -> !ap.assignmentRowsList.isEmpty());
+        Assert.assertFalse(ap.assignmentRowsList.isEmpty());
     }
 
-    @And("User filters the search by \"Course\"")
-    public void filterSearchByCourse() {
-        clickWithRetry(() -> assign.classFilterDropdown);
-        wait.until(driver -> assign.filterOptionsList.size() > 1);
-        clickWithRetry(() -> assign.filterOptionsList.get(1));
+    @And("User filters the search by {string}")
+    public void filterSearchBy(String filterName) {
+        WebElement dropdown;
+
+        switch (filterName) {
+            case "Course":
+                dropdown = ap.classFilterDropdown;
+                break;
+            case "Status":
+                dropdown = ap.statusFilterDropdown;
+                break;
+            case "Semester":
+                dropdown = ap.semesterFilterDropdown;
+                break;
+            default:
+                throw new IllegalArgumentException("No filter defined for: " + filterName);
+        }
+
+        clickWithRetry(dropdown);
+        wait.until(driver -> ap.filterOptionsList.size() > 1);
+        clickWithRetry(ap.filterOptionsList.get(1));
         closeOpenDropdown();
-
-    }
-
-    @And("User filters the search by \"Status\"")
-    public void filterSearchByStatus() {
-        clickWithRetry(() -> assign.statusFilterDropdown);
-        wait.until(driver -> assign.filterOptionsList.size() > 1);
-        clickWithRetry(() -> assign.filterOptionsList.get(1));
-        closeOpenDropdown();
-
-    }
-
-    @And("User filters the search by \"Semester\"")
-    public void filterSearchBySemester() {
-        clickWithRetry(() -> assign.semesterFilterDropdown);
-        wait.until(driver -> assign.filterOptionsList.size() > 1);
-        clickWithRetry(() -> assign.filterOptionsList.get(1));
-        closeOpenDropdown();
-
     }
 
     @And("User clicks the \"Search\" button")
     public void clickSearchButton() {
-        clickWithRetry(() -> assign.searchButton);
-
+        clickWithRetry(ap.searchButton);
     }
 
     @Then("User should see the filtered assignment results")
     public void checkFilteredResultsVisible() {
-        wait.until(ExpectedConditions.visibilityOf(assign.assignments));
-        Assert.assertTrue(assign.assignments.isDisplayed());
-
+        wait.until(ExpectedConditions.visibilityOf(ap.assignments));
+        Assert.assertTrue(ap.assignments.isDisplayed());
     }
 
     @Then("User should see the \"Show By\" dropdown menu")
     public void checkShowByDropdownVisible() {
-        wait.until(ExpectedConditions.visibilityOf(assign.showByDropdownButton));
-        Assert.assertTrue(assign.showByDropdownButton.isDisplayed());
-
+        wait.until(ExpectedConditions.visibilityOf(ap.showByDropdownButton));
+        Assert.assertTrue(ap.showByDropdownButton.isDisplayed());
     }
 
-    @When("User sorts the results by \"Course\" from the \"Show By\" dropdown")
-    public void sortResultsByCourse() {
-        selectShowByOption("Show by Class");
-
+    @When("User sorts the results by {string} from the \"Show By\" dropdown")
+    public void sortResultsBy(String sortName) {
+        selectShowByOption("Show by " + showByWord(sortName));
     }
 
-    @Then("User should see the results sorted by \"Course\"")
-    public void checkResultsSortedByCourse() {
-        wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Class"));
-
+    @Then("User should see the results sorted by {string}")
+    public void checkResultsSortedBy(String sortName) {
+        wait.until(ExpectedConditions.textToBePresentInElement(ap.showByDropdownButton, showByWord(sortName)));
     }
 
-    @When("User sorts the results by \"Type\" from the \"Show By\" dropdown")
-    public void sortResultsByType() {
-        selectShowByOption("Show by Type");
-
-    }
-
-    @Then("User should see the results sorted by \"Type\"")
-    public void checkResultsSortedByType() {
-        wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Type"));
-
-    }
-
-    @When("User sorts the results by \"Date\" from the \"Show By\" dropdown")
-    public void sortResultsByDate() {
-        selectShowByOption("Show by Date");
-
-    }
-
-    @Then("User should see the results sorted by \"Date\"")
-    public void checkResultsSortedByDate() {
-        wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Date"));
-
-    }
-
-    @When("User sorts the results by \"Chart\" from the \"Show By\" dropdown")
-    public void sortResultsByChart() {
-        selectShowByOption("Show by Chart");
-
-    }
-
-    @Then("User should see the results sorted by \"Chart\"")
-    public void checkResultsSortedByChart() {
-        wait.until(ExpectedConditions.textToBePresentInElement(assign.showByDropdownButton, "Chart"));
-
+    private String showByWord(String sortName) {
+        return sortName.equals("Course") ? "Class" : sortName;
     }
 
     private void closeOpenDropdown() {
         new Actions(getDriver()).sendKeys(Keys.ESCAPE).perform();
-        wait.until(driver -> assign.openDropdowns.isEmpty());
-
+        wait.until(driver -> ap.openDropdowns.isEmpty());
     }
 
-    private void clickWithRetry(Supplier<WebElement> elementSupplier) {
-        for (int i = 0; i < 3; i++) {
-            try {
-                new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(driver ->
-                        assign.overlayBackdrops.stream().allMatch(b -> "0".equals(b.getCssValue("opacity"))));
-            } catch (org.openqa.selenium.TimeoutException e) {
-                System.out.println("Overlay backdrop still present after 3s; attempting the click anyway");
-            }
+    private void clickWithRetry(WebElement element) {
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            waitForOverlaysToFade();
 
             try {
-                WebElement element = elementSupplier.get();
                 wait.until(ExpectedConditions.elementToBeClickable(element));
                 element.click();
                 return;
-            } catch (ElementClickInterceptedException e) {
-                if (i == 2) throw e;
+            } catch (ElementClickInterceptedException clickBlocked) {
+                if (attempt == 3) {
+                    throw clickBlocked;
+                }
             }
         }
     }
 
-    private void selectShowByOption(String optionText) {
-        click(assign.showByDropdownButton, 5);
-        wait.until(ExpectedConditions.visibilityOfAllElements(assign.showByMenuItemsList));
+    private void waitForOverlaysToFade() {
+        try {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(driver -> noOverlayIsVisible());
+        } catch (TimeoutException overlayStillThere) {
+        }
+    }
 
-        for (WebElement item : assign.showByMenuItemsList) {
+    private boolean noOverlayIsVisible() {
+        for (WebElement overlay : ap.overlayBackdrops) {
+            if (!overlay.getCssValue("opacity").equals("0")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void selectShowByOption(String optionText) {
+        click(ap.showByDropdownButton, 5);
+        wait.until(ExpectedConditions.visibilityOfAllElements(ap.showByMenuItemsList));
+
+        for (WebElement item : ap.showByMenuItemsList) {
             if (item.getText().trim().equals(optionText)) {
                 item.click();
                 return;
             }
         }
     }
-
 }

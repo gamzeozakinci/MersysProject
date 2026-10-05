@@ -52,11 +52,20 @@ public class US006_DeleteMessage {
     }
 
     private void waitForListToSettle() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15)).until(driver -> {
-            int before = mp.messageRows.size();
+        int previousCount = -1;
+
+        for (int check = 0; check < 30; check++) {
+            int currentCount = mp.messageRows.size();
+
+            if (currentCount > 0 && currentCount == previousCount) {
+                return;
+            }
+
+            previousCount = currentCount;
             pause(500);
-            return before > 0 && before == mp.messageRows.size();
-        });
+        }
+
+        Assert.fail("The message list never stopped changing.");
     }
 
     @When("User clicks on the Move to Trash icon for a sent message")

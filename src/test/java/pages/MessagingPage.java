@@ -30,10 +30,13 @@ public class MessagingPage extends ParentPage {
     private void retypeDate(WebElement field, String value) {
         field.sendKeys(Keys.chord(Keys.CONTROL, "a"), value);
 
-        String expectedDigits = value.replaceAll("\\D", "");
-        new WebDriverWait(getDriver(), Duration.ofSeconds(5)).withMessage(
-                        "The date field kept its own value instead of accepting " + value)
-                .until(d -> expectedDigits.equals(field.getAttribute("value").replaceAll("\\D", "")));
+        new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+                .withMessage("The date field kept its own value instead of accepting " + value)
+                .until(d -> digitsOf(field.getAttribute("value")).equals(digitsOf(value)));
+    }
+
+    private String digitsOf(String text) {
+        return text.replaceAll("\\D", "");
     }
 
     @FindBy(css = "tbody.mdc-data-table__content")

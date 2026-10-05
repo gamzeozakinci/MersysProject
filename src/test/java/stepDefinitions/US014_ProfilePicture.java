@@ -2,25 +2,29 @@ package stepDefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.SettingsPage;
-import io.cucumber.java.en.When;
-import java.awt.*;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
-import java.time.Duration;
 import java.nio.file.Paths;
+import java.time.Duration;
 
+import static pages.ParentPage.pause;
 import static utilities.GWD.getDriver;
-
 
 public class US014_ProfilePicture {
 
     SettingsPage settpage = new SettingsPage(getDriver());
+    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
     @And("User clicks on the profile picture")
     public void userClicksOnTheProfilePicture() {
@@ -29,24 +33,20 @@ public class US014_ProfilePicture {
 
     @Then("Profile Photo window should be displayed")
     public void profilePhotoWindowShouldBeDisplayed() {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-
         wait.until(ExpectedConditions.visibilityOf(settpage.profilePhotoWindowTitle));
 
         Assert.assertTrue(settpage.profilePhotoWindowTitle.isDisplayed());
     }
 
     @When("User selects a profile picture")
-    public void userSelectsAProfilePicture() throws Exception {
-
+    public void userSelectsAProfilePicture() throws AWTException {
         settpage.fileSelectButton.click();
 
-        Thread.sleep(1500);
+        pause(1500);
 
         String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "features", "files", "blank.png").toString();
 
-        Toolkit.getDefaultToolkit().getSystemClipboard()
-                .setContents(new StringSelection(filePath), null);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(filePath), null);
 
         Robot robot = new Robot();
 
@@ -60,13 +60,14 @@ public class US014_ProfilePicture {
         robot.keyRelease(KeyEvent.VK_V);
         robot.keyRelease(KeyEvent.VK_CONTROL);
 
-        Thread.sleep(500);
+        pause(500);
 
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
 
-        Thread.sleep(1500);
+        pause(1500);
     }
+
     @Then("User should see the uploaded image size")
     public void userShouldSeeTheUploadedImageSize() {
         Assert.assertTrue(settpage.uploadedImageSize.isDisplayed());
@@ -79,36 +80,23 @@ public class US014_ProfilePicture {
 
     @And("User clicks the Save button")
     public void userClicksTheSaveButton() {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-
         wait.until(ExpectedConditions.elementToBeClickable(settpage.saveButton));
 
         new Actions(getDriver())
                 .moveToElement(settpage.saveButton)
                 .click()
                 .perform();
-
-
     }
 
     @Then("User should see {string} message")
     public void userShouldSeeMessage(String message) {
-
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-
-        WebElement toast = wait.until(
-                ExpectedConditions.visibilityOf(settpage.saveConfirm)
-        );
+        WebElement toast = wait.until(ExpectedConditions.visibilityOf(settpage.saveConfirm));
 
         Assert.assertEquals(toast.getText().trim(), message);
-
     }
 
     @And("User closes the Profile Photo window")
     public void userClosesTheProfilePhotoWindow() {
         settpage.closeButton.click();
     }
-
 }
-
-

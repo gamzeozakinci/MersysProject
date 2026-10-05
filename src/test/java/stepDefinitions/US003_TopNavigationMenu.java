@@ -1,9 +1,11 @@
 package stepDefinitions;
+
 import io.cucumber.java.en.When;
+import org.openqa.selenium.WebElement;
 import pages.HeaderMenu;
 import pages.NavigationPage;
-import pages.ParentPage;
 
+import static pages.ParentPage.click;
 import static utilities.GWD.getDriver;
 
 public class US003_TopNavigationMenu {
@@ -13,47 +15,43 @@ public class US003_TopNavigationMenu {
 
     @When("User navigates to {string} page")
     public void userNavigatesToPage(String linkName) {
+        WebElement link;
+
         switch (linkName) {
             case "Grading":
-                ParentPage.click(hm.headerGradingButton, 10);
+                link = hm.headerGradingButton;
                 break;
             case "Calendar":
-                ParentPage.click(np.calendarLink,10);
+                link = np.calendarLink;
                 break;
-
             case "Courses":
-                ParentPage.click(np.coursesLink, 10);
+                link = np.coursesLink;
                 break;
-
             case "Attendance":
-                ParentPage.click(hm.headerAttendanceButton, 10);
+                link = hm.headerAttendanceButton;
                 break;
-
             case "Assignments":
-                ParentPage.click(hm.headerAssignmentButton, 10);
+                link = hm.headerAssignmentButton;
                 break;
-
             case "Hamburger Menu":
-                ParentPage.click(hm.hamburgerButton, 10);
+                link = hm.hamburgerButton;
                 break;
-
             case "Chat Msg.":
-                ParentPage.click(np.chatMsgLink, 10);
+                link = np.chatMsgLink;
                 break;
-
             case "Messages":
-                ParentPage.click(np.messagesLink, 10);
+                link = np.messagesLink;
                 break;
-
             case "Announcements":
-                ParentPage.click(np.announcementLink, 10);
+                link = np.announcementLink;
                 break;
-
             case "Profile":
-                ParentPage.click(np.profileButton, 10);
+                link = np.profileButton;
                 break;
-
+            default:
+                throw new IllegalArgumentException("No top menu link defined for: " + linkName);
         }
-    }
 
+        click(link, 10);
+    }
 }
